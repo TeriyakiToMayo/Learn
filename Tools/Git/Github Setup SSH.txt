@@ -84,4 +84,6 @@ Change Connection Method to SSH
 	
 //	$ git branch --set-upstream-to=origin/master master
 	$ git push --set-upstream origin master
+	
+	
 
