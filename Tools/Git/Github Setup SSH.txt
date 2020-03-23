@@ -61,3 +61,17 @@ Add SSH Key to gibhub Account
 	Paste the SSH Key
 	
 	
+====================================================================
+Establish Connection
+====================================================================
+
+	$ ssh -T git@github.com
+	
+	> The authenticity of host 'github.com'.....
+	
+	yes
+	
+	
+	
+	
+
