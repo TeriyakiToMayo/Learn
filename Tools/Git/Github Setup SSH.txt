@@ -1,0 +1,63 @@
+
+((https://help.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh))
+
+====================================================================
+Check for Existing SSH keys
+====================================================================
+
+	$ ls -al ~/.ssh		Windows
+	$ ls -al ~/.ssh		Linux
+	
+
+====================================================================
+Generate SSH Key
+====================================================================
+
+	(https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
+	
+	$ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"								Windows
+	$ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"								Linux
+	
+	> Generating public/private rsa key pair.					
+	
+	> Enter a file in which to save the key (/c/Users/you/.ssh/id_rsa):[Press enter]	Enter for default
+	
+	> Enter passphrase (empty for no passphrase): [Type a passphrase]					password for SSH Key
+	> Enter same passphrase again: [Type passphrase again]
+	
+	
+====================================================================
+Add SSH Key to ssh-agent
+====================================================================
+
+	(https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
+								
+								start ssh-agent
+	$ eval $(ssh-agent -s)		Windows
+	$ eval "$(ssh-agent -s)"	Linux
+	
+	>  Agent pid 59566
+	
+	$ ssh-add ~/.ssh/id_rsa		Windows
+	$ ssh-add ~/.ssh/id_rsa		Linux
+
+	
+====================================================================
+Add SSH Key to gibhub Account
+====================================================================
+
+	(https://help.github.com/en/github/authenticating-to-github/checking-for-existing-ssh-keys)
+	
+	Windows:
+		$ clip < ~/.ssh/id_rsa.pub
+		
+	Linux:
+		$ sudo apt-get install xclip
+		$ xclip -sel clip < ~/.ssh/id_rsa.pub
+		
+	
+	Go to github.com -> settings -> SSH and GPG keys -> New SSH Key
+	Type Title
+	Paste the SSH Key
+	
+	
