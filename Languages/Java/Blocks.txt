@@ -1,0 +1,15 @@
+====================================================
+Single Line and Blocks
+====================================================
+
+------------------------------------------------------
+[Single Line in Block]
+List<String> list = new ArrayList<>();
+if(n == 1) {list.add("1"); return list;}
+
+------------------------------------------------------
+[Single Line not in Block]
+List<String> list = new ArrayList<>();
+if(n == 1) list.add("1"); return list;
+//return list; is not part of the if statement
+

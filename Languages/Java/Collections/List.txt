@@ -1,0 +1,177 @@
+//==================================================================
+// General Problems
+//==================================================================
+List<T>
+	- T: Object types(Integer, Character, int[], SomeObj)
+
+
+
+//==================================================================
+// Implementation Types
+//==================================================================
+List<>
+ArrayList<>: 
+	- Accessing: ramdom
+	- Editing: add to first/last
+LinkedList<>: 
+	- Accessing: sequential
+	- Editing: add to positions other than the last
+
+------------------------------------------------------
+[Example 1]
+76. Minimum Window Substring
+
+sReCon as LinkedList:	exceeds time limitation
+sReCon as ArrayList:	faster than 65.05%
+
+
+------------------------------------------------------
+[Example 2]
+
+113. Path Sum II
+
+list as List<Integer>:			2 ms 63.53%
+list as ArrayList<Integer>:		1 ms 100%
+
+
+
+
+
+//==================================================================
+// Initialize
+//==================================================================
+https://stackoverflow.com/questions/2607289/converting-array-to-list-in-java
+
+------------------------------------------------------
+[Initialize with Collection]
+
+List<Integer> list0 = new LinkedList<>();
+List<Integer> list1 = new LinkedList<>(list0);				//list0 can be 
+															//	- other Collections: Set, List, Stack...
+															//	- Collection of other collections: Map.values()	
+
+List<Integer> list = new LinkedList<>(Arrays.asList(...));	//... see "Convert Array to List"
+
+------------------------------------------------------
+[Initialize with Array]
+
+List<Integer> list = Arrays.asList(...)						//... see "Convert Array to List"
+
+
+
+//==================================================================
+// Convert Array to List
+//==================================================================
+https://stackoverflow.com/questions/36560522/add-string-array-to-arraylist
+
+------------------------------------------------------
+[Converting by enumerating each element]
+
+List<Integer> list = Arrays.asList(1, 2, 3);	//This is much faster, and no need to convert int[] to Integer[]
+
+List<Integer> list = Arrays.asList(new Integer[] {1, 2, 3});
+
+
+------------------------------------------------------
+[Converting by from exist array]
+
+Integer[] spam = new Integer[] { 1, 2, 3 };	//Note: type must be Integer
+List<Integer> list = Arrays.asList(spam);
+
+int[] spam = new int[] {1, 2, 3};
+Integer[] boxedArray = Arrays.stream(primitiveArray).boxed().toArray(Integer[]::new);
+List<Integer> list = Arrays.asList(boxedArray);
+
+
+
+//==================================================================
+// Convert List to Array
+//==================================================================
+https://javadevnotes.com/java-list-to-array-examples/
+
+------------------------------------------------------
+[1-D Array]
+//Integer
+List<Integer> list2 = new LinkedList<>(Arrays.asList(1, 2, 3));
+Integer[] arr = list2.toArray(new Integer[0]);
+
+//int
+int[] array = list.stream().mapToInt(i->i).toArray();
+
+//String
+List<String> myList = new LinkedList<String>();
+String[] myArray = myList.toArray(new String[0]);
+
+------------------------------------------------------
+[2-D Array]
+//Num56_MergeIntervals.java: (2-D Array)
+//Note: if array parameter is large enough, the data will be copied there then returns to myArray
+//		if not, then it directly returns myArray
+int[][] myArray = list.toArray(new int[0][0]);
+
+
+
+
+//==================================================================
+// Add
+//==================================================================
+list.add(value);
+list.add(index, value);
+
+list.addAll(list0);			//Collection c containing elements to add
+list.addAll(Arrays.asList(...));
+
+//==================================================================
+// Get
+//==================================================================
+int list.get(index);
+
+
+//==================================================================
+// Remove
+//==================================================================
+
+//Note: non-specified List (e.g. List<Integer>) cannot remove element
+//		only specified List like LinkedList, ArrayList can remove element
+int list.remove(index);
+
+
+//==================================================================
+// Contains
+//==================================================================
+------------------------------------------------------
+[item as primitive]
+
+List<Integer> list = Arrays.asList(1, 2, 3);
+out("" + list.contains(1));		//output: true
+
+
+------------------------------------------------------
+[item as object]
+
+List<List<Integer>> list = new LinkedList<List<Integer>>();
+List<Integer> subList0 = Arrays.asList(1, 2, 3);
+List<Integer> subList1 = Arrays.asList(1, 2, 3);
+list.add(subList0);
+out("" + list.contains(subList0));		//output: true
+out("" + list.contains(subList1));		//output: true
+
+
+//==================================================================
+// Sort
+//==================================================================
+https://howtodoinjava.com/sort/collections-sort/
+
+List<String> names = Arrays.asList("Alex", "Charles", "Brian", "David");
+ 
+//Natural order
+Collections.sort(names);    //[Alex, Brian, Charles, David]
+ 
+//Reverse order
+Collections.sort(names, Collections.reverseOrder());    [David, Charles, Brian, Alex] 
+
+
+//==================================================================
+// Compare
+//==================================================================
+myList.equals(myList2)

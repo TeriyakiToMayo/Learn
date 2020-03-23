@@ -1,0 +1,31 @@
+https://www.tutorialspoint.com/cplusplus/cpp_references.htm
+//==================================================================
+// reference
+//==================================================================
+https://www.includehelp.com/cpp-tutorial/cpp-reference-variable-cpp-programming-tutorial.aspx
+
+Alias of variables, almost the same.
+
+----------------------------------------------------------------------
+[Declaration]
+
+int student_age=10;
+int &age=student_age;	// reference variable
+	
+----------------------------------------------------------------------
+[Usage]
+Same as variables
+
+
+//==================================================================
+// reference vs. variable
+//==================================================================
+1. Can only be assigned once
+	
+	int student_age=10;
+	int &age=student_age;	// reference variable
+	
+2. Reference as function parameters vs. Variables
+	SEE "Class and functions - functions - function parameters"
+		
+	

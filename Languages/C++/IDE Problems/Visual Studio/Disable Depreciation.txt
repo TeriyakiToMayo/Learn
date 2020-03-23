@@ -1,0 +1,9 @@
+https://stackoverflow.com/questions/22450423/how-to-use-crt-secure-no-warnings
+//==================================================================
+// How to disable depreciation?
+//==================================================================
+Configuration Properties
+>>C/C++
+>>Preporocessor
+>>Preprocessor Definitions
+>> _CRT_SECURE_NO_WARNINGS

@@ -1,0 +1,49 @@
+//==================================================================
+// Related Headers
+//==================================================================
+#include <sstream>
+	stringstream
+	ostringstream
+
+
+//==================================================================
+// stringstream
+//==================================================================
+//correct approach to use
+std::stringstream sstm;
+sstm << name << age;
+std::string result = sstm.str();
+
+/*	Something about why 
+*	"stringstream ss << "Number of people is " << numPeople;"
+*	is wrong.
+*/
+https://stackoverflow.com/questions/21924156/how-to-initialize-a-stdstringstream
+
+//stringstream applications
+https://www.geeksforgeeks.org/stringstream-c-applications/
+
+
+//==================================================================
+// ostringstream
+//==================================================================
+
+http://www.cplusplus.com/reference/sstream/ostringstream/str/
+
+// ostringstream::rdbuf
+#include <string>       // std::string
+#include <iostream>     // std::cout
+#include <sstream>      // std::ostringstream
+
+int main () {
+  std::ostringstream oss;
+  oss << "One hundred and one: " << 101;
+  std::string s = oss.str();
+  std::cout << s << '\n';
+  return 0;
+}
+
+// difference between stringstream and ostringstream
+https://stackoverflow.com/questions/18251346/difference-stringstream-and-ostringstream
+https://stackoverflow.com/questions/3292107/whats-the-difference-between-istringstream-ostringstream-and-stringstream-w
+

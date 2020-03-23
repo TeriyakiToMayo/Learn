@@ -1,0 +1,15 @@
+//==================================================================
+// Convex Hull
+//==================================================================
+
+The [convex hull] is the smalledst convex polygon 
+that contains all the points of S (on boundary or inside)
+
+
+//==================================================================
+// Convex Hull Algorithm: Graham Scan Algorithm
+//==================================================================
+https://youtu.be/ZFxFKABnXN0
+
+
+

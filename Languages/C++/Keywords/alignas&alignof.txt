@@ -1,0 +1,39 @@
+//==================================================================
+// Usage
+//==================================================================
+https://docs.microsoft.com/en-us/cpp/cpp/alignof-and-alignas-cpp?view=vs-2019
+alignas: determines stride of memory allocation
+alignof: outputs the alignas value
+------------------------------------------------------
+[Ex. 1]
+struct alignas(8) x_
+{
+	int a;
+	int b;
+} my_struct1;
+
+int main() {
+	
+	cout << alignof(x_) << endl;			//output: 8
+	cout << sizeof(my_struct1) << endl;		//output: 8
+
+	return 0;
+}
+
+------------------------------------------------------
+[Ex. 2]
+struct alignas(8) x_
+{
+	int a;
+	int b;
+	int c;
+} my_struct1;
+
+int main() {
+	
+	cout << alignof(x_) << endl;			//output: 8
+	cout << sizeof(my_struct1) << endl;		//output: 16
+
+	return 0;
+}
+

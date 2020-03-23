@@ -1,0 +1,62 @@
+//==================================================================
+// Instructions
+//==================================================================
+
+https://www.youtube.com/watch?v=xWAuP6FN0d4&t=121s
+
+
+Doc version tutorial: https://docs.google.com/document/d/1cj3BgSHbtAPmNzRrNdqRPIqjQ59eW4DWICbuOuGFeAM/edit
+
+CMake: https://cmake.org/download/
+Qt5: https://download.qt.io/archive/qt/5.9/5.9.1/
+Boost: https://sourceforge.net/projects/boost/files/boost-binaries/
+CGAL: https://github.com/CGAL/cgal/releases
+
+C/C++: 
+C:\local\CGAL\auxiliary\gmp\include
+C:\local\boost_1_64_0
+C:\local\CGAL\build\include
+C:\local\CGAL\include
+
+Linker/General:
+C:\local\CGAL\auxiliary\gmp\lib
+C:\local\boost_1_64_0\libs
+C:\local\CGAL\build\lib
+
+
+Linker/Input:
+libgmp-10.lib
+libmpfr-4.lib
+kernel32.lib
+user32.lib
+CGAL_Core-vc140-mt-gd-4.13.1.lib		//change it to current version
+CGAL_ImageIO-vc140-mt-gd-4.13.1.lib		//change it to current version
+CGAL-vc140-mt-gd-4.13.1.lib				//change it to current version
+
+
+//==================================================================
+// Problems
+//==================================================================
+------------------------------------------------------
+[Build Error: "The command setlocal..." Error]
+SEE "H:\Programming Studies\Languages\C++\IDE Problems" 
+    "CMake.txt\Problems with CMake"
+
+
+------------------------------------------------------
+[Build Error: I cannot find build\lib, build\include, build\bin]
+
+1. In CMake configurations, Uncheck CGAL_HEADER_ONLY
+
+2. These folders are in directory specified in CMAKE_INSTALL_PREFIX
+
+
+------------------------------------------------------
+[Running Preparation Error: When copying .dll files, I cannot find Qt.dll]
+It is totally fine.
+Correctly installing and configuring Qt will fix this problem.
+
+------------------------------------------------------
+[I get errors like ".... Cannot find or open the PDB file"]
+These are not errors.
+See: https://software.intel.com/en-us/articles/visual-studio-debugger-cannot-find-or-open-the-pdb-file

@@ -1,0 +1,123 @@
+====================================================
+Problem 91. Decode Ways
+====================================================
+A message containing letters from A-Z is being encoded to 
+numbers using the following mapping:
+
+'A' -> 1
+'B' -> 2
+...
+'Z' -> 26
+
+Given a non-empty string containing only digits, determine 
+the total number of ways to decode it.
+
+Example 1:
+
+Input: "12"
+Output: 2
+Explanation: It could be decoded as "AB" (1 2) or "L" (12).
+
+Example 2:
+
+Input: "226"
+Output: 3
+Explanation: It could be decoded as "BZ" (2 26), "VF" (22 
+6), or "BBF" (2 2 6).
+
+
+
+====================================================
+Analysis
+====================================================
+------------------------------------------------------
+[Processing steps]
+Similar to steping stairs
+
+Assume String s = [2, 3, 6, 1, 2]
+
+Step 1: Since there is only 1 way to reach the 1st element
+2, 3, 6, 1, 2
+1
+
+Step 2: there are 2 ways to get to the 2nd element
+	Case 1: "2" +  "3"	(1)	(1 is from the 1st element "2")
+	Case 2: ""  + "23"  (1)
+
+2, 3, 6, 1, 2
+1  2
+
+
+Step 3: there are 2 ways to get to the 3rd element
+	Case 1: "23" +  "6"	(2)	(2 is from the 2nd element "3", since there are 2 ways to divide "23")
+	Case 2: "2"  + "36"	(0)	(since no letter 36, this way is not possible)
+	
+2, 3, 6, 1, 2
+1  2  2
+
+
+......
+
+
+2, 3, 6, 1, 2
+1  2  2  2  4
+
+
+------------------------------------------------------
+[Special cases]
+
+Assume s = "12345101"
+
+For the 1st "0"
+	Case 1: "123451" +  "0"	(this is not possible because no letter matches 0)
+	Case 2: "12345"  + "10"
+	
+For the last "1"
+	Case 1: "1234510" +  "1" 
+	Case 2: "123451"  + "01" (this is not possible because no letter matches 01)
+
+Conclusion:
+	Single digit: "0"(X) "1" ~ "9"(OK)
+	Double digits: "00"~"09"(X) "10" ~ "26"(OK) "27"~"99"(X)
+	
+
+
+====================================================
+Java Approach: Dynamic Programming
+1 ms	100.00%
+37.4 MB	5.02%
+====================================================
+
+public static int numDecodings(String s) {
+	int len = s.length();
+	
+	if(len == 0) return 0;
+	
+	int[] dp = new int[len];
+	dp[0] = isLetter0(s, 0) ? 1 : 0;
+	if(len == 1) return dp[0];
+	dp[1] = (isLetter0(s, 1) ? dp[0] : 0) + (isLetter(s, 0) ? 1 : 0);
+	
+	for(int i = 2; i < len; i++) {
+		dp[i] = (isLetter0(s, i) ? dp[i - 1] : 0) + (isLetter(s, i - 1) ? dp[i - 2] : 0);
+	}
+	
+	return dp[len - 1];
+}
+
+public static boolean isLetter0(String s, int start) {
+	return s.charAt(start) != '0';
+}
+
+public static boolean isLetter(String s, int start) {
+	char a = s.charAt(start);
+	if(a == '0') return false;
+	if(a == '1') return true;
+	if(a == '2') {
+		a = s.charAt(start + 1);
+		return a <= '6';
+	}
+		
+	return false;
+}
+

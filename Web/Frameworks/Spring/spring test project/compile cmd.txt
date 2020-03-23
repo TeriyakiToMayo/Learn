@@ -1,0 +1,24 @@
+#https://www.javatpoint.com/steps-to-create-spring-application
+
+javac -d . -cp org.springframework.core-3.0.1.RELEASE-A.jar;org.springframework.beans-3.0.1.RELEASE-A.jar; Student.java Test.java
+#note1: -d . means compile result to be stored in current folder
+#note2: need semi-colon at the end of each(including the last one) jar
+#note3: for compilation, we only need core.jar and bean.jar
+
+java -cp org.springframework.core-3.0.1.RELEASE-A.jar;org.springframework.beans-3.0.1.RELEASE-A.jar;com.springsource.org.apache.commons.logging-1.1.1.jar; com.javatpoint.Test
+#note1: for running, we need core.jar, bean.jar and apache.commons.logging-1.1.1.jar
+#note2: classpath
+			- In current folder: 
+				- xxx.jar
+				- ./xxx.jar
+			- In some other folder:
+				- ./jar/xxx.jar
+			- In parent folder:
+				- ../xxx.jar
+#note3: since package com.javatpoint, we need com.javatpoint.Test to run Test
+#note4: JNI error1. javac -version NOT EQUAL TO java -version*
+#	   JNI error2. trying to run with .class only
+
+C:\ProgramData\Oracle\Java\javapath
+C:\Program Files (x86)\Common Files\Oracle\Java\javapath
+

@@ -1,0 +1,7 @@
+//==================================================================
+// type name
+//==================================================================
+https://stackoverflow.com/questions/11310898/how-do-i-get-the-type-of-a-variable
+
+typeid(variable).name();
+

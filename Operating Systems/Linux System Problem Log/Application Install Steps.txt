@@ -1,0 +1,75 @@
+=============================
+Sources
+=============================
+https://blog.csdn.net/qq_36328643/article/details/89072628
+
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup	#make backup
+sudo gedit /etc/apt/sources.list	#edit content:
+
+	# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
+	deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse
+	# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse
+	deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse
+	# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse
+	deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse
+	# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse
+	deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse
+	# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse
+
+	# 预发布软件源，不建议启用
+	# deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse
+	# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main
+
+sudo apt-get update
+
+
+=============================
+Onedrive
+=============================
+https://blog.csdn.net/skylark0924/article/details/80251753
+
+
+=============================
+Notepad++
+=============================
+https://www.jianshu.com/p/4d53fd3b1bcf	(obsolete)
+
+snap install --classic notepadqq
+
+
+
+=============================
+Java Environment
+=============================
+sudo apt install default-jdk (will be slow if source is not right)
+
+Alternative: 
+	https://blog.csdn.net/qq_28869927/article/details/80961907
+	https://blog.csdn.net/sangewuxie/article/details/80958611
+
+
+
+
+
+=============================
+Eclipse
+=============================
+https://blog.csdn.net/yinghuo110/article/details/80726750
+
+
+=============================
+Navicat
+=============================
+	http://navicat.com.cn/download/navicat-for-mysql
+	
+	chmod +x navicat15-mysql-cs.AppImage
+	./navicat15-mysql-cs.AppImage
+
+
+
+=============================
+QQ
+=============================
+	Official: https://im.qq.com/linuxqq/download.html
+	Deepin wine: https://www.lulinux.com/archives/1319
+

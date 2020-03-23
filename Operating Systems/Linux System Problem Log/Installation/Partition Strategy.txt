@@ -1,0 +1,20 @@
+=============================
+Partitions
+=============================
+(https://blog.csdn.net/baidu_36602427/article/details/86548203)
+
+1TB Hard Drive
+
+Name		Type		Use as		Mount Point		Space in MB		Space in GB
+root		MAIN		Ext4		"/"				122879			120
+/boot		MAIN		Ext4		"/boot"			1024			1
+/home		Logic		Ext4		"/home"			266239			260
+/tmp		Logic		Ext4		"/tmp"			40960			40
+/usr		Logic		Ext4		"/usr"			460799			450
+/var		Logic		Ext4		"/var"			40960			40
+swap		Logic		Swap		none			26378			25
+EFI			Logic		EFI			none			1024			1
+
+
+
+

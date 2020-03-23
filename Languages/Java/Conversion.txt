@@ -1,0 +1,16 @@
+====================================================
+Conversion
+====================================================
+------------------------------------------------------
+[Boundary case]
+long tempDividend = Math.abs(dividend);			//wrong
+long tempDividend = Math.abs((long)dividend);	//correct
+
+SEE "primitive types.txt\Boundings\Boundary cases"
+
+
+------------------------------------------------------
+[Other cases]
+(int)-tempDividend;		//wrong
+(int)(-tempDividend);	//correct
+

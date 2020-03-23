@@ -1,0 +1,39 @@
+https://en.wikibooks.org/wiki/Java_Programming/Primitive_Types
+//==================================================================
+// Boundings
+//==================================================================
+Integer: 
+  (-2^31)   ~ (2^31 - 1)
+-2147483648 ~ 2147483647	//their absolute values are different
+
+Long: 
+        (-2^63)            ~        (2^63-1)
+-9,223,372,036,854,775,808 ~ 9,223,372,036,854,775,807
+
+------------------------------------------------------
+[Boundary cases]
+1. Absolute values
+	- Since absolute value of Integer.MIN_VALUE is out of range, 
+	  Math.abs(Integer.MIN_VALUE) is still Integer.MIN_VALUE:
+
+		Math.abs(Integer.MAX_VALUE) 	==  2147483647
+		......
+		Math.abs(1)						==  1
+		Math.abs(0)						==  0
+		Math.abs(-1)					==  1
+		......
+		Math.abs(Integer.MIN_VALUE + 1)	==  2147483647
+		Math.abs(Integer.MIN_VALUE) 	== -2147483648
+
+2. Multiplication (similar to absolute values):
+	- (-1)*Integer.MIN_VALUE == -2147483648
+	
+3. Addition:
+	- (Integer.MIN_VALUE + Integer.MIN_VALUE) == 0
+
+
+//==================================================================
+// Wrapper Classes
+//==================================================================
+int		-> Integer
+char	-> Character

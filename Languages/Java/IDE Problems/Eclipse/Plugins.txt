@@ -1,0 +1,15 @@
+====================================================================
+Java Decompiler
+====================================================================
+
+	https://github.com/java-decompiler/jd-eclipse
+	
+	> git clone https://github.com/java-decompiler/jd-eclipse.git
+	> cd jd-eclipse
+	> chmod +x ./gradlew
+	> ./gradlew build
+	
+
+
+
+

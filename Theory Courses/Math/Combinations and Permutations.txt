@@ -1,0 +1,59 @@
+====================================================
+Permutation
+====================================================
+------------------------------------------------------
+[Intuition]
+
+Assume pick 2 from [?, ?, ?, ?, ?] to make permutation
+
+_ _ 
+? ?
+
+[?, P, ?, ?, ?]: pick 1 from 5 (P:picked)
+[?, P, ?, P, ?]: then pick 1 from the remaining 4  
+
+Permutations: 5*4
+
+
+
+------------------------------------------------------
+[Formula]
+A(m, n) = m!/(m-n)!
+
+A(5, 3) = 5!/2! = 60
+
+
+====================================================
+Combination
+====================================================
+------------------------------------------------------
+[Intuition]
+
+Assume pick 2 from [?, ?, ?, ?, ?] to make combination
+
+_ _
+? ?
+
+[?, P, ?, ?, ?]: pick 1 from 5 (P:picked)
+[?, P, ?, P, ?]: then pick 1 from the remaining 4  
+
+Combinations: 5*4/2*1
+	- Since there are repeated cases, for each set of n elements, there are n! repeated cases
+		- [1, 2] and [2, 1] are the same combinations
+
+
+
+------------------------------------------------------
+[Formula]
+C(m, n) = A(m, n)/n!
+
+C(5, 3) = (5!/2!)/3! = 10
+
+
+
+====================================================
+Tree Structure Differences
+====================================================
+SEE "46. Permutations.txt"
+
+

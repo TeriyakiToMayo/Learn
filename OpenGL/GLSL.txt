@@ -1,0 +1,12 @@
+//==================================================================
+// GLSL Vector Arithmatics
+//==================================================================
+vec3 Color;
+vec4 outColor;
+
+outColor = vec4(1 - Color.r, 1 - Color.g, 1 - Color.b, 1.0);
+outColor = vec4(1 - Color.x, 1 - Color.y, 1 - Color.z, 1.0);
+outColor = vec4(1 - Color, 1.0);
+//These three are equivalent
+
+

@@ -1,0 +1,40 @@
+//==================================================================
+// Adding New Library 
+//==================================================================
+1. include:
+	- Project 
+	-> properties 
+	-> Configuration Properties 
+	-> C/C++
+	-> Additional Include Directories
+	(add "Include" folder)
+2. lib 
+	- Project 
+	-> properties 
+	-> Configuration Properties 
+	-> Linker
+	-> General
+	-> Additional Library Directories
+	(add "lib" folder)
+3. library
+	- Project 
+	-> properties 
+	-> Configuration Properties 
+	-> Linker
+	-> Input
+	-> Additional Dependencies
+	(add ".lib" files)
+
+* add dll to project folder
+
+
+//==================================================================
+// Example: OpenGL + GLEW + FreeGlut
+//==================================================================
+https://www.wikihow.com/Set-Up-an-OpenGL-FreeGLUT-GLEW-Template-Project-in-Visual-Studio-2017
+
+
+//==================================================================
+// Example: OpenGL + GLFW
+//==================================================================
+https://learnopengl.com/Getting-started/Creating-a-window

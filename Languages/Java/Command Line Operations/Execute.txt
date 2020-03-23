@@ -1,0 +1,42 @@
+====================================================================
+Run Jar Files
+====================================================================
+	
+	> java -jar xxx.jar
+
+
+====================================================================
+Input Stream as Main Argument
+====================================================================
+	https://alvinalexander.com/java/edu/pj/pj010005
+	
+	Test.java:
+	
+		import java.util.Scanner;
+		public class Test{
+			public static void main(String[] args){
+				Scanner scanner = new Scanner(System.in);
+				while(scanner.hasNext()){
+					System.out.println(scanner.next());
+				}
+				
+			}
+		}
+		
+		
+	new:
+		
+		A
+		B
+		C
+		
+	
+	> javac Test.java
+	> java Test < new
+	
+	
+	Output:
+		
+		A
+		B
+		C

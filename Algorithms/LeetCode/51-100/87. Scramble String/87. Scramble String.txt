@@ -1,0 +1,179 @@
+====================================================
+Problem 87. Scramble String
+====================================================
+Given a string s1, we may represent it as a binary tree by 
+partitioning it to two non-empty substrings recursively.
+
+Below is one possible representation of s1 = "great":
+
+    great
+   /    \
+  gr    eat
+ / \    /  \
+g   r  e   at
+           / \
+          a   t
+
+To scramble the string, we may choose any non-leaf node and 
+swap its two children.
+
+For example, if we choose the node "gr" and swap its two 
+children, it produces a scrambled string "rgeat".
+
+    rgeat
+   /    \
+  rg    eat
+ / \    /  \
+r   g  e   at
+           / \
+          a   t
+
+We say that "rgeat" is a scrambled string of "great".
+
+Similarly, if we continue to swap the children of nodes 
+"eat" and "at", it produces a scrambled string "rgtae".
+
+    rgtae
+   /    \
+  rg    tae
+ / \    /  \
+r   g  ta  e
+       / \
+      t   a
+
+We say that "rgtae" is a scrambled string of "great".
+
+Given two strings s1 and s2 of the same length, determine 
+if s2 is a scrambled string of s1.
+
+Example 1:
+
+Input: s1 = "great", s2 = "rgeat"
+Output: true
+
+Example 2:
+
+Input: s1 = "abcde", s2 = "caebd"
+Output: false
+
+
+====================================================
+Analysis
+====================================================
+------------------------------------------------------
+[Basic Analysis]
+
+s1 = "great"
+s2 = "rgtea"
+
+2 Spliting Ways:
+
+I. No swap
+         g r | e a t
+(several processing steps....)
+         r g | t a e
+
+II. Swap
+         g r | e a t
+		 e a t | g r
+(several processing steps....)
+         r g t | a e
+
+
+Assume [q] letters are in the left side, [len - q] in the right 
+len: 1 <= len <= 5
+i: s1.substring(i, i + len)
+j: s2.substring(j, j + len)
+
+dp[len][i][j]: whether 2 substrings are "scrambled" to each other
+E.g.:
+dp[1][0][0]: if one scramble case of "g" is "r": false
+dp[2][0][0]: if one scramble case of "gr" is "rg": true
+
+For I. dp[q][i][j] && dp[len - q][i + q][j + q]
+      "gr" vs. "rg"            "eat" vs. "tea"
+
+For II. dp[q][i][j + len - q] && dp[len - q][i + q][j]	//j + len - q: starting element of the right side
+        "gr" vs. "ae"            "eat" vs. "rgt"
+
+
+------------------------------------------------------
+[DP Table]
+DP[][][] table contains all results of sub-problems
+
+
+
+len = 1
+[g:r false, g:g true, g:t false, g:e false, g:a false]
+[r:r true, r:g false, r:t false, r:e false, r:a false]
+[e:r false, e:g false, e:t false, e:e true, e:a false]
+[a:r false, a:g false, a:t false, a:e false, a:a true]
+[t:r false, t:g false, t:t true, t:e false, t:a false]
+
+len = 2
+[gr:rg true, gr:gt false, gr:te false, gr:ea false]
+[re:rg false, re:gt false, re:te false, re:ea false]
+[ea:rg false, ea:gt false, ea:te false, ea:ea true]
+[at:rg false, at:gt false, at:te false, at:ea false]
+
+len = 3
+[gre:rgt false, gre:gte false, gre:tea false]
+[rea:rgt false, rea:gte false, rea:tea false]
+[eat:rgt false, eat:gte false, eat:tea true]
+
+len = 4
+[grea:rgte false, grea:gtea false]
+[reat:rgte false, reat:gtea false]
+
+len = 5
+[great:rgtea true]
+
+
+====================================================
+Java Approach: Dynamic Programming
+2 ms	31.04%
+39.2 MB	26.23%
+====================================================
+public static boolean isScramble(String s1, String s2) {
+	
+	int n = s1.length(), n2 = s2.length();
+	
+	//deal with special cases
+	//case 1: length not equal
+	if(n != n2) return false;
+	//case 2: strings are equal
+	if(s1.equals(s2)) return true;
+	//case 3: decide if letters match
+	int[] letters = new int[26];
+	for (int i = 0; i < s1.length(); i++) {
+		letters[s1.charAt(i) - 'a']++;
+		letters[s2.charAt(i) - 'a']--;
+	}
+	for (int i = 0; i < 26; i++) {
+		if (letters[i] != 0) {
+			return false;
+		}
+	}
+	
+	//dynamic programming
+	boolean[][][] dp = new boolean[n + 1][n][n];
+	
+	for(int len = 1; len <= n; len++) {
+		for(int i = 0; i <= n - len; i++) {
+			for(int j = 0; j <= n - len; j++) {
+				if(len == 1) {
+					dp[len][i][j] = s1.charAt(i) == s2.charAt(j);
+				}else {
+					//split into 2 parts: q and (len - q) 
+					for(int q = 1; q < len; q++) {
+						boolean noSwap = dp[q][i][j] && dp[len - q][i + q][j + q];
+						boolean swap = dp[q][i][j + len - q] && dp[len - q][i + q][j];
+						dp[len][i][j] = noSwap || swap || dp[len][i][j];
+					}
+				}
+			}
+		}
+	}
+	
+	return dp[n][0][0];
+}

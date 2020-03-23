@@ -1,0 +1,24 @@
+//==================================================================
+// C++11 introduced a standardized memory model. What does it mean? 
+// And how is it going to affect C++ programming?
+//==================================================================
+https://stackoverflow.com/questions/6319146/c11-introduced-a-standardized-memory-model-what-does-it-mean-and-how-is
+-it-g
+
+
+//==================================================================
+// What does --> mean?
+//==================================================================
+https://stackoverflow.com/questions/1642028/what-is-the-operator-in-c
+#include <stdio.h>
+int main()
+{
+    int x = 10;
+    while (x --> 0) // x goes to 0
+    {
+        printf("%d ", x);
+    }
+}
+
+// in fact it is:
+	while( (x--) > 0 )

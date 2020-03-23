@@ -1,0 +1,24 @@
+//==================================================================
+// Static and Dynamic Linking
+//==================================================================
+http://cs-fundamentals.com/c-programming/static-and-dynamic-linking-in-c.php
+http://cs-fundamentals.com/tech-interview/c/difference-between-static-and-dynamic-linking.php
+
+
+//==================================================================
+// Extention Names
+//==================================================================
+https://stackoverflow.com/questions/6422478/linking-a-lib-and-def-files
+Static Link Library:
+	- Unix: xxx.a
+	- Windows: xxx.lib
+
+Dyanmic Link Library:
+	- Unix: xxx.so
+	- Windows: xxx.dll
+
+
+//==================================================================
+// Rellocatable Obj Files vs. Executable Obj Files
+//==================================================================
+https://stackoverflow.com/questions/24655839/what-is-the-difference-between-executable-and-relocatable-in-elf-format

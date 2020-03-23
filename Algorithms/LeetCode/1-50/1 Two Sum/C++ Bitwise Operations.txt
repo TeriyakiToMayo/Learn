@@ -1,0 +1,97 @@
+//==================================================================
+// Addition
+//==================================================================
+int add(int x, int y) {
+	while (y != 0) {
+		int carry = (x & y) << 1;
+
+		x = x ^ y;
+
+		y = carry;
+	}
+
+	return x;
+}
+
+//1. cauculate carry
+//2. cauculate x XOR y (noncarry addition)
+//3. go to next loop, add carry and (x XOR y) until carry == 0
+
+------------------------------------------------------
+[Examples]
+1. Binary
+0001 1001 (25)
+0001 0111 (23)
+
+             0001 1001
+            +0001 0111
+            -----------
+Carry:       0010 0010
+x XOR y:    +0000 1110
+            -----------
+Carry:       0000 0100
+x XOR y:    +0010 1100
+            -----------
+Carry:       0000 1000
+x XOR y:    +0010 1000
+            -----------
+Carry:       0001 0000
+x XOR y:    +0010 0000
+            -----------
+Carry:	     0000 0000
+x XOR y:     0011 0000
+
+Result = 0011 0000 (48)
+			 
+
+2. Decimal("XOR" means only adding each digit, not carry)
+
+                653
+               + 76
+               -----
+Carry:          100
+x "XOR" y:     +629
+               -----
+Carry: 		    000
+x "XOR" y:      729
+
+Result = 729
+
+------------------------------------------------------
+[number of loops]
+the largest number of 0 or 1 to the left of 1
+					  1    0				1
+					  
+Ex:
+0000 1001
+0000 0111
+loops = 3
+
+0001 1001
+0001 0111
+loops = 3
+
+//Since result of 0 or 1 is 0, hence they do not carry to higher order
+                  0    1
+				  
+//Since result of 1 or 0 is 1, they carry to the next order, on and forth
+                  0    1
+				  
+  until they meet 0 or 1 
+				  0    1
+				  
+				  
+//==================================================================
+// Negation
+//==================================================================
+int ny = add(~y, 1);
+
+
+//==================================================================
+// Subtraction
+//==================================================================
+int substract(int x, int y) {
+	int ny = add(~y, 1);
+	return add(x, ny);
+}
+

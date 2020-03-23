@@ -1,0 +1,29 @@
+//==================================================================
+// memset
+//==================================================================
+http://www.cplusplus.com/reference/cstring/memset/
+
+Sets the first [num] bytes of the block of memory pointed by ptr 
+to the specified value (interpreted as an unsigned char,
+that is, pick the lowest 1 byte).
+
+memset(void *p, int value, size_t num );
+
+char str[] = "almost every programmer should know memset!";
+memset (str,'-',6);
+puts (str);	
+//output: ------ every programmer should know memset!
+
+//==================================================================
+// value larger than unsigned char
+//==================================================================
+char a[] = "abc";
+memset(a, 1000, 2);	//1000 = 0000 0000  0000 0000  0000 0011  1110 1000
+
+char b[] = "abc";
+memset(b, 232, 2);	//232 =  0000 0000  0000 0000  0000 0000  1110 1000
+
+//we can get the same result
+//since only the lowest 1 byte (1110 1000) is picked
+
+

@@ -1,0 +1,232 @@
+https://www.haroldserrano.com/blog/understanding-opengl-objects
+//==================================================================
+// GLuint
+//==================================================================
+OpenGL cross-platform unsigned int
+
+//==================================================================
+// Types of OpenGL objects
+//==================================================================
+------------------------------------------------------
+[Regular Objects]
+
+    Buffer Objects
+    Renderbuffer Objects
+    Texture Objects
+    Query Objects
+    Sampler Objects
+	
+------------------------------------------------------
+[Container Objects]
+
+    Framebuffer Objects
+    Vertex Array Objects
+    Transform Feedback Objects
+    Program Pipeline Objects
+
+
+//==================================================================
+// OpenGL Object Creation: glGen
+//==================================================================
+glGen
+
+void glGenObjectType(GLsizei n, GLuint *objectIDs);
+	- Procedure: Generates [names(in fact, they are IDs)] for n objects, and store them in objectIDs
+		- n: number of objects
+		- objectIDs: object names are stored here
+
+Ex.:
+GLuint bufferName;
+glGenBuffers(1, &bufferName);
+
+GLuint testID[3];
+glGenVertexArrays(3, testID);
+
+------------------------------------------------------
+[Stack memory corrupted problem]
+https://stackoverflow.com/questions/53982888/how-to-fix-opengl-stack-corruption-when-exiting
+
+
+//==================================================================
+// OpenGL Object Binding: glBind
+//==================================================================
+glBind
+
+void glBindObjectType(GLenum target, GLuint object);
+	- Procedure: bounds object to OpenGL context
+		- target: target specifies the behaviors of objects
+			- GL_ARRAY_BUFFER: Vertex Buffer Object(VBO)
+			- GL_PIXEL_PACK_BUFFER: Pixel Buffer Object(PBO)
+			... ...
+			(https://stackoverflow.com/questions/14802854/what-does-the-gl-array-buffer-target-mean-in-glbindbuffer)
+		- object
+
+
+//==================================================================
+// OpenGL Object Data Storage: glBufferData
+//==================================================================
+glBufferData(GL_ARRAY_BUFFER,sizeof(data), data, GL_STATIC_DRAW);
+	- Procedure: stores vertex data [data] into VBO
+		- VBO is not referred to
+		- usage: 
+			- GL_STATIC_DRAW: uploaded once, drawn many times(world)
+			- GL_DYNAMC_DRAW: uploaded once, changed from time to time, drawn many times
+			- GL_STREAM_DRAW: uploaded once, drawn once
+			(https://open.gl/drawing)
+
+
+//==================================================================
+// OpenGL Object Shader Connection: 1. glVertexAttribPointer
+//==================================================================
+------------------------------------------------------
+[initialization]
+float vertices[] = {
+		-0.5f, 0.5f, 1.0f, 0.0f, 0.0f,
+		0.5f, 0.5f, 0.0f, 1.0f, 0.0f,
+		0.5f, -0.5f, 0.0f, 0.0f, 1.0f,
+		-0.5f, -0.5f, 0.0f, 1.0f, 0.0f
+	};
+
+GLuint vertexbuffer;
+glGenBuffers(1, &vertexbuffer);												//creates VBO
+glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);								//bind VBO to ???
+glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);	//attach data to VBO
+	
+------------------------------------------------------
+[main loop]
+Glint posAttrib = glGetAttribLocation(programID, "position");
+glEnableVertexAttribArray(posAttrib);
+glVertexAttribPointer(posAttrib,3,GL_FLOAT,GL_FALSE,0,0);
+	- Procedure: sends vertex data in "binded VBO"(now it is [vertexbuffer]) to shader
+		- posAttrib: which [Attribute] to assign data to
+			- can obtain by glGetAttribLocation()
+			- can also obtain by 0, since "layout(location = 0)"
+		- VBO format (vertex size):
+			- 2: Position (x, y)
+			- 3: Position (x, y, z)
+			- ?: Normal (n1, n2, n3)
+			- ?: Texture(u, v)
+		- vertex data type: GL_FLOAT
+		- normalized?: GL_FALSE
+		- stride: 
+			- 0: is equal to "vertex size" * sizeof(float)
+			- 5 * sizeof(float): stride is 5 (x, y, z, a, b)
+		- data offset: beginning position of stride
+			- 0: from x to z(since vertex size is 3)
+			- 3: from a
+
+
+------------------------------------------------------
+[vertex shader]
+layout(location = 0) in vec2 vertexPosition_modelspace;
+
+
+//==================================================================
+// OpenGL Object Shader Connection: 2. glGetUniformLocation
+//==================================================================
+------------------------------------------------------
+[main loop]
+GLint uniColor = glGetUniformLocation(programID, "triangleColor");
+glUniform3f(uniColor, 0.0f, value, value);
+	- Procedure: sends color to fragment shader
+		- uniColor Location
+		- target color variable
+
+------------------------------------------------------
+[fragment shader]
+layout(location = 0) in vec2 vertexPosition_modelspace;
+
+
+------------------------------------------------------
+[vertex shader]
+uniform vec3 triangleColor;
+
+
+//==================================================================
+// OpenGL Object Drawing: glDrawArrays & glDrawElements
+//==================================================================
+------------------------------------------------------
+[draw arrays]
+void glDrawArrays(GL_TRIANGLES, 0, 3);
+	- Procedure: draws array
+		- primitive type: GL_TRIANGLES
+		- offset: how many vertices to skip at beginning
+		- number of vertices
+
+
+------------------------------------------------------
+[draw elements]
+GLuint elements[] = {
+		0, 1, 2, 
+		2, 3, 0
+	};
+
+GLuint ebo;
+glGenBuffers(1, &ebo);
+glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
+
+void glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+	- Procedure: reuses vertex data to draw
+		- primitive type: GL_TRIANGLES
+		- number of indices
+		- type of element data: GL_UNSIGNED_INT
+		- offset
+
+------------------------------------------------------
+[about output colors]
+- If not specified, output color is the FIRST DEFINED out variable
+- How to specify?
+	glBindFragDataLocation(ProgramID, 0, "outColor");	
+	//add this line after attaching shaders
+	//if only one output, this line does not work
+
+
+//==================================================================
+// OpenGL Texture: Binding Texture
+//==================================================================
+------------------------------------------------------
+[gglTexImage2D specs]
+https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glTexImage2D.xhtml
+
+void glTexImage2D(GLenum target,
+  	GLint level,			//level-of-detail, 0 == original, n == nth mipmap
+  	GLint internalformat,	//Color component: GL_RGB
+  	GLsizei width,
+  	GLsizei height,
+  	GLint border,			//must be 0
+  	GLenum format,			//pixel data color format: GL_BGR(bmp)
+  	GLenum type,			//pixel data type
+  	const GLvoid * data);	//image data
+
+------------------------------------------------------
+[glTexParameteri specs]
+
+------------------------------------------------------
+[Usage]
+GLuint textureID;
+glGenTextures(1, &textureID);
+glBindTexture(GL_TEXTURE_2D, textureID);
+glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
+
+
+//==================================================================
+// OpenGL Texture: Sending Texture to Shader
+//==================================================================
+glActiveTexture(GL_TEXTURE0);
+glBindTexture(GL_TEXTURE_2D, textureID);	//textureID is id from Binding Texture
+
+GLint uniUV = glGetUniformLocation(programID, "myTextureSampler");
+glUniform1i(uniUV, 0);
+
+
+//==================================================================
+// OpenGL Object Deletion: glDelete
+//==================================================================
+glDelete
+
+void glDeleteObjectType(GLsizei n, const GLuint *objects);
+
+
+
+

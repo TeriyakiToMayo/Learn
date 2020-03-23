@@ -1,0 +1,129 @@
+====================================================
+Problem 60. Permutation Sequence
+====================================================
+The set [1,2,3,...,n] contains a total of n! unique 
+permutations.
+
+By listing and labeling all of the permutations in 
+order, we get the following sequence for n = 3:
+
+    "123"
+    "132"
+    "213"
+    "231"
+    "312"
+    "321"
+
+Given n and k, return the kth permutation sequence.
+
+Note:
+
+    Given n will be between 1 and 9 inclusive.
+    Given k will be between 1 and n! inclusive.
+
+Example 1:
+
+Input: n = 3, k = 3
+Output: "213"
+
+Example 2:
+
+Input: n = 4, k = 9
+Output: "2314"
+
+
+====================================================
+Analysis
+====================================================
+--------------------------------------------------------------
+[Range]
+Total number of permutations: n!
+Since k covers the entire range of n!, and k is int
+therefore:
+	1. n! <= Integer.MAX_VALUE, n <= 12
+	2. factorials is okay to be int[]
+
+--------------------------------------------------------------
+[Kth permutation]
+if k != range * i
+then i = k/range
+        nextK = k%range
+E.g. range = 2, k = 1
+then i = 0, nextK = 1
+
+if k == range * i
+k/range is the next range, hence i = k/range - 1
+nextK will be calculated as 0, hence nextK = range
+
+
+E.g.: Assume n = 3, k = 2
+
+Groups: 3
+Range: 2
+
+123	1	k	=> i = 1/2 = 0 (group0, correct), nextK = 1%2 = 1
+132	2	k   => i = 2/2 = 1 (group1, incorrect), nextK = 2%2 = 0 (incorrect)
+		k	=> i = 2/2 - 1 = 0 (group0, correct), nextK = 2%2 == 0 ? range : 2%2 = 2 (correct)
+213	3
+231	4
+
+312	5
+321	6
+
+
+
+====================================================
+Java Approach: Backtracing
+2 ms	81.66%
+40.4 MB	5.28%
+====================================================
+
+//Note: since n <= 12, hence using a factorial array to 
+//store factorials is unnecessary and time consuming
+static int num = 0;
+static LinkedList<Integer> list;
+static String str;
+	
+public static String getPermutation2(int n, int k) {
+	
+	//initialize nums
+	num = n;
+	//generate factorial array and number list
+	list = new LinkedList<Integer>();
+	for(int i = 1; i <= n; i++) {
+		list.add(i);
+	}
+	//initlize result str
+	str = "";
+	
+	permute2(k);
+	
+	return str;
+}
+
+public static void permute2(int k) {
+	
+	int len = list.size();
+	if(len == 1) {
+		str += list.remove(0);
+		return;
+	}
+	
+	int range = factorial(len - 1);
+	int i = k/range;
+	int nextK = k%range;
+	if(nextK == 0) {
+		i -= 1;
+		nextK = range;
+	}
+	str += list.remove(i);
+	permute(nextK);
+}
+
+private static int factorial(int n){
+	int res = 1;
+	for(int i = n; i > 1; i--){
+		res *= i;
+	}
+	return res;
+}

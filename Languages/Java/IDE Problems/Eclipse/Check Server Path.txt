@@ -1,0 +1,16 @@
+====================================================================
+Server
+====================================================================
+
+	How to check web-app path?
+		
+		SEE "How_to_check_web-app_path.png"
+		Click Servers tab(along with Console tab)
+		- Double click one Server
+		- Select Modules(beside Overview)
+	
+	
+
+
+
+

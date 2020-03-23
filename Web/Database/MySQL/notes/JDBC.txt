@@ -1,0 +1,186 @@
+====================================================
+JDBC Connection
+====================================================
+https://www.codejava.net/java-se/jdbc/connect-to-mysql-database-via-jdbc
+https://www.javatpoint.com/example-to-connect-to-the-mysql-database
+
+1. add  mysql-connector-java-5.1.21-bin.jar 
+
+2. set up connection
+	try{
+		Class.forName("com.mysql.cj.jdbc.Driver");  //"com.mysql.jdbc.Driver" is deprecated
+		Connection con = DriverManager.getConnection(  
+    				"jdbc:mysql://localhost:3306/test?serverTimezone=UTC","admin","admin");  
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+	
+--------------------------------------------------------
+[problems]
+1. Time zone unrecognized:
+https://mkyong.com/jdbc/java-sql-sqlexception-the-server-time-zone-value-xx-time-is-unrecognized/
+
+Append "?serverTimezone=UTC" to url
+
+2. No suitable driver found for jdbc:mysql://localhost:3306/test?serverTimezone=UTC
+
+Add "Class.forName("com.mysql.jdbc.Driver"); " before connection
+					
+
+====================================================
+JDBC Query
+====================================================					
+Connection con=EmpDao.getConnection();  
+
+--------------------------------------------------------
+[Select]
+Get row count:
+	PreparedStatement ps=con.prepareStatement("SELECT COUNT(*) FROM user905");  
+	ResultSet rs=ps.executeQuery();  
+	rs.next();
+	rows = rs.getInt(1);
+
+Get a multiple rows:
+	PreparedStatement ps = con.prepareStatement("select * from user905 where id=?");  
+	ps.setInt(1,id);  
+	ResultSet rs = ps.executeQuery();  
+	if(rs.next()){  					//Must rs.next() before start
+		e.setId(rs.getInt(1));  		//Column starts from 1
+		e.setName(rs.getString(2));  
+		e.setPassword(rs.getString(3));  
+		e.setEmail(rs.getString(4));  
+		e.setCountry(rs.getString(5));  
+	}  
+
+
+
+
+--------------------------------------------------------
+[Insert]
+https://docs.microsoft.com/en-us/sql/connect/jdbc/reference/executeupdate-method-java-lang-string-sqlserverstatement?view=sql-server-ver15
+
+PreparedStatement ps=con.prepareStatement(  
+			 "insert into user905(name,password,email,country) values (?,?,?,?)");  //(name,password,email,country) indicate the column names
+ps.setString(1,e.getName());  
+ps.setString(2,e.getPassword());  
+ps.setString(3,e.getEmail());  
+ps.setString(4,e.getCountry());  
+  
+int status = ps.executeUpdate();  
+//status indicates the number of rows affected
+
+
+--------------------------------------------------------
+[Update]
+PreparedStatement ps = con.prepareStatement(  
+			"update user905 set name=?,password=?,email=?,country=? where id=?");  
+ps.setString(1,e.getName());  
+ps.setString(2,e.getPassword());  
+ps.setString(3,e.getEmail());  
+ps.setString(4,e.getCountry());  
+ps.setInt(5,e.getId());  
+  
+int status = ps.executeUpdate();  
+
+--------------------------------------------------------
+[Delete]
+PreparedStatement ps=con.prepareStatement("delete from user905 where id=?");  
+ps.setInt(1,id);  
+int status = ps.executeUpdate();  
+
+
+====================================================
+Spring JDBC Template: Setting Up
+====================================================
+https://www.javatpoint.com/spring-JdbcTemplate-tutorial
+https://www.javatpoint.com/spring-mvc-crud-example
+
+spring-servlet.xml:
+
+	<bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">    
+	<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>    
+	<property name="url" value="jdbc:mysql://localhost:3306/test"></property>    
+	<property name="username" value=""></property>    
+	<property name="password" value=""></property>    
+	</bean>    
+	  
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
+	<property name="dataSource" ref="ds"></property>  
+	</bean>  
+	
+	
+	
+====================================================
+Spring JDBC Template: Query
+====================================================
+--------------------------------------------------------
+[Query for row set]
+http://www.java2s.com/Code/Java/Spring/QueryForRowset.htm
+
+Object[] parameters = new Object[] { new Integer(1) }; //SQL parameters
+SqlRowSet srs = jt.queryForRowSet("select id, name from employee where id > ?", parameters);
+int rowCount = 0;
+while (srs.next()) {
+  System.out.println(srs.getString("id") + " - " + srs.getString("name"));
+  rowCount++;
+}
+//Useful for general purpose
+
+--------------------------------------------------------
+[Query for object]
+https://mkyong.com/spring/spring-jdbctemplate-querying-examples/
+
+//query for count
+String sql = "SELECT COUNT(*) FROM CUSTOMER";
+jdbcTemplate.queryForObject(sql, Integer.class);
+
+//query for single entry
+String sql="select * from Emp99 where id=?";    
+template.queryForObject(sql, new Object[]{id},new BeanPropertyRowMapper<Emp>(Emp.class));    
+	//returns an Emp obj
+	//expected result size is 1, exceeding this size will cause an exception
+
+	//BeanPropertyRowMapper maps columns and properties automatically
+	//Manually set up a RowMapper:
+	new RowMapper<Emp>()
+	{    
+		public Emp mapRow(ResultSet rs, int row) throws SQLException 
+		{    
+			Emp e=new Emp();    
+			e.setId(rs.getInt(1));    
+			e.setName(rs.getString(2));    
+			e.setSalary(rs.getFloat(3));    
+			return e;    
+		}    
+	}
+
+//query for multiple entries
+String sql="select * from emp99 limit "+ initIndex +","+ total;    
+template.query
+(
+	sql,
+	new RowMapper<Emp>()
+	{    
+		public Emp mapRow(ResultSet rs, int row) throws SQLException 
+		{    
+			Emp e=new Emp();    
+			e.setId(rs.getInt(1));    
+			e.setName(rs.getString(2));    
+			e.setSalary(rs.getFloat(3));    
+			return e;    
+		}    
+	}
+);    
+//in Java 8
+template.query(sql, 
+	(rs, row) -> new Emp(rs.getInt(1), rs.getString(2), rs.getFloat(3)));
+//Or
+template.query(sql, (rs, row) 
+	    		-> {
+	    			Emp e = new Emp();
+	    			e.setId(rs.getInt(1));    
+		            e.setName(rs.getString(2));    
+		            e.setSalary(rs.getFloat(3));    
+		            return e;    
+	    		});
+

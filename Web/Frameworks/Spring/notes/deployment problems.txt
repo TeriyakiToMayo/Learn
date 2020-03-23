@@ -1,0 +1,17 @@
+====================================================
+Update Deployment Settings
+====================================================
+-----------------------------------------------------
+[problem]
+1. java.lang.ClassNotFoundException: org.springframework.web.servlet.DispatcherServlet
+2. folder missing
+
+https://stackoverflow.com/questions/21705851/spring-mvc-suddenly-class-not-found-dispatcherservlet
+solution: 
+	- right click project - Properties - Deployment Assembly
+	- Add... 
+		- Java Build Path Entries - Maven Dependencies
+		- Folder - targetFolder
+	- (Optional) remove project from server - Run As - Run on Server
+		
+		

@@ -1,0 +1,48 @@
+====================================================================
+Compile
+====================================================================
+	
+	(https://blog.csdn.net/kittaaron/article/details/8101391)
+	(https://www.cnblogs.com/studyskill/p/8335833.html)
+	(https://blog.csdn.net/weixin_33976072/article/details/85933357)
+	
+	//Default output: a.out
+	
+	gcc test.cpp -lstdc++			compilie test.cpp 
+									since default linked lib is libc.so
+									we must explicitly indicate the linked lib for c++: libstdc++.so
+	
+	g++ test.cpp					compile test.cpp
+									g++ is the c++ version of gcc
+						
+	//Customized output name
+	
+	gcc test.cpp -lstdc++ -o test	compilie test.cpp 
+	
+	g++ test.cpp -o test			compilie test.cpp
+	
+	
+
+====================================================================
+Run
+====================================================================
+	
+	(https://www.cnblogs.com/studyskill/p/8335833.html)
+	
+	$ ./a.out
+	
+	$ ./test
+	
+
+
+
+====================================================================
+Check Memory Layout
+====================================================================
+
+	(https://www.geeksforgeeks.org/memory-layout-of-c-program/)
+	
+	size memory-layout			display memory layout
+	
+	//Note: bss only
+	

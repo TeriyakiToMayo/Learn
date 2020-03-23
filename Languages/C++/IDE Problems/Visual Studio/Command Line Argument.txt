@@ -1,0 +1,21 @@
+//==================================================================
+// Pass Command Line Arguments
+//==================================================================
+https://www.youtube.com/watch?v=IgbQCRHKV-Y
+https://social.msdn.microsoft.com/Forums/en-US/20865ea1-ff94-41a7-b668-a7f24154f3b4/argc-and-argv-inputs?forum=vcmfcatl
+
+int main(int argc, char* argv[]){}
+
+Project (Right Click) 
+	-> Properties 
+	-> Debugging
+	-> Command Arguments
+	
+Enter 
+	hello world
+	
+Then
+	argc == 3
+	argv[1] == "hello"
+	argv[2] == "world"
+

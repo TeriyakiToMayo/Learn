@@ -1,0 +1,52 @@
+====================================================
+Problem 49. Group Anagrams
+====================================================
+Given an array of strings, group anagrams together.
+
+Example:
+
+Input: ["eat", "tea", "tan", "ate", "nat", "bat"],
+Output:
+[
+  ["ate","eat","tea"],
+  ["nat","tan"],
+  ["bat"]
+]
+
+Note:
+
+    All inputs will be in lowercase.
+    The order of your output does not matter.
+
+
+====================================================
+Java Approach: HashMap
+32ms: 17.99%
+46.3: 5.01%
+====================================================
+public static List<List<String>> groupAnagrams(String[] strs) {
+	
+	Map<List<Character>, List<String>> map 
+		= new HashMap<List<Character>, List<String>>();
+	
+	for(String word : strs) {
+		List<Character> list = divideWord(word);
+		if(!map.containsKey(list)) map.put(list, new LinkedList<String>());	
+		map.get(list).add(word);
+	}
+	
+	List<List<String>> groups = new LinkedList<List<String>>(map.values());
+	
+	return groups;
+}
+
+public static List<Character> divideWord(String word){
+	List<Character> list = new LinkedList<>();
+	
+	for(int i = 0; i < word.length(); i++) {
+		list.add(word.charAt(i));
+	}
+	Collections.sort(list);
+	
+	return list;
+}

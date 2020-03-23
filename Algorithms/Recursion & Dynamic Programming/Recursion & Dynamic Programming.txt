@@ -1,0 +1,137 @@
+====================================================
+Relationship Between Recursion & Dynamic Programming
+====================================================
+https://zhuanlan.zhihu.com/p/75285771
+
+Leetcode Problem 87. Scramble String
+
+1. Direction
+	- Recursion: from top to bottom
+		- E.g.: Split "Great" into different combinations, then do recursions
+	- Dynamic Programming: from bottom to top
+		- E.g.: Calculate each sub-problem, store the results in table, then 
+		        build up to top
+				
+2. Space Utilizing:
+	- Recursion: uses less space, but usually slower because of repeating 
+	             the sub-problem calculations
+	- Dynamic Programming: uses more space to store results of each level of 
+	                       recursion
+						   
+						   
+
+====================================================
+Dynamic Programming Problem Types
+====================================================
+------------------------------------------------------
+[All States Table Prbolems]
+
+Listing all states of a recursion (each table cell corresponds 
+   to a recursion state(sub-problem result)), then calculating:
+	1. the amount of routes to achieve the final state
+		- 1D tables
+			- 70. Climbing Stairs
+			- 91. Decode Ways
+		- 2D tables
+			- 62. 63. Robot route problems
+			- 87. Scramble strings
+				{
+					dp[len][i][j]
+
+					s1 = "great" s2 = "rgeat"
+
+					dp[1][0][0]: if one scramble case of "g" is "r": false
+					dp[2][0][0]: if one scramble case of "gr" is "rg": true
+				}
+				- Each cell represents a recursion state, the goal is to 
+				  find if it is possible to find a way to the final state
+				  (the single cell of the up most 2d table) (if the amount 
+				  of route is not zero)
+	2. the cost of the most efficient route
+		- 72. Edit distance
+			- All the possible generated strings in editing process are stored in the 2d table
+			- Recursion will go through all possible ways to achieve the final state
+			- Dyanmic programming only concerns about the states hence more efficient
+
+
+------------------------------------------------------
+[Counting States Problems]
+
+Counting the states according to specific requirements 
+(each table cell represents multiple recursion states):
+	1. Combinations
+		- 115. Distinct subsequences
+
+
+
+
+====================================================
+Dynamic Programming Table Dimensions
+====================================================
+Determined by the structure of corresponding Backtracing problem
+
+Example 1: 3D-table
+Leetcode Problem 87. Scramble String
+
+	public boolean isScramble(String s1, String s2) {
+		//Some other code
+		
+		//test different lengths of s1 and s2
+		for (int i = 1; i < s1.length(); i++) {
+			if (isScramble(s1.substring(0, i), s2.substring(0, i)) 
+					&& isScramble(s1.substring(i), s2.substring(i))) {
+				return true;
+			}
+			if (isScramble(s1.substring(i), s2.substring(0, s2.length() - i)) &&
+			   isScramble(s1.substring(0, i), s2.substring(s2.length() - i)) ) {
+				return true;
+			}
+		}
+		
+		//Some other code
+	}
+
+For 2 strings, we generates 2d table (each cell for each pair of indices)
+For for loop, add 1 more dimension to the table
+
+
+
+Example 2: 2D-table
+Leetcode Problem 97. Interleaving String
+
+	public static boolean isInterleave(String s1, String s2, String s3) {
+		//Some other code
+		
+		boolean result = false;
+		if(s1.charAt(0) == s3.charAt(0)) result = result || isInterleave(s1.substring(1), s2, s3.substring(1));
+		if(s2.charAt(0) == s3.charAt(0)) result = result || isInterleave(s1, s2.substring(1), s3.substring(1));
+		
+		//Some other code
+	}
+	
+For 2 strings, we generate 2d table
+s3 is the target, hence no dimension needed
+
+
+Example 3: 1D-table
+Leetcode Problem 91. Decode Ways
+
+	public static int numDecodings(String s, int index) {
+		//Some other code
+		
+		int output = 0;
+		output += isLetter0(s, index - 1) ? numDecodings(s.substring(1)) : 0;
+		output += isLetter(s, index - 0) ? numDecodings(s.substring(2)) : 0;
+		
+		//Some other code
+	}
+	
+	//test if the character correspondes to a valid letter (not equal to 0)
+	public static boolean isLetter0(String s, int start) {}
+	
+	//test if the 2 characters correspondes to a valid letter
+	public static boolean isLetter(String s, int start) {}
+	
+	
+Since only 1 string is involved, and no for loop (testing different lenths of substrings)
+1D-table is needed

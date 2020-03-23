@@ -1,0 +1,92 @@
+//==================================================================
+// lvalue & rvalue
+//==================================================================
+https://en.cppreference.com/w/cpp/language/value_category
+
+------------------------------------------------------
+[lvalue & rvalue simple definitions]
+http://thbecker.net/articles/rvalue_references/section_01.html#lrvalues
+lvalue: 
+	- an expression
+	- refers to a memory location
+	- allows memory location access via & 
+	
+rvalue:
+	- anything else
+
+
+------------------------------------------------------
+[increments & decrements]
+++a //lvalue
+a++ //non lvalue
+
+
+//==================================================================
+// rvalue and move semantics
+//==================================================================
+http://thbecker.net/articles/rvalue_references/section_02.html
+------------------------------------------------------
+[lvalue resource allocation in assignment operator]
+X& X::operator=(X const & rhs){
+	//1. Make a clone of rhs.resources
+	//2. Destroy original this.resources
+	//3. Attach the clone to this.resources
+}
+
+------------------------------------------------------
+[rvalue resource allocation in assignment operator]
+X::foo(){}	//foo() definition
+X x;
+x = foo();
+
+//1. Clone resources from temporary returned by foo
+//2. Destroy [x resources] and [foo temporary]
+//3. Attach the clone to x
+
+------------------------------------------------------
+[move semantics]
+X& X::operator=(X const & rhs){
+	//make a copy of rhs.resources
+}
+
+X& X::operator=(X const && rhs){
+	//swap this.resources and rhs.resources
+}
+
+
+//==================================================================
+// lvalue reference & rvalue reference
+//==================================================================
+http://thbecker.net/articles/rvalue_references/section_03.html
+lvalue reference:
+	X&
+	
+rvalue reference:
+	X&&
+
+------------------------------------------------------
+[lvalue reference and variable]
+"Data Structures And Algorithm Analysis Cpp" p24
+auto & whichList = theLists[myhash(x, theLists.size())];	//assigns reference to whichList
+auto whichList = theLists[myhash(x, theLists.size())];		//makes a copy and assigns it to whichList
+
+------------------------------------------------------
+[function arguments differences]
+void foo(X const &);	//takes both l-value and r-value
+
+void foo(X&);			//takes only l-value
+
+void foo(X&&);			//takes only r-value
+
+
+//==================================================================
+// consecutive assignments
+//==================================================================
+x = y = y++;
+
+1. all expressions(x and y) on the left of the last '=' are lvalues(variables or others)
+2. calculating process:
+	-* calculate all pre increments/decrements, use results in following steps
+	-  calculate the right most expression
+	-  assign the same result to all lvalues on the left(x and y)
+	-* calculate all post increments/decrements

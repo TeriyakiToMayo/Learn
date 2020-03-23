@@ -1,0 +1,74 @@
+====================================================
+Problem
+====================================================
+Given an array nums of n integers and an integer 
+target, are there elements a, b, c, and d in nums 
+such that a + b + c + d = target? Find all unique 
+quadruplets in the array which gives the sum of 
+target.
+
+Note:
+
+The solution set must not contain duplicate 
+quadruplets.
+
+Example:
+
+Given array nums = [1, 0, -1, 0, -2, 2], and target 
+= 0.
+
+A solution set is:
+[
+  [-1,  0, 0, 1],
+  [-2, -1, 1, 2],
+  [-2,  0, 0, 2]
+]
+
+
+====================================================
+Java Approach: Standard
+====================================================
+public static List<List<Integer>> fourSum3(int[] nums, int target) {
+	Arrays.sort(nums);
+	
+	List<List<Integer>> list = new LinkedList<List<Integer>>();
+	
+	for(int i = 0; i < nums.length - 3; i++) {							//Iteration for i
+		if(i > 0 && nums[i - 1] == nums[i])continue;
+		
+		 if(nums[i]*4>target) break;// Too Big!!
+		 if(nums[i]+3*nums[nums.length-1]<target) continue;//Too Small
+		
+		for(int j = i + 1; j < nums.length - 2; j++) {					//Iteration for j
+			if(j > i + 1 && nums[j - 1] == nums[j])continue;
+			
+			 if(nums[j]*3>target-nums[i]) break;//Too Big
+			 if(nums[j]+2*nums[nums.length-1]<target-nums[i]) continue;// Too Small
+			
+			int lo = j + 1, hi = nums.length - 1;
+			while(lo < hi) {
+				int sum = nums[i] + nums[j] + nums[lo] + nums[hi];
+				if(sum == target) {
+					list.add(Arrays.asList(nums[i],  nums[j], nums[lo], nums[hi]));
+					
+					hi--;
+					while(lo < hi && nums[hi] == nums[hi + 1]) hi--;
+					lo++;
+					while(lo < hi && nums[lo - 1] == nums[lo]) lo++;
+				}else if(sum > target) {
+					hi--;
+					while(lo < hi && nums[hi] == nums[hi + 1]) hi--;
+				}else {
+					lo++;
+					while(lo < hi && nums[lo - 1] == nums[lo]) lo++;
+				}
+			}
+			
+		}
+	}
+	
+	return list;
+}
+
+
+Almost the same as 3Sum, simply see j as another i, then do lo and hi narrowing

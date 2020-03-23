@@ -1,0 +1,15 @@
+====================================================
+Multiple objects (different types) as return
+====================================================
+https://stackoverflow.com/questions/2558290/how-do-i-return-an-array-of-objects-in-java
+https://www.techiedelight.com/return-multiple-values-method-java/
+
+public List<Object> getListOfObjects() {
+   
+   // do some work
+   
+   Object[] objs = new Object[] {min, setMin};
+   List<Object> arrayList = new ArrayList<Object>(Arrays.asList(objs));
+   return arrayList;
+}
+

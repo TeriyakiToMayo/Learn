@@ -1,0 +1,80 @@
+====================================================
+Problem 79. Word Search
+====================================================
+Given a 2D board and a word, find if the word exists in the 
+grid.
+
+The word can be constructed from letters of sequentially 
+adjacent cell, where "adjacent" cells are those 
+horizontally or vertically neighboring. The same letter 
+cell may not be used more than once.
+
+Example:
+
+board =
+[
+  ['A','B','C','E'],
+  ['S','F','C','S'],
+  ['A','D','E','E']
+]
+
+Given word = "ABCCED", return true.
+Given word = "SEE", return true.
+Given word = "ABCB", return false.
+
+
+
+
+====================================================
+Java Approach: Backtracing
+5 ms	96.78%
+42.9 MB	16.25%
+====================================================
+Note 1: using [Xes] and [Yes] to avoid four different cases
+Note 2: use [start] to avoid using substring()
+
+
+public static int[] Xes = {0, 1, 0, -1};
+public static int[] Yes = {-1, 0, 1, 0};
+public static char[][] Board;
+public static String Word;
+public static int row = 0, col = 0;
+
+public static boolean exist(char[][] board, String word) {
+	if(board.length == 0 || board[0].length == 0 || word.length() == 0) return false;
+	
+	Board = board;
+	Word = word;
+	row = board.length;
+	col = board[0].length;
+	
+	char c = word.charAt(0);
+	for(int i = 0; i < row; i++) {
+		for(int j = 0; j < col; j++) {
+			if(Board[i][j] == c) {
+				Board[i][j] = '0';
+				if(helper(j, i, 1)) return true;
+				Board[i][j] = c;
+			}
+		}
+	}
+	return false;
+}
+
+public static boolean helper(int x, int y, int start) {
+	if(start == Word.length()) return true;
+	
+	char c = Word.charAt(start);
+	for(int i = 0; i < 4; i++) {
+		int nextX = Xes[i] + x;
+		int nextY = Yes[i] + y;
+		
+		if(nextX < 0 || nextX >= col || nextY < 0 || nextY >= row) continue;
+		if(Board[nextY][nextX] == c) {
+			Board[nextY][nextX] = '0';
+			if(helper(nextX, nextY, start +1)) return true;
+			Board[nextY][nextX] = c;
+		}
+	}
+	return false;
+}

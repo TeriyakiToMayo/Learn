@@ -1,0 +1,114 @@
+http://www.cplusplus.com/reference/cstdio/
+https://www.programiz.com/cpp-programming/library-function/cstdio/fopen
+
+//==================================================================
+// File Access: 1. fopen()
+//==================================================================
+http://www.equestionanswers.com/c/file-append-mode.php
+
+#include <stdio.h>
+
+------------------------------------------------------
+[Prototypes]
+
+FILE *fopen(const char *path, const char *mode);
+FILE *fdopen(int fd, const char *mode);
+FILE *freopen(const char *path, const char *mode, FILE *stream);
+
+FILE *fp = fopen(<path>, "a");
+FILE *fp = fopen(<path>, "a+");
+
+------------------------------------------------------
+[Mode Argument]
+Mode	Interpretation			Position			If file doesn't exist
+"r" 	read mode 				Start				Error
+"w" 	write mode 				Erase all			Create new file
+"a"		append mode 			End					Create new file
+"r+"	read and write mode 	Start				Error
+"w+" 	read and write mode 	Erase all 			Create new file
+"a+" 	read and write mode 	End 				Create new file
+
+
+https://stackoverflow.com/questions/2174889/whats-the-differences-between-r-and-rb-in-fopen
+"rb": non-text file
+
+------------------------------------------------------
+[Mode]
+
+Mode		Read			Write
+
+read		Yes				No effect
+	
+write		No effect		Yes
+
+append		No effect		Yes				
+
+read&write	Yes				Yes		
+
+
+//==================================================================
+// File Access: 2. fclose()
+//==================================================================
+fclose(fp);
+
+
+//==================================================================
+// Reading&Writing: 1. File Stream: putc() getc()
+//==================================================================
+char str[] = "abc";
+putc(str[i],fp);
+
+while ((c = getc(fp)) != EOF){}
+
+
+//==================================================================
+// Reading&Writing: 2. File Stream: Chunk Reading/Writing fread() fwrite()
+//==================================================================
+http://www.cplusplus.com/reference/cstdio/fread/
+
+fread(void *ptr, size_t size, size_t count, FILE *fp);
+	- ptr: buffer
+	- size: (in byte) size of each element
+	- count: number of elements
+	- fp: input file
+
+
+//==================================================================
+// Reading&Writing: 3. Console Stream: putchar() getchar()
+//==================================================================
+
+char c;
+c = getchar();
+putchar(c);
+
+------------------------------------------------------
+[Ending Characters]
+EOF		== -1	//file ending
+'\0' 	== 0	//string literal("abc") ending
+'\n'	== 10	//enter, console input ending
+
+------------------------------------------------------
+[How getchar() works?]
+						_ _ _ _ ____
+console input stream:	A B C D '\n'
+
+if:	
+	(there is nothing in input stream): start console input mode(ends with enter)
+	(there is something in input stream): consume it
+
+
+//==================================================================
+// File Poisitioning
+//==================================================================
+http://www.cplusplus.com/reference/cstdio/
+
+fgetpos(FILE * fp, fpos_t & pos);
+	- returns fp position to pos, starts from 0
+fsetpos(FILE * fp, fpos_t & pos);
+	- sets fp position to pos
+	- how to set pos?
+		fpos_t pos = 0;
+
+rewind(FILE * fp);
+	- set fp position to 0
+

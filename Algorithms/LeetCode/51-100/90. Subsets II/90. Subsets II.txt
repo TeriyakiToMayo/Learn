@@ -1,0 +1,64 @@
+====================================================
+Problem 90. Subsets II
+====================================================
+Given a collection of integers that might contain 
+duplicates, nums, return all possible subsets (the power 
+set).
+
+Note: The solution set must not contain duplicate subsets.
+
+Example:
+
+Input: [1,2,2]
+Output:
+[
+  [2],
+  [1],
+  [1,2,2],
+  [2,2],
+  [1,2],
+  []
+]
+
+
+====================================================
+Analysis
+====================================================
+SEE "1.png"
+
+
+
+====================================================
+Java Approach: Backtracing
+1 ms	100.00%
+39.5 MB	5.03%
+====================================================
+static ArrayList<Integer> tmpList;
+static List<List<Integer>> output;
+
+public static List<List<Integer>> subsetsWithDup(int[] nums) {
+	//Must sort
+	//Assume {3, 1, 3}
+	//Sorted result: [[], [1], [1, 3], [1, 3, 3], [3], [3, 3]]
+	//Not sorted result: [[], [3], [3, 1], [3, 1, 3], [3, 3], [1], [1, 3]]
+	//[1, 3] and [3, 1] are actually the same subset
+	Arrays.sort(nums);
+	output = new ArrayList<>();
+	tmpList = new ArrayList<>();
+	findCombinations(0, nums);
+	
+	return output;
+}
+
+private static void findCombinations(int index, int[] nums) {
+	output.add(new ArrayList<>(tmpList));
+
+	for (int i = index; i < nums.length; i++) {
+		if(i > index && nums[i - 1] == nums[i]) continue;
+		
+		tmpList.add(nums[i]);
+		findCombinations(i + 1, nums);
+		tmpList.remove(tmpList.size() - 1);
+	}
+}
+

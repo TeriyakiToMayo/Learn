@@ -1,0 +1,99 @@
+====================================================
+Problem 72. Edit Distance
+====================================================
+Given two words word1 and word2, find the minimum number of 
+operations required to convert word1 to word2.
+
+You have the following 3 operations permitted on a word:
+
+    Insert a character
+    Delete a character
+    Replace a character
+
+Example 1:
+
+Input: word1 = "horse", word2 = "ros"
+Output: 3
+Explanation: 
+horse -> rorse (replace 'h' with 'r')
+rorse -> rose (remove 'r')
+rose -> ros (remove 'e')
+
+Example 2:
+
+Input: word1 = "intention", word2 = "execution"
+Output: 5
+Explanation: 
+intention -> inention (remove 't')
+inention -> enention (replace 'i' with 'e')
+enention -> exention (replace 'n' with 'x')
+exention -> exection (replace 'n' with 'c')
+exection -> execution (insert 'u')
+
+
+
+
+====================================================
+Analysis
+====================================================
+
+		""		a		p		p		l		e
+
+""		rad		arad	aprad	apprad	applrad	applerad
+		|		 |		  |		   |		|		 |
+		0		1		2		3		4		5
+		
+r		ad		aad		apad	appad	applad	applead
+		|		 |		  |		   |		|		 |
+		1		1		2		3		4		5
+		
+a		d		ad		apd		appd	appld	appled
+		|		 |		  |		   |		|		 |
+		2		1		2		3		4		5
+
+d		""		a		ap		app		appl	apple
+		3		2		2		3		4		5
+
+
+The worst case: max(m, n)
+E.g.: Assume a = "rad", b = "apple" 
+	  replace "rad" with "apple" character by character
+	  
+	  Assume a = "apple", b = "rad"
+	  replace "app" with "rad", then remove "le"
+
+
+Operations:
+Down: remove character at i, and move i to next
+Right: add character at j to the left pos of i, and move j to next
+Down Right: skip character at i or replace it with character at j, move both i and j to next
+
+
+====================================================
+Java Approach: Dynamic Programming
+6 ms	91.86%
+42 MB	5.05%
+====================================================
+public static int minDistance2(String word1, String word2) {
+	int len1 = word1.length(), len2 = word2.length();
+	
+	int[][] map = new int[len1 + 1][len2 + 1];
+	
+	for(int i = 1; i <= len1; i++) {
+		map[i][0] = i;
+	}
+	
+	for(int i = 1; i <= len2; i++) {
+		map[0][i] = i;
+	}
+	
+	for(int i = 1; i <= len1; i++) {
+		for(int j = 1; j <= len2; j++) {
+			if(word1.charAt(i - 1) == word2.charAt(j - 1)) map[i][j] = map[i - 1][j - 1];
+			else map[i][j] = 1 + Math.min(map[i - 1][j], Math.min(map[i - 1][j - 1], map[i][j - 1]));
+		}
+	}
+	
+	return map[len1][len2];
+}
+

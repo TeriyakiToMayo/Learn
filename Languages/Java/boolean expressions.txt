@@ -1,0 +1,12 @@
+//==================================================================
+// Short circuit 
+//==================================================================
+https://cs-fundamentals.com/java-programming/java-logical-operators.php
+
+//If 1st expression false, then 2nd not evaluate:
+if(str == null || str.length() == 0)return 0;
+
+A && B	logical AND				short circuit
+A || B	logical OR				short circuit
+A & B	boolean logical AND		not short circuit
+A | B	boolean logical OR		not short circuit

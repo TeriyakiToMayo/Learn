@@ -1,0 +1,29 @@
+https://www.geeksforgeeks.org/understanding-volatile-qualifier-c-set-1-introduction/
+https://www.geeksforgeeks.org/understanding-volatile-qualifier-in-c/
+//==================================================================
+// Problem with compiler optimization
+//==================================================================
+uint32 status = 0;	//status is IO flag, turned on/off by IO devices
+while(status == 0)
+{
+	//do something
+}
+
+//Compiler will optimize this as:
+
+while(1)
+{
+	//do something
+}
+
+// turnning off optimization is not necessary:
+	- only 1 variable not needs optimization
+	- turnning off optimization causes low level program increases 
+	  (size, execution time)
+	  
+	  
+//==================================================================
+// How volatile works
+//==================================================================
+volatile unit 32 status = 0;	//status wont be removed because of optimization
+

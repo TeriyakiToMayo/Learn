@@ -1,0 +1,22 @@
+
+//==================================================================
+// i++ atomic problem
+//==================================================================
+
+https://blog.csdn.net/lx_Frolf/article/details/82254722
+
+i++:
+1. read value from memory and save it to register
+2. i + 1 in register
+3. write value to memory
+
+if A thread and B thread read i at the same time:
+
+assume i = 3
+1. A reads 3
+2. B reads 3
+3. 3 + 1 in A register
+4. 3 + 1 in B register
+5. A saves 4 to memory
+6. B saves 4 to memory
+result: i = 4 (correct: 5)

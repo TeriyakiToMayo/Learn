@@ -1,0 +1,67 @@
+====================================================
+Problem 22: Generate Parentheses
+====================================================
+ Given n pairs of parentheses, write a function to 
+generate all combinations of well-formed 
+parentheses.
+
+For example, given n = 3, a solution set is:
+
+[
+  "((()))",
+  "(()())",
+  "(())()",
+  "()(())",
+  "()()()"
+]
+
+
+====================================================
+Analysis
+====================================================
+n = 1
+[
+	"()"
+]
+
+n = 2
+[
+	"(())"
+	"()()"
+]
+
+
+====================================================
+Java Approach: Back Tracking
+====================================================
+public static List<String> generateParenthesis2(int n) {
+	List<String> ans = new LinkedList<>();
+	backtrack(ans, "", 0, 0, n, 0);
+	return ans;
+}
+
+//open: number of "("
+//close: number of ")"
+//max: max pairs of parentheses
+public static void backtrack(List<String> ans, String cur, int open, int close, int max, int indent){
+//	String output = "cur = \"" + cur + "\" open = " + open + " close = " + close + " max = " + max;
+// 	printWithIndent(indent, output);
+	
+	//When we have enough pairs of parentheses, return
+	if (cur.length() == max * 2) {
+		ans.add(cur);
+		return;
+	}
+	
+	//For each invoke, we have 2 options: +"(" and +")"
+	//If there are fewer open than max, we can +"("
+	if (open < max)
+		backtrack(ans, cur+"(", open+1, close, max, indent + 1);
+	
+	//If there are fewer close than open, then we close one of them by +")"
+	//open - close == current open parentheses
+	//e.g.: cur = "(()(" open = 3 close = 1 max = 3
+	//       open - close = 2, we have 2 open parentheses
+	if (close < open)
+		backtrack(ans, cur+")", open, close+1, max, indent + 1);
+}

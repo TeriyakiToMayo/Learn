@@ -1,0 +1,280 @@
+
+
+
+//==================================================================
+// function template
+//==================================================================
+http://www.cplusplus.com/doc/tutorial/functions2/
+----------------------------------------------------------------------
+[class typename]
+template <class T, typename U>
+bool are_equal (T a, U b)
+{
+  return (a==b);
+}
+
+are_equal<int,double>(10,10.0);		
+are_equal(10,10.0);
+//same as above line.
+//integer literal => int
+//float-point literal => double
+
+----------------------------------------------------------------------
+[type var]
+template <class T, int N>
+T fixed_multiply (T val)
+{
+  return val * N;
+}
+//N works similar as function parameter
+
+fixed_multiply<int, 10>(5);
+//N determined at compile time => must constant expression
+
+----------------------------------------------------------------------
+[Instantiation & Specilization] P428-430
+//non template function prototype
+void Swap(job &j1, job &j2);
+
+//explicit specilization
+template <> void Swap<job>(job &j1, job &j2);
+template <> void Swap(job &j1, job &j2);
+
+//explicit template prototype instantiation
+template void Swap<job>(job &j1, job &j2);
+template void Swap(job &j1, job &j2);
+
+//template prototype
+template<class T>
+void Swap(T &j1, T &j2);
+
+Overriding:
+	non_temp > exp_spec > temp
+	
+Instantiation & Specialization difference:
+	1. Declaration: no need to add function headers to the top, since we have template prototype
+		- Instantiation: template <>
+		- Specialization: template
+	2. Definition:
+		- Instantiation: definition comes from template
+		- Specialization: definition explicitly defined
+	3. They cannot exist at the same time in the same file
+		- If this instance is used, an compiling error appears
+		- If not used, no errors
+
+
+//==================================================================
+// function declaration
+//==================================================================
+int sum(int a, int b);
+int sum(int, int);
+
+
+//==================================================================
+// inline function 
+//==================================================================
+https://stackoverflow.com/questions/190232/can-a-recursive-function-be-inline
+https://stackoverflow.com/questions/5150465/what-will-happen-if-the-recursive-function-is-defined-as-inline
+
+----------------------------------------------------------------------
+[What are inline functions]
+functions:
+1. whose complete body get inserted at every places in the program 
+2. where the function is called
+3. before compilation by compiler
+
+----------------------------------------------------------------------
+[Properties]
+1. Inline functions with same header can be defined in different files
+2. The one which is first called will override all other ones with the same header
+
+----------------------------------------------------------------------
+[Recursive inline functions]
+- inline functions can be recursive
+- different compilers have different recursive limits
+	- 0 = ignores inline
+	- 1 = recurses once
+	....
+	- n = recurses n times
+
+
+//==================================================================
+// function return type
+//==================================================================
+Omiting return type == int (see p31)  //not recommended
+
+
+//==================================================================
+// function argument
+//==================================================================
+----------------------------------------------------------------------
+[void & empty argument]
+https://stackoverflow.com/questions/51032/is-there-a-difference-between-foovoid-and-foo-in-c-or-c
+In C:
+
+    void foo() means "a function foo taking an unspecified number of arguments of unspecified type"
+    void foo(void) means "a function foo taking no arguments"
+
+In C++:
+
+    void foo() means "a function foo taking no arguments"
+    void foo(void) means "a function foo taking no arguments"
+	
+----------------------------------------------------------------------
+[Argument passed by value & by pointer & by reference]
+http://www.cplusplus.com/doc/tutorial/functions/
+int add(int a, int b);					//passing variable, copy all
+int add(int *a, int *b);				//passing pointer, copy all
+int add(int& a, int& b);				//passing reference, no copy, just referencing
+int add(const int& a, const int& b);	//passing reference, no copy, referencing, changing value not allowed
+
+//fundamental types: copy
+//compound types: reference
+
+----------------------------------------------------------------------
+[Types of argument passing strategies and their usages]
+"Data Structures And Algorithm Analysis Cpp" p27
+1. We need to change argument value:
+		Call-by-reference
+2. We dont nee to change argument value:
+	1. primitive type:
+			Call-by-value
+	2. class type:
+			Call-by-constant-reference
+
+----------------------------------------------------------------------
+[Variable number of arguments]
+https://stackoverflow.com/questions/1657883/variable-number-of-arguments-in-c
+#include <stdarg.h>
+int maxof(int n_args, ...)
+{
+	va_list ap;
+	va_start(ap, n_args);
+
+	int max = va_arg(ap, int);
+	for (int i = 2; i <= n_args; i++) {
+		int a = va_arg(ap, int);
+		if (a > max) max = a;
+	}
+
+	va_end(ap);
+	return max;
+}
+
+//More info see "C++ Standard Library - C Library - cstdarg"
+
+
+//==================================================================
+// function scope test
+//==================================================================
+----------------------------------------------------------------------
+[Source code]
+void test_ref(int *&pr);
+
+int main(){
+	int z = 10;
+	int *p = &z;
+	int *&pr = p;
+	cout << "before" << endl;
+	cout << *p << " *p" << endl;
+	cout << *pr << " *pr" << endl;
+	cout << p << " p" << endl;
+	cout << pr << " pr" << endl;
+
+	test_ref(pr);
+
+	cout << endl << "after" << endl;
+	cout << *p << " *p" << endl;
+	cout << *pr << " *pr" << endl;
+	cout << p << " p" << endl;
+	cout << pr << " pr" << endl;
+}
+
+
+void test_ref(int *&pr) {
+	int x = 5;
+	pr = &x;
+
+	cout << endl << "function running" << endl;
+	cout << *(&x) << " *(&x)" << endl;
+	cout << *pr << " *pr" << endl;
+	cout << &x << " &x" << endl;
+	cout << pr << " pr" << endl;
+	cout << "function finishing" << endl;
+}
+
+----------------------------------------------------------------------
+[Output]
+
+	before
+	10 *p
+	10 *pr
+	00FFFAD0 p
+	00FFFAD0 pr
+
+	function running
+	5 *(&x)
+	5 *pr
+	00FFF9D0 &x
+	00FFF9D0 pr
+	function finishing
+
+	after
+	1659485152 *p
+	1659485152 *pr
+	00FFF9D0 p
+	00FFF9D0 pr
+	
+----------------------------------------------------------------------
+[Explaination]
+
+before:
+p: pointer to z
+pr: reference to p
+
+function:
+x: created on stack address xxx
+pr: points to x (p points to x)
+x: released
+
+after:
+p: points to address xxx, but not x because it has been released
+pr: same as p
+
+
+----------------------------------------------------------------------
+[Solution]
+int x = 5; => int *x = new int(10);
+
+
+//==================================================================
+// const function
+//==================================================================
+https://stackoverflow.com/questions/10368294/const-at-the-end-of-function-declaration-in-c
+https://stackoverflow.com/questions/3141087/what-is-meant-with-const-at-end-of-function-declaration
+const function:
+	- cannot change any of the instance's data
+	
+----------------------------------------------------------------------
+[Usage]
+struct Foo {
+  void bar() const {}
+  void boo() {}
+};
+
+Foo f0;
+f0.bar(); // OK
+fo.boo(); // OK
+
+const Foo f1;
+f1.bar(); // OK
+f1.boo(); // Error!
+
+//non-const variable: can use both
+//const variable: can only use const funcions
+
+
+//==================================================================
+// function return
+//==================================================================
+Omitting return == return 0; //only works for main

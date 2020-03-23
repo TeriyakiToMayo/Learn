@@ -1,0 +1,6 @@
+Window - Preferences - Apearance:
+	Theme: Dark
+	
+Window - Preferences - Apearance - Colors and Fonts
+	Debug - Console font: Comic Sans MS, Regular, 14
+	Java - Java Editor Text Font: Comic Sans MS, Regular 14

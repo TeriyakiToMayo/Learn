@@ -1,0 +1,10 @@
+//==================================================================
+// Types of anti-aliasing techniques
+//==================================================================
+Supersampling: a method used to remove aliasing(jagged and pixelated edges)
+	- Full-scene anti-aliasing(FSAA): 
+		- rendering a scene at a higher resolution
+	- Multisampling anti-aliasing(MSAA):
+		- a specific optimization of supersampling
+		
+	

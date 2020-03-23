@@ -1,0 +1,24 @@
+//==================================================================
+// What is CMake
+//==================================================================
+https://stackoverflow.com/questions/26007566/how-is-cmake-used
+
+- Manages dependencies, build orders
+- Generate specific projects for IDEs 
+	- Microsoft Visual Studio solution
+	- Eclipse project
+	
+	
+//==================================================================
+// Problems with CMake
+//==================================================================
+------------------------------------------------------
+["The command setlocal..." Error]
+https://forums.ogre3d.org/viewtopic.php?t=70347
+https://stackoverflow.com/questions/50434096/cgal-building-install-sln-error-msb3073-the-command-setlocal
+
+1. In CMake configurations, set CMAKE_INSTALL_PREFIX to 
+   somewhere other than C:\program files
+
+2. Run Visual Studio as administrator
+

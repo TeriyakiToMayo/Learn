@@ -1,0 +1,9 @@
+//==================================================================
+// Framebuffer related hints
+//==================================================================
+https://www.glfw.org/docs/latest/window_guide.html
+GLFW_SAMPLES:
+	- Meaning: Specifies the desired number of samples to use for multisampling. 
+	- Value:
+		- 0 disables multisampling. 
+		- GLFW_DONT_CARE means the application has no preference.

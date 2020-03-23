@@ -1,0 +1,131 @@
+====================================================
+Problem 30 Substring with Concatenation of All Words
+====================================================
+You are given a string, s, and a list of words, 
+words, that are all of the same length. Find all 
+starting indices of substring(s) in s that is a 
+concatenation of each word in words exactly once 
+and without any intervening characters.
+
+ 
+
+Example 1:
+
+Input:
+  s = "barfoothefoobarman",
+  words = ["foo","bar"]
+Output: [0,9]
+Explanation: Substrings starting at index 0 and 9 
+are "barfoo" and "foobar" respectively.
+The output order does not matter, returning [9,0] 
+is fine too.
+
+Example 2:
+
+Input:
+  s = "wordgoodgoodgoodbestword",
+  words = ["word","good","best","word"]
+Output: []
+
+
+====================================================
+Analysis
+====================================================
+
+--------------------------------------------------------------
+[How to implement a pocket set?]
+Pocket set means items inside needed to be taken out one by one for counting.
+
+
+Given a HashMap<Object, Integer> map
+	- Object: the obj we store in set
+	- Integer: obj count
+	
+
+Case 1: take out objects from set
+	- Appraoch: modify count in map
+
+	obj1: 1
+	obj2: 2
+	obj3: 5
+
+	=> (take out 1 obj1)
+
+	obj1: 0
+	obj2: 2
+	obj3: 5
+
+
+Case 2: compare SetA and SetB
+	- Approach-1: make a copy of SetA, then check count
+		- Efficiency: since it needs a copy of SetA, it needs larger space
+	- Approach0: take out all from setB, then check one by one
+		- Effeciency: since it has at least 2 passes (Step1 and Step2), it is slow
+	
+	Step1: create SetB
+	
+	Step2: compare SetA and SetB
+	
+	SetA			SetB
+	obj1: 1			obj1: 1		//obj1: match
+	obj2: 2						//obj2: no match
+	obj3: 5			obj3: 3		//obj3: count not match
+					obj4: 8		//obj4: no match
+	
+	
+	- Approach1: record and check objects while taking them out
+		- Total steps: amount of objects in SetA, in this case, 8
+
+	Step 1: put first target obj into SetB
+	
+	SetA			SetB
+	obj1: 1			
+	obj2: 2
+	obj3: 5			obj3: 1		//now SetB is valid, go to next step
+	
+	Step 2:
+	
+	SetA			SetB
+	obj1: 1			
+	obj2: 2			obj2: 1		//valid
+	obj3: 5			obj3: 1		
+	
+	Step 3:
+	
+	SetA			SetB
+	obj1: 1			obj1: 1		//valid
+	obj2: 2			obj2: 1		
+	obj3: 5			obj3: 1		
+	
+		Step 3A (invalid):
+		
+		SetA			SetB
+		obj1: 1			obj1: 1
+		obj2: 2			obj2: 1		
+		obj3: 5			obj3: 1		
+						obj4: 1		//since SetA does not contain obj4, invalid
+
+		Step 3B (invalid):
+		
+		SetA			SetB
+		obj1: 1			obj1: 2		//since SetA contains only 1 obj1, invalid
+		obj2: 2			obj2: 1		
+		obj3: 5			obj3: 1		
+		
+	Step 3:
+	
+	SetA			SetB
+	obj1: 1			obj1: 1
+	obj2: 2			obj2: 1		
+	obj3: 5			obj3: 2			//valid
+	
+	......
+	
+	Step 8:
+	
+	SetA			SetB
+	obj1: 1			obj1: 1
+	obj2: 2			obj2: 2		
+	obj3: 5			obj3: 5			//valid
+	
+	Hence SetA and SetB match each other

@@ -1,0 +1,328 @@
+//==================================================================
+// Related Headers
+//==================================================================
+#include <stdio.h>
+	printf
+
+
+using namespace std;
+	iostream
+	string
+	sstream
+
+//includes <string> <stdio.h> std
+#include <iostream>
+	cin <<
+	cout <<
+
+#include <string> std
+	to_string()
+	substr()
+	stoi()...
+
+//includes <string> <stdio.h> std
+#include <sstream>
+	<string>
+	<stdio.h>
+	stringstream
+
+//using members must include corresponding library(some libs include other libs, so including might be redundant)
+//std::string ...
+//using namespace allows you to directly use it
+//string ...
+
+
+//==================================================================
+// String to Others: 1. stoi/atoi
+//==================================================================
+
+------------------------------------------------------
+[string to numbers]
+(https://stackoverflow.com/questions/37838417/what-do-atoi-atol-and-stoi-stand-for)
+
+#include <string>	//for stoi
+
+std::stoi(str_int)
+std::stol(str_long)
+std::stoll(str_long_long)
+std::stoul(str_usigned_long)
+std::stoull(str_unsigned_long_long)
+std::stof(str_float)
+std::stod(str_double)
+std::stold(str_long_double)
+
+
+#include <stdlib.h>	//for atoi
+
+atoi
+
+------------------------------------------------------
+[Difference between stoi & atoi]
+https://stackoverflow.com/questions/20583945/what-is-the-difference-between-stdatoi-and-stdstoi
+
+std::atoi returns an error
+std::stoi returns an exception
+
+------------------------------------------------------
+[Problems with stoi/atoi]
+1. Conversion Errors:
+	- Causing runtime errors:
+		- String not start with valid number: "a" 
+		- Out of range input: stoi("10000000000")
+		- "0" => 0
+	- Runs well but result wrong:
+		- "123xh" => 123
+2. Must assume input is base 10
+
+
+//==================================================================
+// String to Others: 2. strtol & its family
+//==================================================================
+https://stackoverflow.com/questions/194465/how-to-parse-a-string-to-an-int-in-c
+https://stackoverflow.com/questions/1640720/how-do-i-tell-if-the-c-function-atoi-failed-or-if-it-was-a-string-of-zeros
+
+strtol
+strtoll
+strtoul
+strtoull
+strtof
+strtod
+strtold
+
+-------------------------------------------------------
+const char *number = "10"; /* for example */
+string str = "10";
+number = str.c_str();
+
+char *end;
+long value = strtol(number, &end, 10); 
+if (end == number || *end != '\0' || errno == ERANGE)
+  /* ERROR, abort */;
+  
+/* Success */
+/* Add whatever range checks you want to have on the value of `value` */
+
+-------------------------------------------------------
+enum STR2INT_ERROR { SUCCESS, OVERFLOW, UNDERFLOW, INCONVERTIBLE };
+
+STR2INT_ERROR str2int (int &i, char const *s, int base = 0)
+{
+    char *end;
+    long  l;
+    errno = 0;
+    l = strtol(s, &end, base);
+    if ((errno == ERANGE && l == LONG_MAX) || l > INT_MAX) {
+        return OVERFLOW;
+    }
+    if ((errno == ERANGE && l == LONG_MIN) || l < INT_MIN) {
+        return UNDERFLOW;
+    }
+    if (*s == '\0' || *end != '\0') {
+        return INCONVERTIBLE;
+    }
+    i = l;
+    return SUCCESS;
+}
+
+//==================================================================
+// String Construct: 1.Other to String
+//==================================================================
+string to_string (int val);
+string to_string (long val);
+string to_string (long long val);
+string to_string (unsigned val);
+string to_string (unsigned long val);
+string to_string (unsigned long long val);
+string to_string (float val);
+string to_string (double val);
+string to_string (long double val);
+
+
+//==================================================================
+// String Construct: 2.String Concatenation
+//==================================================================
+std::string name = "John";
+int age = 21;
+std::string result;
+
+--------------------------------------------------------------
+// 6. with IOStreams
+std::stringstream sstm;
+sstm << name << age;
+result = sstm.str();
+
+// 2. with C++11
+result = name + std::to_string(age);
+result += "abc";
+result += 'a';
+
+// 8. with sprintf
+char numstr[21]; // enough to hold all numbers up to 64-bits
+sprintf(numstr, "%d", age);
+result = name + numstr;
+
+--------------------------------------------------------------
+// 1. with Boost
+result = name + boost::lexical_cast<std::string>(age);
+
+// 3. with FastFormat.Format
+fastformat::fmt(result, "{0}{1}", name, age);
+
+// 4. with FastFormat.Write
+fastformat::write(result, name, age);
+
+// 5. with the {fmt} library
+result = fmt::format("{}{}", name, age);
+
+// 7. with itoa
+char numstr[21]; // enough to hold all numbers up to 64-bits
+result = name + itoa(age, numstr, 10);
+
+// 9. with STLSoft's integer_to_string
+char numstr[21]; // enough to hold all numbers up to 64-bits
+result = name + stlsoft::integer_to_string(numstr, 21, age);
+
+// 10. with STLSoft's winstl::int_to_string()
+result = name + winstl::int_to_string(age);
+
+// 11. With Poco NumberFormatter
+result = name + Poco::NumberFormatter().format(age);
+
+---------------------------------------------------------------------------
+1. is safe, but slow; requires Boost (header-only); most/all platforms
+2. is safe, requires C++11 (to_string() is already included in #include <string>)
+3. is safe, and fast; requires FastFormat, which must be compiled; most/all platforms
+4. is safe, and fast; requires FastFormat, which must be compiled; most/all platforms
+5. is safe, and fast; requires the {fmt} library, which can either be compiled or used in a header-only mode; most/all platforms
+6. safe, slow, and verbose; requires #include <sstream> (from standard C++)
+7. is brittle (you must supply a large enough buffer), fast, and verbose; itoa() is a non-standard extension, and not guaranteed to be available for all platforms
+8. is brittle (you must supply a large enough buffer), fast, and verbose; requires nothing (is standard C++); all platforms
+9. is brittle (you must supply a large enough buffer), probably the fastest-possible conversion, verbose; requires STLSoft (header-only); most/all platforms
+10. safe-ish (you don't use more than one int_to_string() call in a single statement), fast; requires STLSoft (header-only); Windows-only
+11. is safe, but slow; requires Poco C++ ; most/all platforms
+
+
+//==================================================================
+// String Destruct: 1.Get Char
+//==================================================================
+string str = "abc";
+
+//Get char
+char c = str.at(i);
+cahr c2 = str[i];
+
+//char * and string ARE DIFFERENT
+char * cp = &str;			//illegal: cannot assign address of string to char*
+char * cp = &(str.at(0));	// initialize char *
+*(cp + i);  cp[i];			// get i-th charcater, i >= 0
+
+//P.S.
+std::cout << cp << std::endl;  //output: abc
+std::cout << *cp << std::endl; //output: a
+
+
+//==================================================================
+// String Destruct: 2.String Substring
+//==================================================================
+std::string str2 = str.substr (pos, length);
+
+std::string str3 = str.substr (pos);
+
+
+//==================================================================
+// String Destruct: 3.String Tokens
+//==================================================================
+string str = "- This, a sample string.";
+char * pch = strtok (str," ,.-");
+
+printf("%s\n", pch); //Output: This
+
+
+//==================================================================
+// c_string
+//==================================================================
+--------------------------------------------------------------
+[initialize]
+		char 	c_str[256]	= "abc";	//c_string OR const char
+const 	char * 	c_str 		= "abc";	//c_string OR const char
+		char * 	cp 			= "abc";	//illegal
+		
+							"abc";		//c_string OR const char
+		string 	str;					//std::string
+
+https://stackoverflow.com/questions/14183445/what-does-0-mean
+'\0' marks the end of a c_string
+
+--------------------------------------------------------------
+[Conversion: string to c_string]
+https://stackoverflow.com/questions/13294067/how-to-convert-string-to-char-array-in-c
+char c_str[10];	strcpy_s(c_str, str.c_str());
+const char * sp = str.c_str();
+const char * sp = &str.at(0);
+char * p = str.c_str();	//illegal
+char * p = &str.at(0);
+
+--------------------------------------------------------------
+[Conversion: c_string to string]
+https://stackoverflow.com/questions/4764897/converting-a-c-style-string-to-a-c-stdstring
+char c_str[] = "abc";
+const char * sp = "abc";
+char *p = &c_str[0];
+
+string str = "abc";	//literal value
+string str = c_str;	//address of first element
+string str = sp;	//address of first element
+string str = p;		//address of first element
+
+
+--------------------------------------------------------------
+[Print Result]
+same as general char *
+
+--------------------------------------------------------------
+[c_string and string difference]
+1. NULL
+	- c_string: NULL is valid
+	- string: NULL is invalid
+
+
+
+
+//==================================================================
+// String Comparison
+//==================================================================
+https://stackoverflow.com/questions/9158894/differences-between-c-string-and-compare
+
+--------------------------------------------------------
+std::string::compare() returns an int:
+
+    equal to zero if s and t are equal,
+    less than zero if s is less than t,
+    greater than zero if s is greater than t.
+	
+--------------------------------------------------------
+str1 == str2;
+	only tests equality, returns bool.
+
+
+//==================================================================
+// string::size_type
+//==================================================================
+https://stackoverflow.com/questions/1181079/stringsize-type-instead-of-int
+string::size_type:
+	- unsigned int literal
+	- large enough to represent sizes of any string
+
+
+
+
+==================================================================
+Copy Strings
+==================================================================
+#include <string.h>	// for strcpy_s
+
+int str_size = 6;
+char *str = (char *)malloc(str_size);
+strcpy_s(str, str_size, "hello");
+std::cout << str << "\n";
+

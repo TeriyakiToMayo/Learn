@@ -1,0 +1,127 @@
+====================================================
+Problem 124. Binary Tree Maximum Path Sum
+====================================================
+Given a non-empty binary tree, find the maximum path sum.
+
+For this problem, a path is defined as any sequence of nodes 
+from some starting node to any node in the tree along the 
+parent-child connections. The path must contain at least one 
+node and does not need to go through the root.
+
+Example 1:
+
+Input: [1,2,3]
+
+       1
+      / \
+     2   3
+
+Output: 6
+
+Example 2:
+
+Input: [-10,9,20,null,null,15,7]
+
+   -10
+   / \
+  9  20
+    /  \
+   15   7
+
+Output: 42
+
+
+====================================================
+Analysis
+====================================================
+At a node, there are 2 types of maxSumList:
+I. Extendable
+	- The path has the max sum among all paths that start from root
+	
+				[-10]
+			   /     \
+			  9     [20]
+					/  \
+				 [15]   7
+		  All paths start from root are:
+		  [-10, 9] 		= -1
+		  [-10, 20, 15]	= 25	(MAX)
+		  [-10, 20, 7]	= 17
+		  
+		  We calculate extendable list from bottom to top in one pass according to
+		  the principles introduced in 53. Maximum Subarray
+	
+II. Inextendable (the path not contains root)
+	- The path inside one subtree
+				-10
+			   /   \
+			  [9]  -10
+				  /   \
+			   [15]    7
+		  The maxSumList of left subtree is: [9]
+		  The maxSumList of right subtree is: [15]
+		   
+		   
+	- The path extends from left tree to right tree
+
+			  [20]
+			 /    \
+		   [15]   [7]
+		 
+		The maxSumList: [15, 20, 7]
+		
+
+
+Steps:
+1. We calculate the extendable, add it to maxSum
+2. We calculate the inextendable, add it to maxSum
+	- We only need to care about the inextendable maxSumPath extends from left to right subtree
+	- Since the inextendable maxSumPath inside subtrees have been taken care of in subtree recursions
+
+
+
+====================================================
+Java Approach: Backtracing
+1 ms	99.93%
+41.3 MB	16.66%
+====================================================
+public static int maxSum = Integer.MIN_VALUE;
+
+public static int maxPathSum(TreeNode root) {
+	if(root == null) return 0;
+	maxSum = Integer.MIN_VALUE;
+	helper0(root);
+	return maxSum;
+}
+
+public static int helper0(TreeNode node) {
+	//node has no subtree
+	if(node.left == null && node.right == null) {
+		maxSum = Math.max(maxSum, node.val);
+		return node.val;
+	}
+	
+	//node has one subtree
+	if((node.left != null && node.right == null) 
+			|| (node.left == null && node.right != null)) {
+		int extendable = node.left != null ? helper0(node.left) : helper0(node.right);
+		extendable = extendable >= 0 ? extendable + node.val : node.val;
+		maxSum = Math.max(maxSum, extendable);
+		return extendable;
+	}
+	
+	//node has both left and right subtrees
+	int leftExt = helper0(node.left);
+	int rightExt = helper0(node.right);
+	
+	if(leftExt > 0 && rightExt > 0) {
+		maxSum = Math.max(maxSum, leftExt + node.val + rightExt);
+	}
+	
+	leftExt = leftExt >= 0 ? leftExt + node.val : node.val;
+	rightExt = rightExt >= 0 ? rightExt + node.val : node.val;
+	int extendable = leftExt >= rightExt ? leftExt : rightExt;
+	maxSum = Math.max(maxSum, extendable);
+	
+	return extendable;
+}

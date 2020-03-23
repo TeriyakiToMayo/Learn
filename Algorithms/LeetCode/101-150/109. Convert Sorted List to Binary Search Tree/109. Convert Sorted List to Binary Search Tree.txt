@@ -1,0 +1,106 @@
+====================================================
+Problem 109. Convert Sorted List to Binary Search Tree
+====================================================
+Given a singly linked list where elements are sorted in 
+ascending order, convert it to a height balanced BST.
+
+For this problem, a height-balanced binary tree is defined 
+as a binary tree in which the depth of the two subtrees of 
+every node never differ by more than 1.
+
+Example:
+
+Given the sorted linked list: [-10,-3,0,5,9],
+
+One possible answer is: [0,-3,9,-10,null,5], which 
+represents the following height balanced BST:
+
+      0
+     / \
+   -3   9
+   /   /
+ -10  5
+
+
+
+====================================================
+Analysis 0
+====================================================
+Two Pointers:
+	- Slow: go forward once 1 element
+	- Fast: go forward once 2 elements
+	
+When Fast reaches the end, the Slow is at the Mid.
+
+------------------------------------------------------
+[Time Complexity]
+We need to traverse each element, hence N elements in total
+
+												Sub-problems	Operation Count		Total Operations
+                    ------------				1=2^0			N/2					1*N/2=N/2
+					
+				------         ------			2=2^1			N/4					2*N/4=N/2
+
+             ---    ---        ---   ---		4=2^2			N/8					4*N/8=N/2
+			 
+		-- -       -- -        -- -    -- -		8=2^3			N/16				8*N/16=N/2
+															
+												N=2^h-1			N/2^h				2^(h-1) * N/2^h = N/2
+
+												h = log2(N) + 1						SUM = N/2 * (log2(N) + 1)
+																						= O(NlogN)
+												
+												
+====================================================
+Analysis 1
+====================================================
+Convert List to Array, then construct the BST.
+
+
+
+====================================================
+Analysis 2
+====================================================
+We assume there is a virtual BST constructed by picking the mid element of 
+the list, we know its length, then we "traverse" it inorderly, for each node 
+we traverse, we construct it.
+
+
+
+====================================================
+Java Approach: Backtracing
+1 ms	99.16%
+41.8 MB	5.27%
+====================================================
+public static ListNode newHead;
+
+public static TreeNode sortedListToBST(ListNode head) {
+	if(head == null) return null;
+	
+	int len = 0;
+	ListNode pointer = head;
+	while(pointer != null) {
+		len++;
+		pointer = pointer.next;
+	}
+	newHead = head;
+	
+	return helper(0, len - 1);
+}
+
+public static TreeNode helper(int start, int end) {
+	int mid = (start + end)/2;
+	TreeNode node = new TreeNode(0);
+	if(start < mid) node.left = helper(start, mid - 1);
+	node.val = newHead.val;
+	newHead = newHead.next;
+	if(mid < end) node.right = helper(mid + 1, end);
+	
+	return node;
+}
+
+
+
+
+
+

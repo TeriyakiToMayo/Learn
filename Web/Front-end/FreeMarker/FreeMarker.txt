@@ -1,0 +1,100 @@
+====================================================================
+Documentation
+====================================================================
+	https://freemarker.apache.org/docs/index.html
+	
+
+====================================================================
+Data Model
+====================================================================
+	
+	Tree Structure:
+		- Variables
+			- Directory variables (root, animals, mouse...) are [hash]es
+			- List variables (misc2) are [sequence]s
+			- Single value variables (size, price...) are [scalar]s
+		- Data Access
+			- animals.mouse.price
+			- misc2.fruits[1]
+	
+	(root)
+	  |
+	  +- animals
+	  |   |
+	  |   +- mouse
+	  |   |   |
+	  |   |   +- size = "small"
+	  |   |   |
+	  |   |   +- price = 50
+	  |   |
+	  |   +- elephant
+	  |   |   |
+	  |   |   +- size = "large"
+	  |   |   |
+	  |   |   +- price = 5000
+	  |   |
+	  |   +- python
+	  |       |
+	  |       +- size = "medium"
+	  |       |
+	  |       +- price = 4999
+	  |
+	  +- message = "It is a test"
+	  |
+	  +- misc
+	  |   |
+	  |   +- foo = "Something"
+	  |
+	  +- misc2
+		  |
+		  +- fruits
+		      |
+		      +- (1st) = "orange"
+		      |
+		      +- (2nd) = "banana"
+		  
+		  
+
+====================================================================
+FTL
+====================================================================
+	FreeMarker Template
+	
+====================================================================
+Boolean Expressions
+====================================================================
+	https://blog.csdn.net/u010398838/article/details/79978266
+	https://freemarker.apache.org/docs/ref_directive_if.html
+	https://freemarker.apache.org/docs/dgui_template_exp.html
+	
+	Operand			functionality
+	??				if null
+	?has_content	if null or empty
+	
+	
+	
+	
+====================================================================
+Configuration Structures
+====================================================================
+	
+	FreeMarkerConfigurationFactory
+	{
+	}
+	|
+	+
+	FreeMarkerConfigurer
+	{
+		Configuration configuration
+	}
+	|
+	+
+	FreeMarkerConfigurerEx                           
+
+	
+	
+	Configuration
+	{
+		HashMap sharedVariables
+	}
+	

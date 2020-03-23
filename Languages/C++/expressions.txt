@@ -1,0 +1,15 @@
+//==================================================================
+// Increment
+//==================================================================
+
+--------------------------------------------------------------
+[difference between ++i and i++]
+https://stackoverflow.com/questions/24853/what-is-the-difference-between-i-and-i
+
+++i (pre-increment)
+	- increment value of i
+	- return incremented value
+
+++i (post-increment)
+	- increment value of i
+	- return original value

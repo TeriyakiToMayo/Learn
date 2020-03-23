@@ -1,0 +1,7 @@
+http://www.nongnu.org/hcb/#assignment-expression
+
+
+//==================================================================
+// Fold Expression
+//==================================================================
+https://en.cppreference.com/w/cpp/language/fold

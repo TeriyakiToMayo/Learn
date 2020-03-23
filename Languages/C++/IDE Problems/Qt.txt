@@ -1,0 +1,20 @@
+Account:
+tianz83@yahoo.com
+Fate1516118!
+
+//==================================================================
+// Installation Selections
+//==================================================================
+mingw53_32
+msvc2017
+.....
+Qt...
+
+
+//==================================================================
+// Environment Variable Settings
+//==================================================================
+https://doc.qt.io/archives/qt-4.8/install-win.html
+https://www.youtube.com/watch?v=eS7ank-qFjg&list=PLS1QulWo1RIZiBcTr5urECberTITj7gjA&index=2
+
+

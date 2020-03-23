@@ -1,0 +1,28 @@
+====================================================
+Structure Tags
+====================================================
+<title>
+	This is my title
+</title>
+<!- it displays at page tag ->
+
+
+====================================================
+Text Tags
+====================================================
+<br>: new line
+
+
+====================================================
+GET Link
+====================================================
+<a href="generic">Click to call Generic Servlet</a>
+
+====================================================
+Form
+====================================================
+<form action="http_servlet" method="get">
+	User Name: <input type="text" name="uname"><br>
+	User Age: <input type="text" name="uage"><br>
+	<input type="submit" value="submit">
+</form> <br><br>

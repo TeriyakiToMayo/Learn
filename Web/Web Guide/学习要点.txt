@@ -1,0 +1,17 @@
+javaWeb学习要点：
+基础语言：后端：java
+前端：html、JavaScript、jQuery
+框架：Spring、SpringMVC、Framework、Hibernate
+数据库：MySQL
+服务器：Tomcat（servlet容器）、Nginx
+工具：Eclipse（IDE）、Navicat（数据库）
+环境安装：jdk1.8、mysql数据库、maven仓库
+
+http://how2j.cn/
+https://www.w3school.com.cn/h.asp
+https://www.bootcss.com/
+http://ace.jeka.by/
+https://www.layui.com/
+https://cn.vuejs.org/
+https://www.runoob.com/
+

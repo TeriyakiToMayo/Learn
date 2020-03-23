@@ -1,0 +1,12 @@
+https://doc.cgal.org/latest/Alpha_shapes_2/
+
+https://doc.cgal.org/latest/Alpha_shapes_3/
+
+https://en.wikipedia.org/wiki/Alpha_shape
+
+//==================================================================
+// Alpha Shape
+//==================================================================
+- Chocolates inside ice cream
+- Use fix-sized sphere-formed spoon carve out all possible 
+  ice cream without bumping into chocolate pieces

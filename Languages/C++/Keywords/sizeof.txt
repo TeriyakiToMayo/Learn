@@ -1,0 +1,20 @@
+//==================================================================
+// Basic Usage
+//==================================================================
+http://www.c4learn.com/cplusplus/cpp_sizeof_operator/
+sizeof(data type);	//specifically, see numerical_types.txt
+
+
+//==================================================================
+// Parameter Pack
+//==================================================================
+https://docs.microsoft.com/en-us/cpp/cpp/ellipses-and-variadic-templates?view=vs-2019
+template <typename T, typename... Ts>
+void print(const T& arg, const Ts&... args) {
+	cout << sizeof ... (args) << endl;
+	cout << arg << endl;
+	print(args...);
+}
+
+//parameter pack see template.txt - template arguments - variadic template
+

@@ -1,0 +1,26 @@
+//==================================================================
+// How to have cmd window stay open
+//==================================================================
+https://stackoverflow.com/questions/454681/how-to-keep-the-console-window-open-in-visual-c
+
+1. Use ctrl + F5
+
+2. use std::cin.get();
+
+
+//==================================================================
+// What if ctrl + F5 not working?
+//==================================================================
+https://stackoverflow.com/questions/913054/visual-studio-commands-dont-work-ctrl-f5-doesnt-run-my-application
+
+This means you created some empty project
+
+Solution 1: Create "Win32 Console Application"
+
+Solution 2:
+	Project 
+		-> properties 
+		-> Configuration Properties 
+		-> Linker
+		-> System
+		-> SubSystem: Console(/SUBSYSTEM:CONSOLE)

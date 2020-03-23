@@ -1,0 +1,257 @@
+====================================================
+Spring MVC views
+====================================================
+----------------------------------------------------------
+[page types]
+JSP: JavaServer Pages
+
+
+----------------------------------------------------------
+[page names]
+all page names must be lower case, or resolver cannot resolve
+	- it only sees lower case name pages
+
+<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+	<property name="prefix" value="/WEB-INF/jsp/"></property>  
+	<property name="suffix" value=".jsp"></property>       
+</bean>
+
+
+----------------------------------------------------------
+[jsp variables]
+${filesuccess}
+	- variable names are correspond to Model attributes
+	- empty(null) variable does not show up
+
+
+----------------------------------------------------------
+[jsp form request mapping]
+action="xxxaction"
+	- url = localhost:8080/SpringMVC/xxxaction
+	- Unresolved: variable will be omitted:
+		- current url in edit page: localhost:8080/SpringMVC/edit/1
+			- 1 is the ${id}
+		- submit url:   localhost:8080/SpringMVC/edit/xxxaction
+	
+action="/xxxaction"
+	- url = localhost:8080/xxxaction
+
+----------------------------------------------------------
+[jsp form and Spring Model binding]
+https://stackoverflow.com/questions/17647050/path-attribute-in-spring
+
+
+MODEL POOL				VIEW
+InstanceA		->	modelAttribute
+field1			->	inputPath1
+field2			->	inputPath2
+field3			->	inputPath3
+
+Note: The modelAttribute must exist in Model Pool, or there will be unbinding error
+
+
+<form:form method="post" modelAttribute="theStudent">
+	Name: <form:input type="text" path="name"/>
+	Cool?: <form:input type"checkbox" path="cool"/>
+	<button>Save</button>
+</form:form>
+
+
+----------------------------------------------------------
+[jsp form error]
+Password(*): <form:password path="pass"/>    
+<form:errors path="pass" cssClass="error"/>
+//perhaps model attribute properties contain both value and error info
+
+
+
+====================================================
+Spring MVC Objects: Overall
+====================================================
+Beans: application backbone objects
+
+Model: container of application data 
+	- normally for data communication:
+		-> (in jsp) form submitted 
+		-> model attribute created/resetted 
+		-> (in controller) @ModelAttribute binds attribute with bean
+		
+
+BindingResult: container of validation result
+
+
+====================================================
+Spring MVC Objects: Beans
+====================================================
+----------------------------------------------------------
+[Core Annotations]
+https://www.javatpoint.com/spring-mvc-crud-example
+https://springframework.guru/spring-framework-annotations/
+https://www.baeldung.com/spring-value-annotation
+
+@Autowired: automatic injection, based on name
+	- spring-servlet.xml:
+		<bean id="dao" class="com.javatpoint.dao.EmpDao">    
+			<property name="template" ref="jt"></property>    
+		</bean>
+	- EmpController.java:
+		@Autowired    
+		EmpDao dao;
+
+
+
+
+@Qualifier: specifies @Autowired type
+	- BeanB1 and BeanB2 implement BeanInterface
+	- BeanA.java:
+		@Autowired
+		@Qualifier("beanB2")
+		private BeanInterface dependency;
+
+
+@Lazy: lazily initialize bean
+	- EmpController.java:
+		@Autowired   
+		@Lazy
+		EmpDao dao;
+	- WebConfig.java:
+		@Bean
+		@Lazy
+		public Person person(){
+			return new Person(address());
+		}
+		
+
+@Value: value injection
+	- SomeBean.java
+		@Value("string value")	//value from annotation
+		private String stringValue;
+		
+		@Value("${value.from.file}")	//value from property file
+		private String valueFromFile;
+		
+		@Value("${listOfValues}")
+		private String[] valuesArray;	//a list of values
+		
+
+@Configuration + @ComponentScan + @Bean: configurations
+	- WebConfig.java:
+		@Configuration	//declares the configuration file
+		@ComponentScan("com.howtodoinjava.web")	//set controller sourse
+		public class AppConfig{
+			@Bean	//creates the Spring Bean
+			public Person person(){
+				return new Person(address());
+			}
+			@Bean
+			public Address address(){
+				return new Address();
+			}
+		}
+
+
+----------------------------------------------------------
+[Stereotype Annotations]
+@Component: 
+	- component-scanning mechanism adds to application context
+		- E.g.: is a bean class
+	- @Service: 
+		- a type of @Component
+		- executes business logic / performs calculations
+
+@Repository: Data Access Object
+
+@Controller
+
+
+
+
+====================================================
+Spring MVC controllers
+====================================================
+----------------------------------------------------------
+[controller setting up]
+https://howtodoinjava.com/spring5/webmvc/controller-getmapping-postmapping/
+
+Approach 1 - WebConfig.java:
+	@Configuration
+	@ComponentScan("com.howtodoinjava.web")
+	public class WebConfig {
+		//Other configurations
+	}
+	
+Approach 2 - spring-servlet.xml:
+	<context:component-scan base-package="com.javatpoint.controller"></context:component-scan>
+//the com.javatpoint.controller folder must contain all controllers
+
+
+----------------------------------------------------------
+[controller request annotations]
+https://howtodoinjava.com/spring5/webmvc/controller-getmapping-postmapping/
+
+@RequestMapping(value="someaction", method = RequestMethod.GET)	
+	- method: 
+		- Types: GET, POST
+		- default: GET
+		
+@GetMapping(value="someaction")
+	- shortcut for: @RequestMapping(value="someaction", method = RequestMethod.GET)	
+	
+@PostMapping(value="someaction")
+	- shortcut for: @RequestMapping(value="someaction", method = RequestMethod.POST)	
+
+//value:
+	- "someaction" is equal to "/someaction"
+	- "someaction/{id}", see "controller method parameter correspondence" section
+
+----------------------------------------------------------
+[controller method parameter correspondence]
+//for mapping url path like "someaction/{id}"
+	
+	public String edit(@PathVariable int id, Model m)
+	
+
+//for form submit without JSTL
+
+	public String display(@RequestParam("name") String name, Model m) 
+
+
+//for form submit with JSTL
+1. pass the entire model:
+
+	public String bookingForm(Model model)  
+	
+2. pass specific model attribute:
+	
+	public String submitForm(@ModelAttribute("reservation") Reservation res)
+	//Field name of form and model:
+		- not sensitive to cases
+		- names must accord with each other
+		
+----------------------------------------------------------
+[controller method parameter validation]
+ public String submitForm( @Valid @ModelAttribute("emp") Employee e, BindingResult br)  
+ //@Valid performs validation process
+ //Employee definition contains validation requirements
+ //BindingResult:
+	- contains validation result
+	- must comes after @Valid, or it fails (http://zetcode.com/spring/bindingresult/)
+
+		
+----------------------------------------------------------
+[controller method return]
+- page names 
+	- must correspond to jsp names
+	- are case insensitive
+
+1. plain type
+	return "viewemp"
+
+2. return with model object type
+	ModelAndView("uploadform", "filesuccess", "File successfully saved!");  
+	//"uploadform": view name
+	//"filesuccess": model attribute
+	//"File successfully saved!": model object
+	
+	
+	

@@ -1,0 +1,52 @@
+//==================================================================
+// Basic Usage
+//==================================================================
+union mytypes_t {
+	char c;
+	int i;
+	float f;
+}mytypes;
+
+MEMORY SPACE:
+____ ____ ____ ____ ____ ____ ____ ____
+____
+char
+____ ____ ____ ____
+int
+____ ____ ____ ____ ____ ____ ____ ____
+float
+
+1. these member elements share the same physical space in memory
+2. size = max(size(char), size(int), size(float))
+
+
+//==================================================================
+// Anonymous unions
+//==================================================================
+------------------------------------------------------
+[Normal union]
+struct book1_t {
+	char title[50];
+	char author[50];
+	union {
+		float dollars;
+		int yen;
+	} price;
+} book1;
+
+book1.price.dollars;
+book1.price.yen;
+
+------------------------------------------------------
+[Anonymous union]
+struct book2_t {
+	char title[50];
+	char author[50];
+	union {
+		float dollars;
+		int yen;
+	};
+} book2;
+
+book2.dollars;
+book2.yen;

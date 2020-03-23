@@ -1,0 +1,70 @@
+//==================================================================
+// String initialization
+//==================================================================
+String str = "";
+
+String str = new String();
+
+char[] cArr = {'a', 'b'};
+String str = new String(cArr);
+
+
+//==================================================================
+// Get string piece position
+//==================================================================
+String name="javatpoint"; 
+
+------------------------------------------------------
+[Known position, get char]
+char ch = name.charAt(4);
+
+------------------------------------------------------
+[Known position, get string]
+//substring [left, right)
+String str = name.substring(1);		//from left to end
+String str2 = name.substring(1, 3);	//from left to right
+
+------------------------------------------------------
+[Known string, get position]
+int index0 = name.indexOf("");		//returns 0
+int index = name.indexOf("ava");	//returns 1
+
+
+//==================================================================
+// Remove whitespaces in string
+//==================================================================
+------------------------------------------------------
+[All]
+https://stackoverflow.com/questions/5455794/removing-whitespace-from-strings-in-java
+st.replaceAll("\\s+","");
+st.replaceAll("\\s","");
+	//The second regex is 20% faster than the first one, but as the number consecutive spaces increases, the 
+	//first one performs better than the second one.
+
+------------------------------------------------------
+[Leading & Tailing]
+str = str.trim();
+
+	String str = "   asdaa   sasdsad     ";
+	str = str.trim();
+	//output: asdaa   sasdsad
+
+
+//==================================================================
+// UpperCase & LowerCase
+//==================================================================
+str.toUpperCase();
+str.toLowerCase();
+
+
+//==================================================================
+// Split
+//==================================================================
+str = str.trim();
+String[] strArr = str.split("\\s+");
+
+
+//==================================================================
+// Get Array of chars
+//==================================================================
+char[] ca = s.toCharArray();

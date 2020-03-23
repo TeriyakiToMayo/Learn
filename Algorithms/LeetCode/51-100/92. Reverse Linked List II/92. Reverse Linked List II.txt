@@ -1,0 +1,134 @@
+====================================================
+Problem 92. Reverse Linked List II
+====================================================
+Reverse a linked list from position m to n. Do it in one-pass.
+
+Note: 1 ≤ m ≤ n ≤ length of list.
+
+Example:
+
+Input: 1->2->3->4->5->NULL, m = 2, n = 4
+Output: 1->4->3->2->5->NULL
+
+
+
+
+====================================================
+Analysis
+====================================================
+
+[1, 2, 3, 4, 5]
+
+s1l: sec1Last
+s2f: sec2First
+s2l: sec2Last
+s2l2: sec2Last2
+s2ln: sec2LastNext
+s3f: sec3First
+
+
+Step 1: adding new head
+[0, 1, 2, 3, 4, 5]
+
+
+Step 2: find sec1Last and sec2First
+
+0	->	1	->	2	->	3	->	4	->	5
+s1l		s2f
+
+0	->	1	->	2	->	3	->	4	->	5
+		s1l		s2f
+
+
+Step 3: reverse until reach n
+
+0	->	1	->	2	->	3	->	4	->	5
+		s1l		s2f		
+				s2l2	s2l		s2ln
+		
+				 _______
+				|		↓
+0	->	1	->	2	<-	3	->	4	->	5
+		s1l		s2f		
+				s2l2	s2l		s2ln
+				
+				 _______
+				|		↓
+0	->	1	->	2	<-	3	<-	4	 	5
+		s1l		s2f		
+						s2l2	s2l		s2ln
+						
+				 _______
+				|		↓
+0	->	1	->	2	<-	3	<-	4	 	5
+		s1l		s2f		
+						s2l2	s2l		s2ln
+										s3f
+
+
+Step 4: connect sec1Last to sec2Last, connect sec2First to sec3First
+
+		 _______________________
+		|						↓
+0	->	1		2	<-	3	<-	4		5
+		s1l		s2f		
+						s2l2	s2l		s2ln
+										s3f
+				|						↑
+				 -----------------------
+
+
+
+====================================================
+Java Approach
+0 ms	100.00%
+37.1 MB	5.04%
+====================================================
+public static ListNode reverseBetween(ListNode head, int m, int n) {
+	
+	if(n - m == 0) return head;
+	
+	m = m - 1;
+	n = n - 1;
+	
+	ListNode newHead = new ListNode(0);
+	newHead.next = head;
+	
+	ListNode sec1Last = newHead;
+	ListNode sec2First = head;
+	ListNode sec2Last = null;
+	ListNode sec2Last2 = null;
+	ListNode sec2LastNext = null;
+	ListNode sec3First = null;
+	
+	int stage = 0;
+	for(int i = 0; i <= n; i++) {
+		if(stage == 0) {
+			if(i < m) {
+				sec1Last = sec2First;
+				sec2First = sec2First.next;
+				continue;
+			}
+			else if(i == m) {
+				sec2Last2 = sec2First;
+				sec2Last = sec2First.next;
+				stage = 1;
+			}
+		}else {
+			sec2LastNext = sec2Last.next;
+			sec2Last.next = sec2Last2;
+			if(i < n) {
+				sec2Last2 = sec2Last;
+				sec2Last = sec2LastNext;
+			}else if(i == n) {
+				sec3First = sec2LastNext;
+				break;
+			}
+		}
+	}
+	
+	sec1Last.next = sec2Last;
+	sec2First.next = sec3First;
+	
+	return m == 0 ? sec2Last : head;
+}

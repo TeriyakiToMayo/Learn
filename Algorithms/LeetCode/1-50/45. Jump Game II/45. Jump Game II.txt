@@ -1,0 +1,164 @@
+====================================================
+Problem 45. Jump Game II
+====================================================
+Given an array of non-negative integers, you are 
+initially positioned at the first index of the array.
+
+Each element in the array represents your maximum 
+jump length at that position.
+
+Your goal is to reach the last index in the minimum 
+number of jumps.
+
+Example:
+
+Input: [2,3,1,1,4]
+Output: 2
+Explanation: The minimum number of jumps to reach the 
+last index is 2.
+    Jump 1 step from index 0 to 1, then 3 steps to 
+the last index.
+
+Note:
+
+You can assume that you can always reach the last 
+index.
+
+
+====================================================
+Analysis: Traditional Solution
+====================================================
+
+
+[2, 4, 1, 1, 1, 3, 5, 6, 8]
+
+E: end of each stage
+
+
+																 _____________________?
+										 _______________________|
+				 _______		 _______|						|
+				|		|		|		|						|
+2E		4		1E		1		1		3E		5		6		8E
+|		|		|		|_______|		|		|		|__________________________?
+|_______|_______|						|		|________________________________?
+		|_______________________________|
+
+End Range: 
+[2E, 2E], [4, 1E], [1, 1, 3E], [5, 6, 8E]
+
+The shortest step from an end range to next end range is 1
+(That is, we need at least 1 step from an end range to the next)
+E.g.:
+2E -> 4: 
+	2E -> 4 				(1 step)
+4 -> 1: 
+	4 -> 1E -> 1 			(2 steps)
+	4 -> 1 					(1 step)
+4 -> 3E: 
+	4 -> 1E -> 1 -> 1 -> 3E	(4 steps)
+	4 -> 1 -> 1 -> 3E		(3 steps)
+	4 -> 1 -> 3E			(2 steps)
+	4 -> 3E					(1 step)
+
+
+
+====================================================
+Java Approach: Traditional Solution
+2ms: 94.84%
+46.9 MB
+====================================================
+
+public static int jump2(int[] nums) {
+	int end = 0;
+	int maxPosition = 0; 
+	int steps = 0;
+	
+	for(int i = 0; i < nums.length - 1; i++){
+		
+		maxPosition = Math.max(maxPosition, nums[i] + i); 
+		if( i == end){
+			end = maxPosition;
+			steps++;
+		}
+	   
+	}
+	return steps;
+}
+
+====================================================
+Java Approach: Dynamic Programming
+4ms: 31.08%
+46.6MB
+====================================================
+https://www.cnblogs.com/lixing-nlp/p/7688549.html
+
+
+[2, 4, 1, 1, 1, 3, 5, 6, 8]
+
+
+2	4	1	1	1	3	5	6	8		//nums
+---------
+0	1	1								//steps
+	-----------------
+	1	1	2	2	2
+		-----
+		1	2							//can be omitted
+			-----
+			2	3						//can be omitted
+				-----
+				2	3					//can be omitted
+					-------------
+					2	3	3	3		//shortest path
+						---------------
+						3	4	4		//can be omitted
+							-------------
+							3	4		//can be omitted
+								------------
+								4		//can be omitted
+								
+								
+
+public static int jump3(int[] nums) {
+	int n = nums.length;
+	
+	if(n <= 1) return 0;
+	
+	int[] dp = new int[n];
+	Arrays.fill(dp, Integer.MAX_VALUE);
+	dp[0] = 0;
+	
+	int min_i = 0;
+	int add_start = 0;
+	
+	while(true) {
+		
+		//add_start: the length of the range of nums[min_i-1]
+		//		e.g.: [2, 4, 1, 1, 1, 3, 5, 6, 8]
+		//		assume min_i = 1, then min_i-1 = 0, 
+		//		then add_start = nums[0] = 2
+		//		then range of nums[min_i-1]: [4, 1]
+		//
+		//min_i + add_start = min_i-1 + add_start + 1 : first element after last range
+		//		e.g.: similarly to last e.g.
+		//		since, range of min_i-1 (including min_i-1) is: [2, 4, 1]
+		//		then first element after range of min_i-1 is 1 at position 3
+		
+		for(int j = min_i + add_start; j < min_i + nums[min_i] + 1; j++) {
+			if(j < n && dp[j] > dp[min_i] + 1) {
+				dp[j] = dp[min_i] + 1;
+			}
+		}
+
+		if(dp[n - 1] != Integer.MAX_VALUE) break;
+		
+		add_start = nums[min_i];
+		
+		min_i += 1;
+	}
+	
+	
+	return dp[n - 1];
+}
+
+

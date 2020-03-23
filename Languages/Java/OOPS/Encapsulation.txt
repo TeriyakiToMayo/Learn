@@ -1,0 +1,24 @@
+//==================================================================
+// Definition
+//==================================================================
+"Programming Studies\Theory Courses
+\Object Oriented Programming\top-50-oops-interview-questions"
+
+"Encapsulation is an attribute of an object, and it contains all data 
+which is hidden. That hidden data can be restricted to the members of 
+that class."
+
+
+https://blog.csdn.net/qq_32868167/article/details/83181338
+------------------------------------------------------
+[conclusion]
+Encapsulation is:
+	1. attribute of object
+	2. can hide [data members] and [implementations]
+
+
+//==================================================================
+// Problems
+//==================================================================
+https://blog.csdn.net/luojun13class/article/details/83043100
+

@@ -1,0 +1,29 @@
+//==================================================================
+// Vector Initialize
+//==================================================================
+https://www.toptal.com/c-plus-plus/interview-questions
+
+----------------------------------------------------------------------
+[1. std::cout << 25u - 50;]
+(25u - 50) becomes (25u - 50u)
+
+0000 0000  0000 0000  0000 0000  0001 1001:	25u
+0000 0000  0000 0000  0000 0000  0011 0010: 50
+1111 1111  1111 1111  1111 1111  1110 0111: 25u - 50
+
+Output(as unsigned long): 4294967271
+
+----------------------------------------------------------------------
+[3. What is the error in the code below and how should it be corrected?
+	my_struct_t *bar;
+	memset(bar, 0, sizeof(bar));]
+
+memset(void *p, int value, size_t num );
+
+
+The last argument to memset is not right.
+sizeof(bar) is the size of a pointer.
+You need the size of an object. Use sizeof(*bar):
+
+memset(bar, 0, sizeof(*bar));
+

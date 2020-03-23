@@ -1,0 +1,52 @@
+====================================================
+Problem 107. Binary Tree Level Order Traversal II
+====================================================
+Given a binary tree, return the bottom-up level order 
+traversal of its nodes' values. (ie, from left to right, 
+level by level from leaf to root).
+
+For example:
+Given binary tree [3,9,20,null,null,15,7],
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+
+return its bottom-up level order traversal as:
+
+[
+  [15,7],
+  [9,20],
+  [3]
+]
+
+
+
+====================================================
+Java Approach: Backtracing
+1 ms	99.90%
+39 MB	5.11%
+====================================================
+public static LinkedList<List<Integer>> output;
+
+public static List<List<Integer>> levelOrderBottom(TreeNode root) {
+	output = new LinkedList<List<Integer>>();
+	
+	if(root == null) return output;
+	helper(root, 1);
+	Collections.reverse(output);
+	return output;
+}
+
+public static void helper(TreeNode node, int depth) {
+	if(output.size() < depth) {
+		output.add(new ArrayList<Integer>());
+	}
+	
+	output.get(depth - 1).add(node.val);
+	
+	if(node.left != null) helper(node.left, depth + 1);
+	if(node.right != null) helper(node.right, depth + 1);
+}

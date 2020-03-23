@@ -1,0 +1,2 @@
+POJO: Plain and Old Java oObject
+DAO: Data Access Object

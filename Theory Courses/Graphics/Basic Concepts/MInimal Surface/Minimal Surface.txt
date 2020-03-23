@@ -1,0 +1,30 @@
+//==================================================================
+// Minimal Surface
+//==================================================================
+https://wewanttolearn.wordpress.com/2019/02/03/triply-periodic-minimal-surfaces/
+
+---------------------------------------------------------
+[Name origin]
+https://en.wikipedia.org/wiki/Minimal_surface
+https://vimeo.com/40958005
+
+"The term 'minimal surface' is used because these surfaces originally 
+arose as surfaces that minimized total surface area subject to some constraint."
+
+"A shape whose surface has the least amount of area needed to occupy space"
+
+E.g. sphere is a minimal surface SEE "minimal surface.jpg"
+
+
+
+---------------------------------------------------------
+[Definition]
+
+http://mathworld.wolfram.com/MinimalSurface.html
+1. Minimal surfaces are defined as surfaces with zero mean curvature.
+
+https://www.quora.com/What-are-minimal-surfaces
+2. For given boundary constraints, it has minimum surface area. 
+	- SEE "helicoid minimal surface.png"
+		- Boundary: helicoid
+		- Minimal surface: soap film

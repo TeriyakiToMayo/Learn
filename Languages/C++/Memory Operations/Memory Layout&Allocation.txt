@@ -1,0 +1,43 @@
+====================================================================
+Memory Layout in C++
+====================================================================
+	(https://www.geeksforgeeks.org/memory-layout-of-c-program/)
+	
+	
+	[Unmapped]
+		Commendline argument
+		Environment Variables
+	[Dynamic Memory]
+		Stack↓
+		Heap↑
+	[Static Memory]
+		Data Segment: global&static vars
+			Uninitialized Data (block-start-by-symbol(bss) segment): Not initialized + Initialized as 0
+			Initialized Data: 
+				- Read-write area: s[] = "hello world"
+				- Read-only area: literal "hello world"
+		Text Segment: Code
+	
+	
+	-------------------------------------------------------------
+	[Heap]
+	
+		Manage methods: 
+			- Allocate: malloc, realloc
+			- Free up:free, delete
+		
+		Content: 
+			- Shared libraries
+			- Dynamically loaded modules
+			
+	-------------------------------------------------------------
+	[Stack]
+		
+		Program stack
+			- Stack frame:
+				- Parameter
+				- Local vars
+				- Return value
+		
+
+	

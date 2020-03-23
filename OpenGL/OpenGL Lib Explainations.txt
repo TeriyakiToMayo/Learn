@@ -1,0 +1,32 @@
+*Alternative libraries are listed together
+
+//==========================================================
+// Libs handling loading
+//==========================================================
+GLEW: 
+	handles the run time loading of the [mordern] OpenGL API. Ancient OpenGL API determined at compile time.
+	https://stackoverflow.com/questions/15613978/difference-of-freeglut-vs-glew
+
+//==========================================================
+// Libs handling graphics calculation, IO
+//==========================================================
+GLU:
+	Set of functions to create texture mipmaps from a base image, map coordinates 
+	between screen and object space, and draw quadric surfaces and NURBS.
+	https://www.opengl.org/resources/libraries/
+
+GLFW/freeglut: 
+	allow us to create a window, and receive mouse and keyboard input in a cross-platform way,
+	https://stackoverflow.com/questions/15613978/difference-of-freeglut-vs-glew
+
+GLM:
+	OpenGL Mathematics based on OpenGL Shading Language(GLSL) specifications.
+	https://glm.g-truc.net/0.9.9/index.html
+
+//==========================================================
+// Libs handling export
+//==========================================================
+GLAD:
+	retrieve the location of the functions of different versions of OpenGL drivers.
+	https://learnopengl.com/Getting-started/Creating-a-window
+	

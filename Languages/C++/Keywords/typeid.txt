@@ -1,0 +1,12 @@
+//==================================================================
+// Usages
+//==================================================================
+------------------------------------------------------
+[get variable type name]
+https://stackoverflow.com/questions/11310898/how-do-i-get-the-type-of-a-variable
+
+#include <typeinfo>
+
+char c[] = "abc";
+typeid(c).name();	//char [4]
+

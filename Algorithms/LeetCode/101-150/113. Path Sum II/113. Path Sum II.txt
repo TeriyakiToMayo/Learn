@@ -1,0 +1,73 @@
+====================================================
+Problem 113. Path Sum II
+====================================================
+Given a binary tree and a sum, find all root-to-leaf paths 
+where each path's sum equals the given sum.
+
+Note: A leaf is a node with no children.
+
+Example:
+
+Given the below binary tree and sum = 22,
+[5, 4, 8, 11, null, 13, 4, 7, 2, null, null, null, null, 5, 1]
+
+      5
+     / \
+    4   8
+   /   / \
+  11  13  4
+ /  \    / \
+7    2  5   1
+
+Return:
+
+[
+   [5,4,11,2],
+   [5,8,4,5]
+]
+
+
+====================================================
+Java Approach: Backtracing
+1 ms	100.00%
+41.4 MB	5.73%
+====================================================
+//Note: list as List<Integer> 2 ms 63.53%
+//      list as ArrayList<Integer> 1 ms 100%
+
+
+public static List<List<Integer>> output;
+public static ArrayList<Integer> list;
+public static int SUM = 0;
+public static int CURSUM = 0;
+
+public static List<List<Integer>> pathSum(TreeNode root, int sum) {
+	
+	output = new ArrayList<List<Integer>>();
+	if(root == null) return output;
+	
+	list = new ArrayList<Integer>();
+	SUM = sum;
+	CURSUM = 0;
+	
+	helper(root);
+	return output;
+}
+
+public static void helper(TreeNode node) {
+	list.add(node.val);
+	CURSUM += node.val;
+	if(node.left == null && node.right == null && CURSUM == SUM) {
+		output.add(new ArrayList<Integer>(list));
+	}
+	
+	if(node.left != null) helper(node.left);
+	if(node.right != null) helper(node.right);
+	list.remove(list.size() - 1);
+	CURSUM -= node.val;
+}
+
+
+
+
+

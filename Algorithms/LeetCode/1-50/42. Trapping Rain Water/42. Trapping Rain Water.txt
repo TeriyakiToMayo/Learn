@@ -1,0 +1,144 @@
+====================================================
+Problem 42. Trapping Rain Water
+====================================================
+Given n non-negative integers representing an 
+elevation map where the width of each bar is 1, 
+compute how much water it is able to trap after raining.
+
+SEE "rainwatertrap.png"
+
+The above elevation map is represented by array 
+[0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of 
+rain water (blue section) are being trapped. Thanks 
+Marcos for contributing this image!
+
+Example:
+
+Input: [0,1,0,2,1,0,1,3,2,1,2,1]
+Output: 6
+
+
+
+====================================================
+Analysis
+====================================================
+https://www.bilibili.com/video/av48995651/?spm_id_from=333.788.videocard.1
+
+[2, 1, 0, 1, 2]
+
+--------------------
+Water:
+ _       _
+| |_   _| |
+|___|_|___|
+ i
+ 
+Stack: 
+[0]
+
+--------------------
+Water:
+ _       _
+| |_   _| |
+|___|_|___|
+   i
+ 
+Stack: 
+[0, 1]
+
+--------------------
+Water:
+ _       _
+| |_   _| |
+|___|_|___|
+     i
+ 
+Stack: 
+[0, 1, 2]
+
+
+--------------------
+Water:
+ _       _
+| |_   _| |
+|___|x|___|
+       i
+ 
+Stack: 
+[0, 1, 2] -> [0, 1] -> [0, 1, 3]
+//Since height[3](1) > height[2](0), we go to find left bound
+//Since left bound height[1](1) == height[3](1), we calculate the pound, and push 3 into stack
+
+
+--------------------
+Water:
+ _       _
+| |x x x| |
+|___|x|___|
+         i
+ 
+Stack: 
+[0, 1, 3] -> [0, 1] -> [0] -> [0, 4]
+//Since height[4](2) > height[3](1), we go to find left bound 
+//	(in this process, we see height[1] as left bound, but since the bottom(height[2]) is also 1, water added = 0)
+//Since height[4](2) > height[1](1), we go to find left bound
+
+
+
+
+====================================================
+Java Approach: Stack
+====================================================
+
+public static int trap2(int[] height) {
+	if(height == null || height.length == 0) return 0;
+	
+	//Stack contains index of height
+	Stack<Integer> stack = new Stack<Integer>();
+	
+	int water = 0;
+	
+	for(int i = 0; i < height.length; i++) {
+		
+		//Since we need to keep a declining stack, 
+		//when current height is larger than top, then we believe there might be a pound
+		if(!stack.isEmpty() && height[i] > height[stack.peek()]) {
+			
+			while(true) {
+				//After poping the top, we see the left bound (new top)
+				int curTop = stack.pop();
+				
+				//Case 1: no left bound
+				//not possible to contain water
+				if(stack.isEmpty()) {
+					stack.push(i);
+					break;
+				}
+				
+				//Case 2: current height larger than left bound
+				//we calculate the water in the current pound bounded by:
+				//left bound, water bottom (last top), and current height
+				int curTopH = height[curTop];
+				int peekH = height[stack.peek()];
+				if(peekH < height[i]) {
+					water += (peekH - curTopH) * (i - stack.peek() - 1);
+				}
+				
+				//Case 3: current height smaller than left bound
+				//we calculate the water pound similar to case 2, 
+				//then we see current height as next bottom
+				if(peekH >= height[i]) {
+					water += (height[i] - curTopH) * (i - stack.peek() - 1);
+					stack.push(i);
+					break;
+				}
+			}
+		}else {
+			//If current height keeps stack declining, then we push it
+			stack.push(i);
+		}
+	}
+	
+	return water;
+}
+

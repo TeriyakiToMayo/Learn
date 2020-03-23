@@ -1,0 +1,55 @@
+//==================================================================
+// Rotation vs. Orientation
+//==================================================================
+http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-17-quaternions/
+Rotation: the change of orientation
+Orientation: current orientation
+
+
+//==================================================================
+// Euler Angles
+//==================================================================
+http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-17-quaternions/
+Rotations around X, Y and Z axes
+
+--------------------------------------------------------------
+[advantage]
+human readable
+
+--------------------------------------------------------------
+[problems with Euler Angles]
+"1 Problems with Gambal Locks.png"
+
+1. Unprecise and Compliated Rotations: given final rotation, guess Euler angles
+2. Gimbal Lock (Loss of the freedom of the 3rd axis)
+3. Different angles -> same rotation
+
+
+//==================================================================
+// Quaternions
+//==================================================================
+http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-17-quaternions/
+Rotation Axis + Angle
+
+--------------------------------------------------------------
+[representation]
+[x y z w]
+	- x = RotationAxis.x * sin(RotationAngle / 2)
+	- y = RotationAxis.y * sin(RotationAngle / 2)
+	- z = RotationAxis.z * sin(RotationAngle / 2)
+	- w = cos(RotationAngle / 2)
+
+0 <= RotationAngle <= 180
+
+--------------------------------------------------------------
+[advantage]
+1. No Gimbal Lock
+2. faster
+
+
+//==================================================================
+// Which one to choose
+//==================================================================
+Editor: Euler Angles
+Engine Core: Quaternions
+

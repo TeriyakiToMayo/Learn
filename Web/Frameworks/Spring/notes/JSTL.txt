@@ -1,0 +1,20 @@
+====================================================
+JSTL ForEach
+====================================================
+https://www.tutorialspoint.com/jsp/jstl_core_foreach_tag.htm
+//For in range
+<c:forEach var = "i" begin = "1" end = "${pageCount}">
+	<a href="/SpringMVC/viewemp/${i}">${i}</a>  
+</c:forEach>
+	//Note: variable ${i} can be added to urls
+
+
+//For each item
+<c:forEach var="emp" items="${msg}">     
+   <tr>    
+	   <td>${emp.id}</td>    
+	   <td>${emp.name}</td>    
+	   <td>${emp.salary}</td>    
+   </tr>    
+</c:forEach>    
+

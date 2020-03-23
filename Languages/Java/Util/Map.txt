@@ -1,0 +1,55 @@
+//==================================================================
+// Map Basic Problems
+//==================================================================
+
+
+
+//==================================================================
+// Map
+//==================================================================
+map.getOrDefault(str, 0);	//get str, or return 0
+
+
+//==================================================================
+// Map Properties
+//==================================================================
+------------------------------------------------------
+[Keys as primitives]
+
+Map<Integer, Integer> map = new HashMap<>();
+map.put(0, 0);
+out("" + map.containsKey(0));	//output: true
+
+
+------------------------------------------------------
+[Keys as objects]
+//Can be general objects: String
+//Can be collections: List, Set, etc.
+
+Map<Set<Integer>, Integer> map = new HashMap<>();
+Set<Integer> set0 = new HashSet<>();				//Can also be List
+set0.addAll(Arrays.asList(1,2,3));
+Set<Integer> set1 = new HashSet<>();
+set1.addAll(Arrays.asList(3,2,1));
+map.put(set0, 0);
+out("" + map.containsKey(set0));	//output: true
+out("" + map.containsKey(set1));	//output: true
+
+
+//Array is not allowed, since array stores the address, not the values inside
+Map<int[], Integer> map = new HashMap<int[], Integer>();
+map.put(new int[] {1, 2, 3}, 1);
+out2("" + map.get(new int[] {1, 2, 3}));	//output: null
+
+
+
+//==================================================================
+// Map Iteration
+//==================================================================
+
+for(Entry<List<Character>, List<String>> e : map.entrySet()) {}
+
+for(List<Character> key : map.keySet()) {
+	map.get(key);
+}
+

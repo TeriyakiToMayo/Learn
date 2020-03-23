@@ -1,0 +1,22 @@
+====================================================
+StringBuilder
+====================================================
+https://www.codejava.net/java-core/the-java-language/why-use-stringbuffer-and-stringbuilder-in-java
+Why use StringBuilder?
+
+It fixes the performance problem of String concatenation.
+
+sql += " values ('";	
+//it creates 2 Strings: " values ('" and sql + " values ('"
+//object creation takes more time than other operations
+
+
+====================================================
+StringBuilder Initialization
+====================================================
+
+StringBuilder sb = new StringBuilder();
+sb.append("b");
+sb.insert(0, "a");
+String str = sb.toString();
+//output: "ab"

@@ -1,0 +1,52 @@
+http://www.cplusplus.com/reference/vector/vector/
+//==================================================================
+// Vector vs. Array
+//==================================================================
+1. Storage:
+	- Vector: dynamically allocated array
+	- Array: static allocated
+	
+1. Adding new element:
+	- Vector: dynamically allocate extra storage
+	- Array: move all elements to new memory
+	
+
+//==================================================================
+// Vector Initialize
+//==================================================================
+http://www.cplusplus.com/reference/vector/vector/vector/
+
+std::vector<int> negone = {1, 2, 3};					// C++ 11 new feature
+std::vector<int> negone {12};							// vector with single element 12
+std::vector<int> zero (5);								// empty vector of 5 ints
+std::vector<int> first;									// empty vector of ints
+std::vector<int> second (4,100);						// four ints with value 100
+std::vector<int> third (second.begin(),second.end());	// addresses of the first and the last
+std::vector<int> fourth (third);						// a copy of third
+
+int myints[] = {16,2,77,29};
+std::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );	// addresses of the first and the last
+
+--------------------------------------------------------
+[vector address and vector element address]
+vector<int> vec = {1, 2, 3};	//&vec != &vec[0]
+
+
+//==================================================================
+// Vector Iterator
+//==================================================================
+for (std::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
+    std::cout << ' ' << *it;
+
+for (int x : v) {
+		cout << x << endl;
+	}
+
+
+//==================================================================
+// sizeof
+//==================================================================
+X86		X64
+16		32
+
+

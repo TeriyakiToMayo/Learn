@@ -1,0 +1,28 @@
+
+//==================================================================
+// General Usage
+//==================================================================
+//initialization
+Scanner sc = new Scanner(System.in);
+
+//while loop, press CTRL + D to terminate
+while(sc.hasNextLine()) {}
+
+//get next line
+sc.nextLine();
+
+//close
+sc.close();
+
+/*
+if use sc.hasNext()
+when type char, it goes beyond sc.nextLine() immediately
+when type enter, 
+*/
+
+
+//==================================================================
+// lab < data1
+//==================================================================
+lab < data1 //console input
+

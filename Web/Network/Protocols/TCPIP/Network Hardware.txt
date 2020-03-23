@@ -1,0 +1,30 @@
+====================================================================
+Router
+====================================================================
+	(http://www.differencebetween.net/object/difference-between-modem-and-router/)
+	(https://zhidao.baidu.com/question/1831327708226447980.html)
+	
+	Connection: connects devices with RJ45 connectors
+	Safety: provides security measures
+
+	-------------------------------------------------------------
+	[Ports]
+		
+		WAN: Wide Area Network (external network port)
+		LAN: Local Area Network (internal network port)
+			- Gateway Address == LAN Address == 192.168.0.1/192.168.1.1
+	
+	-------------------------------------------------------------
+	[Public and Private Networks]
+	
+		
+	
+	
+
+====================================================================
+Modem
+====================================================================
+	
+	
+	Connection: Phone Line/Fiber-potic Internet
+	Safety: no

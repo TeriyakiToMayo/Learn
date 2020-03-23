@@ -1,0 +1,20 @@
+//==================================================================
+// std::allocator<T>::size_type
+//==================================================================
+https://stackoverflow.com/questions/1181079/stringsize-type-instead-of-int
+std::allocator<T>::::size_type:
+	- unsigned int literal
+	- large enough to represent sizes of any container
+
+
+//==================================================================
+// size_type & size_t
+//==================================================================
+https://stackoverflow.com/questions/502856/whats-the-difference-between-size-t-and-int-in-c
+https://stackoverflow.com/questions/918567/size-t-vs-containersize-type
+
+size_t:
+	- defined in stdlib.h & stddef.h
+	- a datatype to represent the size of an object
+
+[size_type] is typically defined as [size_t]

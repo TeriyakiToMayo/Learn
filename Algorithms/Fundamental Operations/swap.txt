@@ -1,0 +1,29 @@
+====================================================
+Swap with temp
+====================================================
+int a, b, c;
+c = a;
+a = b;
+b = c;
+
+
+====================================================
+Swap without temp
+====================================================
+https://www.geeksforgeeks.org/swap-two-numbers-without-using-temporary-variable/
+
+1. Arithmetic operators
+
+int x, y;
+x = x + y;	//x is sum
+y = x - y;	//sum - y is x
+x = x - y;	//sum - x is y
+
+
+2. Bit XOR (SEE "Algorithms\Fundamental Knowledge in Algorithms\BitwiseOperations&Boolean.txt")
+
+int x, y;
+x = x ^ y;	//XOR of x and y
+y = x ^ y;
+x = x ^ y;
+

@@ -1,0 +1,53 @@
+====================================================
+Problem 41. First Missing Positive
+====================================================
+Given an unsorted integer array, find the smallest 
+missing positive integer.
+
+Example 1:
+
+Input: [1,2,0]
+Output: 3
+
+Example 2:
+
+Input: [3,4,-1,1]
+Output: 2
+
+Example 3:
+
+Input: [7,8,9,11,12]
+Output: 1
+
+Note:
+
+Your algorithm should run in O(n) time and uses 
+constant extra space.
+
+
+====================================================
+Analysis
+====================================================
+https://www.bilibili.com/video/av16440658?from=search&seid=11991350801819699502
+
+------------------------------------------------------
+[Why max result is nums.length?]
+
+1. Assume nums = [1, 2, 3 ,4 ,5] (order does not matter)
+Then result = 6
+
+2. nums = [1, 2, 10 ,4 ,5], result = 3
+
+3. nums = [1, 2, -1 ,4 ,5], result = 3
+
+4. nums = [1, 7, 10 ,4 ,5], result = 2
+
+Note: if not case 1, then result = smallest missing positive element in array [1, 2, 3 ,4 ,5]
+
+
+------------------------------------------------------
+[Hashing process]
+Hashing means calculating position with given value
+In this case: num_pos = num - 1
+
+

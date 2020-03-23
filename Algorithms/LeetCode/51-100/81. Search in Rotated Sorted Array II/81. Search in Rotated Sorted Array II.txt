@@ -1,0 +1,107 @@
+====================================================
+Problem 81. Search in Rotated Sorted Array II
+====================================================
+Suppose an array sorted in ascending order is rotated at 
+some pivot unknown to you beforehand.
+
+(i.e., [0,0,1,2,2,5,6] might become [2,5,6,0,0,1,2]).
+
+You are given a target value to search. If found in the 
+array return true, otherwise return false.
+
+Example 1:
+
+Input: nums = [2,5,6,0,0,1,2], target = 0
+Output: true
+
+Example 2:
+
+Input: nums = [2,5,6,0,0,1,2], target = 3
+Output: false
+
+Follow up:
+
+    This is a follow up problem to Search in Rotated Sorted 
+Array, where nums may contain duplicates.
+    Would this affect the run-time complexity? How and why?
+
+
+
+====================================================
+Analysis
+====================================================
+Case 1: Pivot right at middle
+
+	2 2 5 6 0 0 1
+		  M
+	
+	Then we can search either left or right side 
+	based on target
+	
+	
+Case 2: Pivot in the left or right side or not exists
+	
+	If nums[l] < nums[mid + 1], then pivot can be right or not exist
+	(Since if pivot in left, nums[l] >= nums[mid + 1])
+	
+		Pivot in the left side (s: start, e: end, p: pivot, m: mid):
+            > > e s > > > 
+			2 5 6 0 0 1 2
+				p m
+				
+		Pivot in the right side:
+            > > > > e s > 
+			1 2 2 5 6 0 0
+				  m p
+	
+	If nums[l] > nums[mid + 1], then pivot must be left
+	
+	If nums[l] == nums[mid + 1], we cannot decide, then we go both way
+
+
+====================================================
+Java Approach: Backtracing
+1 ms	96.36%
+39.1 MB	46.86%
+====================================================
+public static boolean search(int[] nums, int target) {
+	if(nums.length == 0) return false;
+	return helper(nums, 0, nums.length - 1, target);
+}
+
+public static boolean helper(int[] nums, int l, int r, int target) {
+	if(l > r) return false;
+	if(l == r) return nums[r] == target;
+	
+	int mid = (l + r)/2;
+	int midN = nums[mid];
+	if(midN == target) return true;
+	
+	int leftN = nums[l];
+	int midNPlus1 = nums[mid + 1];
+	if(midN > midNPlus1) {
+		if(target < midNPlus1 || target > midN) return false;
+		if(target < leftN) return helper(nums, mid + 1, r, target);
+		else return helper(nums, l, mid - 1, target);
+	}else {
+		
+		if(leftN < midNPlus1) {
+			//pivot is on the right side if exists
+			if(target >= midNPlus1) return helper(nums, mid + 1, r, target);
+			else {
+				boolean exists = helper(nums, l, mid - 1, target) || helper(nums, mid + 1, r, target);
+				return exists;
+			}
+		}else if(leftN > midNPlus1) {
+			//pivot is on the left side
+			if(target >= leftN) return helper(nums, l, mid - 1, target);
+			else {
+				boolean exists = helper(nums, l, mid - 1, target) || helper(nums, mid + 1, r, target);
+				return exists;
+			}
+		}else {
+			boolean exists = helper(nums, l, mid - 1, target) || helper(nums, mid + 1, r, target);
+			return exists;
+		}
+	}
+}

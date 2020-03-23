@@ -1,0 +1,24 @@
+https://stackoverflow.com/questions/1333527/how-do-i-print-to-the-debug-output-window-in-a-
+win32-app
+
+	#include <Windows.h>
+
+You can use OutputDebugString. OutputDebugString is a macro that depending on your build 
+options either maps to OutputDebugStringA(char const*) or OutputDebugStringW(wchar_t 
+const*). In the later case you will have to supply a wide character string to the 
+function. To create a wide character literal you can use the L prefix:
+
+	OutputDebugStringW(L"My output string.");
+
+Normally you will use the macro version together with the _T macro like this:
+
+	OutputDebugString(_T("My output string."));
+
+If you project is configured to build for UNICODE it will expand into:
+
+	OutputDebugStringW(L"My output string.");
+
+If you are not building for UNICODE it will expand into:
+
+	OutputDebugStringA("My output string.");
+

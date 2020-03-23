@@ -1,0 +1,19 @@
+====================================================
+Change local repo directory
+====================================================
+https://howtodoinjava.com/maven/change-local-repository-location/
+
+====================================================
+Update(generate) eclipse project with maven
+====================================================
+1. right click project - Run As - Maven generate-sources
+2. right click project - Maven - Update Project
+
+-----------------------------------------------------
+[problem]
+java.lang.ClassNotFoundException: org.springframework.web.servlet.DispatcherServlet
+
+https://stackoverflow.com/questions/21705851/spring-mvc-suddenly-class-not-found-dispatcherservlet
+solution: 
+	- right click project - Properties - Deployment Assembly
+	- Add... - Java Build Path Entries - Maven Dependencies

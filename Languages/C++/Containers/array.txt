@@ -1,0 +1,100 @@
+http://www.cplusplus.com/doc/tutorial/arrays/
+//==================================================================
+// Initialize
+//==================================================================
+int foo [5];
+
+int foo [5] = { 16, 2, 77, 40, 12071 }; 
+int bar [5] = { 10, 20, 30 };
+int baz [5] = { }; 
+
+int foo [] = { 16, 2, 77, 40, 12071 };
+
+int foo[] { 10, 20, 30 }; 
+
+--------------------------------------------------------------
+[why i cannot assign bar to foo?]
+foo[] is a reference
+we cannot reassign a reference
+
+--------------------------------------------------------------
+[but how to assign one array to another?]
+https://stackoverflow.com/questions/23850656/assigning-one-array-to-another-array-c
+std::copy(std::begin(a1), std::end(a1), std::begin(a2));
+
+
+//==================================================================
+// size
+//==================================================================
+--------------------------------------------------------------
+[int, long...]
+int foo [] = {1, 2, 3};
+sizeof(foo) / sizeof(int)
+
+--------------------------------------------------------------
+[char]
+char c_arr[] = "abc"
+sizeof(c_arr) - 1
+
+
+//==================================================================
+// length
+//==================================================================
+-------------------------------------------------
+[calculate from sizeof()]
+int a[] = {1, 2, 3};
+int length = sizeof(a)/sizeof(a[0]);
+
+-------------------------------------------------
+[calculate from _countof]
+(https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/strcpy-s-wcscpy-s-mbscpy-s?view=vs-2019)
+
+#include <stdlib.h>
+
+char string[80];
+int length = _countof(string);
+
+
+//==================================================================
+// Difference between char * and char []
+//==================================================================
+-------------------------------------------------
+[initialize]
+char * cp = 'a';
+
+char cap[] = "abc";
+
+-------------------------------------------------
+[content]
+cp 				//address of 'a'
+
+		cap[0]
+cap	->	&cap[0]	//address of first element
+&cap == &cap[0]
+
+-------------------------------------------------
+[access]
+*cp
+
+*cap	//first element
+cap[0]	//first element
+
+-------------------------------------------------
+[size]
+sizeof(cp);		//output: 4
+sizeof(cap);	//output: see numerical types
+
+
+//==================================================================
+// Pointer to array & array of pointers
+//==================================================================
+https://stackoverflow.com/questions/2879700/c-array-of-pointers
+https://stackoverflow.com/questions/10252837/pointer-to-array-c
+
+Foo *array[10]; // array of 10 Foo pointers
+Foo (*array)[10]; // pointer to array of 10 Foos
+
+//array: pointer to the first element
+//Foo (*array)[10]: pointer to array(a pointer points to another pointer)
+
+

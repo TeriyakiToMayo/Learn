@@ -1,0 +1,8 @@
+https://www.youtube.com/watch?v=G4N8vJpf7hM&vl=en
+
+A: n*n matrix
+x: n*1 vector
+L: lemda, an eigenvalue of A 
+α: random scalar
+
+A * αx = (1/α)L * αx

@@ -1,0 +1,32 @@
+=============================
+Files
+=============================
+
+	Ctrl + H		show hidden files
+
+
+
+
+=============================
+Directory
+=============================
+
+	/			root directory, contains apt, etc, home...
+
+	~/			current user home
+				"~/" == "/home/username/"
+	~/Desktop		desktop of current user
+
+
+=============================
+Screenshot
+=============================
+	
+	Use Screenshot App
+	
+	
+=============================
+Assistive Technology
+=============================
+	https://github.com/Microsoft/vscode-arduino/issues/644
+	

@@ -1,0 +1,119 @@
+//==================================================================
+// Problem
+//==================================================================
+Given n non-negative integers a1, a2, ..., an , where each represents a 
+point at coordinate (i, ai). n vertical lines are drawn such that the two 
+endpoints of line i is at (i, ai) and (i, 0). Find two lines, which 
+together with x-axis forms a container, such that the container contains 
+the most water.
+
+Note: You may not slant the container and n is at least 2.
+
+SEE "question 11.jpg"
+
+The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In 
+this case, the max area of water (blue section) the container can contain 
+is 49.
+
+
+Example:
+
+Input: [1,8,6,2,5,4,8,3,7]
+Output: 49
+
+
+//==================================================================
+// Analysis
+//==================================================================
+https://leetcode.com/problems/container-with-most-water/discuss/6099/yet-another-way-to-see-what-happens-in-the-on-algorithm
+
+Matrix:
+	- rows: left line
+	- columns: right line
+	- each cell: one case
+	
+Note:
+	1. diagonal: lines overlapped (can be seen as positions of left line)
+	2. left triangle: 2 lines switched, symmetric to right triangle
+	
+Corresponding diagram:
+[1, 2]				[2, 3]				[3, 4]				[4, 5]				[5, 6]
+  1 2 3 4 5 6		  1 2 3 4 5 6		  1 2 3 4 5 6		  1 2 3 4 5 6		  1 2 3 4 5 6
+1 x -				1 x ---				1 x -----			1 x -------			1 x ---------
+2 x x				2 x x 				2 x x 				2 x x 				2 x x 
+3 x x x 			3 x x x 			3 x x x				3 x x x				3 x x x
+4 x x x x			4 x x x x			4 x x x x			4 x x x x 			4 x x x x
+5 x x x x x			5 x x x x x			5 x x x x x			5 x x x x x			5 x x x x x 
+6 x x x x x x		6 x x x x x x		6 x x x x x x		6 x x x x x x		6 x x x x x x
+
+[1, 6]				[2, 6]				[3, 6]				[4, 6]				[5, 6]
+  1 2 3 4 5 6		  1 2 3 4 5 6		  1 2 3 4 5 6		  1 2 3 4 5 6		  1 2 3 4 5 6
+1 x ---------		1 x 				1 x 				1 x 				1 x 
+2 x x				2 x x -------		2 x x 				2 x x 				2 x x 
+3 x x x 			3 x x x 			3 x x x -----		3 x x x				3 x x x
+4 x x x x			4 x x x x			4 x x x x			4 x x x x ---		4 x x x x
+5 x x x x x			5 x x x x x			5 x x x x x			5 x x x x x			5 x x x x x -
+6 x x x x x x		6 x x x x x x		6 x x x x x x		6 x x x x x x		6 x x x x x x
+
+
+1. Start with (1, 6), assume L1 is lower
+
+  1 2 3 4 5 6
+1 x ------- o
+2 x x
+3 x x x 
+4 x x x x
+5 x x x x x
+6 x x x x x x
+
+Since L1 is lower, then
+Amax(1, 2) = L1*1 < L1*6	//Amax because there are cases L1 > Ln
+Amax(1, 3) = L1*2 < L1*6	//Then Amax(1, n) = L1*(n - 1) > Ln*(n - 1) = A(1, n)
+Amax(1, 4) = L1*3 < L1*6
+Amax(1, 5) = L1*5 < L1*6
+
+Hence A(1, 6) is max among all, then, the only way is to go down to (2, 6)
+
+
+2. Now we are at (2, 6), assume L6 is lower
+
+  1 2 3 4 5 6
+1 x - - - - o
+2 x x       o
+3 x x x     |
+4 x x x x   |
+5 x x x x x |
+6 x x x x x x
+
+Similarly, since L6 is lower, then
+Amax(3, 6) = L6*3 < L6*4
+Amax(4, 6) = L6*2 < L6*4
+Amax(5, 6) = L6*1 < L6*4
+
+Hence A(2, 6) is max among all, then, the only way is to go left to (2, 5)
+
+
+3. Now we are at (2, 5), assume L5 is lower
+
+  1 2 3 4 5 6
+1 x - - - - o
+2 x x     o o
+3 x x x   | |
+4 x x x x | |
+5 x x x x x |
+6 x x x x x x
+
+Similarly, the only way is to go left to (2, 4)
+
+
+n. At last,
+
+  1 2 3 4 5 6
+1 x ------- o
+2 x x - o o o
+3 x x x o | |
+4 x x x x | |
+5 x x x x x |
+6 x x x x x x
+
+the max is always among the cases of "o"

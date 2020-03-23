@@ -1,0 +1,83 @@
+====================================================
+Problem 97. Interleaving String
+====================================================
+Given s1, s2, s3, find whether s3 is formed by the 
+interleaving of s1 and s2.
+
+Example 1:
+
+Input: s1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac"
+Output: true
+
+Example 2:
+
+Input: s1 = "aabcc", s2 = "dbbca", s3 = "aadbbbaccc"
+Output: false
+
+
+
+====================================================
+Analysis
+====================================================
+s1 = "aabcc" 
+s2 = "dbbca" 
+s3 = "aadbbbaccc"
+
+		""		d		b		b		c		a
+	
+""		true 	false 	false 	false 	false 	false
+
+a		true	false	false	false	false	false
+
+a		true	true	true	true	false	false
+
+b		false	true	true	true	false	false
+
+c		false	false	false	false	false	false
+
+c		false	false	false	false	false	false
+														↓ add 1 char to curS1, keep curS2
+					--------------> 
+			keep curS1, add 1 char to curS2
+
+Each cell means: whether current s1 and s2 can generate current s3
+E.g.:
+	- (1, 1): curS1 = "a", curS2 = "d", curS3 = "aa" [false]
+	- (2, 1): curS1 = "aa", curS2 = "d", curS3 = "aad" [true]
+	- (2, 2): curS1 = "aa", curS2 = "db", curS3 = "aadb" [true]
+
+
+
+
+====================================================
+Java Approach: Dynamic Programming
+3 ms	85.66%
+37.7 MB	5.03%
+====================================================
+public static boolean isInterleave(String s1, String s2, String s3) {
+	
+	int len1 = s1.length(), len2 = s2.length(), len3 = s3.length();
+	if((len1 + len2) != len3) return false;
+	
+	boolean[][] dp = new boolean[len1 + 1][len2 + 1];
+	dp[0][0] = true;
+	
+	for(int i = 1; i <= len1; i++) {
+		dp[i][0] = dp[i - 1][0] == true ? s1.charAt(i - 1) == s3.charAt(i - 1) : false;
+	}
+	
+	for(int i = 1; i <= len2; i++) {
+		dp[0][i] = dp[0][i - 1] == true ? s2.charAt(i - 1) == s3.charAt(i - 1) : false;
+	}
+	
+	for(int i = 1; i <= len1; i++) {
+		for(int j = 1; j <= len2; j++) {
+			dp[i][j] = dp[i - 1][j] == true ? s1.charAt(i - 1) == s3.charAt(i + j - 1) : false;
+			if(!dp[i][j]) {
+				dp[i][j] = dp[i][j - 1] == true ? s2.charAt(j - 1) == s3.charAt(i + j - 1) : false;
+			}
+		}
+	}
+	
+	return dp[len1][len2];
+}

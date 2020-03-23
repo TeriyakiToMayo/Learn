@@ -1,0 +1,74 @@
+http://www.cplusplus.com/doc/tutorial/preprocessor/
+https://www.tutorialspoint.com/cplusplus/cpp_preprocessor.htm
+//==================================================================
+// #include
+//==================================================================
+#include <header>
+#include "file"
+
+
+//==================================================================
+// #define #undef
+//==================================================================
+------------------------------------------------------
+[variable]
+#define TABLE_SIZE
+#define TABLE_SIZE 100
+
+------------------------------------------------------
+[function]
+#define func(a, b) a/b		//simple replacement: func(10*5, 6*9) => 10*5/6*9
+
+#define str(x) #x			//convert x to a string surrounded by quotes
+							//str(test) => "test"
+
+#define concat(x, y) x ## y	//concatenate two tokens
+							//concat(a, b) => ab
+
+Evaluation Order:
+1. If stringfy, then stringfy it
+2. If not stringfy, expand it first
+https://stackoverflow.com/questions/8754593/macro-evaluation-order
+
+Ex.
+#define f(a, b) a ## b
+#define g(a) #a
+#define h(a) g(a)
+
+h(f(1, 2));	//output: 12
+g(f(1, 2));	//output: f(1, 2)
+
+
+//==================================================================
+// #if #ifdef #ifndef #else #elif #endif
+//==================================================================
+#if/#ifdef/#ifndef
+
+#elif
+
+#else
+
+#end
+
+
+//==================================================================
+// Others
+//==================================================================
+#line number "file"
+https://en.cppreference.com/w/cpp/preprocessor/line
+
+#error A C++ compiler is required
+
+
+//==================================================================
+// Built-in Values
+//==================================================================
+__LINE__
+
+__FILE__
+
+__DATE__
+
+__TIME__
+
+__cplusplus

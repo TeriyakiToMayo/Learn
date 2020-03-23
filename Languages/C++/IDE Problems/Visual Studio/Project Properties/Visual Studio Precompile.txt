@@ -1,0 +1,9 @@
+https://stackoverflow.com/questions/7261707/how-to-avoid-precompiled-headers
+
+Project 
+-> Properties
+-> Configuration Properties 
+-> C/C++ 
+-> Precompiled Headers
+
+change the "Precompiled Header" setting to "Not Using Precompiled Headers" option.

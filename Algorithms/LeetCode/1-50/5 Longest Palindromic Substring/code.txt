@@ -1,0 +1,59 @@
+//==================================================================
+// Java
+//==================================================================
+--------------------------------------------------------------
+[Dynamic Programming]
+public static String longestPalindrome(String s) {
+	        
+	if(s == null || s.length() == 0) return s;
+	
+	String res = "";
+	boolean[][] dp = new boolean[s.length()][s.length()];
+	
+	int max = 0;
+	for(int j = 0; j < s.length(); j++) {
+		for(int i = 0; i <= j; i++) {
+			dp[i][j] = s.charAt(i) == s.charAt(j) && ((j - i <= 2) || dp[i + 1][j - 1]);
+		//	System.out.println(s + " " + s.substring(i, j + 1) + " i = " + i + " j = " + j);
+		//	print2DArray(dp);
+			if(dp[i][j]) {
+				if(j - i + 1 > max) {
+					max = j - i + 1;
+					res = s.substring(i, j + 1);
+				}
+			}
+		}
+	}
+	
+	return res;
+}
+
+--------------------------------------------------------------
+[Expansion]
+public static String res = "";
+public static String longestPalindrome2(String s) {
+	res = "";
+	if(s == null || s.length() == 0) return s;
+	
+	for(int i = 0; i < s.length(); i++) {
+		helper(s, i, i);			//detect odd number of letters "a" "aba"
+		helper(s, i, i + 1);	//detect even number of letters "aa" "abba"
+	}
+	
+	return res;
+}
+
+public static void helper(String s, int left, int right) {
+	while(true) {
+		if(left >= 0 && right < s.length() && (s.charAt(left) == s.charAt(right))) {
+			left--;
+			right++;
+		}else {
+			break;
+		}
+	}
+	
+	String temp = s.substring(left + 1, right);
+	if(res.length() < temp.length()) res = temp;
+	
+}

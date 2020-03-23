@@ -1,0 +1,122 @@
+https://www.learncpp.com/cpp-tutorial/header-files/
+
+//==================================================================
+// Compile Process
+//==================================================================
+1. [Preprossessor]: All contents from headers are copied to Main.cpp by preprocessor
+	//declarations can duplicate  (even in the same file)
+	//definition cannot duplicate
+	
+2. [Compiler]: Main.cpp are [compiled] into Main.o
+	// same thing happens to all other cpp files
+	// each file is called "Translation Unit"
+
+3. [Linker]: All .o files are [linked] to each other => Main.exe
+
+
+
+//==================================================================
+// Angled Brackets vs. Quotes
+//==================================================================
+//headers that are not included in project can also be used
+//libs not incldued in project cannot be used
+
+#include <iostream> // VS compiler directly goes to [system directory] to find .h files/
+
+#include "add.h" // [user directory] -> [include] -> [system directory]
+
+
+//==================================================================
+// Why doesnt' iostream have a .h extention?
+//==================================================================
+C:
+	stdlib.h (can still be used) => cstdlib
+	
+	Ex.
+	include <stdlib.h>
+	include <cstdlib>
+
+Old C++: 
+	iostream.h (cannot be used) => iostream
+	string.h (cannot be used) => string
+	... ...
+	
+	Ex.
+	include <iostream>
+	include <string>
+
+Customized headers:
+	"xxx.h"
+	
+	Ex.
+	include "xxx.h"
+
+//old headers can still be used
+//new programs directly use new headers
+
+
+//==================================================================
+// Headers may include other headers
+//==================================================================
+* Problem: when implementation changes, those implicitly included headers may changes,
+			then your program wont work
+
+* Best practice:
+Each .cpp file should explicitly #include all of the header files it needs to compile. 
+Do not rely on headers included from other headers.
+
+* Problem2: 
+//a.h:
+	#include "b.h"
+
+//b.h:
+	#include "a.h"
+
+//result: wont compile, error(too many include files: depth = 1024)
+
+------------------------------------------------------
+[header include positions and their internal includes]
+- If a header is included at very beginning, then it needs to include all headers it needs
+- If a header is included in the middle, and all headers it needs have been included, 
+	it does not need to include them again
+
+
+//==================================================================
+// Header guards
+//==================================================================
+https://www.learncpp.com/cpp-tutorial/header-guards/
+
+0. repeated function prototypes are valid
+
+1. repeatedly adding the same header -> duplicated definitions
+	- Solution:
+		#ifndef SOME_UNIQUE_NAME_HERE
+		#define SOME_UNIQUE_NAME_HERE
+		
+		// content here
+		
+		#endif
+		//this def only exists until the end of current cpp file.
+		//it is not defined once preprocessor goes to the next cpp file
+		
+2. same definitions in different files
+
+
+//==================================================================
+// Header content
+//==================================================================
+"C++ Primer Plus" p448
+
+0. constants:
+	- #define
+	- const
+
+1. functions:
+	- function prototypes
+	- inline functions
+	
+2. structure:
+	- struct declarations
+	- class declarations
+	
+3. template declarations

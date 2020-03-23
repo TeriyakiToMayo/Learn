@@ -1,0 +1,94 @@
+
+
+//==================================================================
+// get input line
+//==================================================================
+https://stackoverflow.com/questions/29630513/difference-between-cin-and-cin-get-for-char-array
+--------------------------------------------
+[Output single word]
+std::cin >> a;
+//skipping over any leading space characters, and stopping when it encounters a space character
+
+--------------------------------------------
+[Output string]
+string str;
+std::getline(std::cin, str);
+
+--------------------------------------------
+[Output c_string]
+char str[256];
+std::cin.get(str, 256); 
+	//this line leaves '\0' in stream, repeating it will 
+	//keep hitting the '\0', so no input will be consumed anymore
+std::cin.get();
+	//this line consumes '\0'
+	
+ORRRRRRRRRRRR
+std::cin.getline(str, 256);
+
+
+//==================================================================
+// Input types
+//==================================================================
+--------------------------------------------
+[function arguments (Lintcode, LeetCode)]
+Nothing to do
+
+--------------------------------------------
+[console input (GeeksForGeeks, NowCoder)]
+
+1. Single line
+	- getline(cin, str); int var = stoi(str);
+	- cin >> var0 >> var1 >> var2;
+	- scanf("%d%s%d", &var0, &str, &var1);
+
+2. Multiple lines with line number
+	- getline
+	- cin
+	- scanf
+
+3. Multiple lines without line number
+https://stackoverflow.com/questions/4708335/istreamgetline-return-type
+	- getline:
+		string str;
+		while(getline(cin, str)){}
+			//terminate: ctrl + z
+	- gets:
+		char a[1001][1001];
+		int len[1001],i=0,max=0,min=1000;
+		while(gets(a[i]))
+		{
+			len[i]=strlen(a[i]);
+			i++;
+		}
+
+//==================================================================
+// cin.fail()
+//==================================================================
+//cin.fail() returns true if the last cin command failed, and false otherwise.
+
+int main() {
+  int i, j = 0;
+
+  while (1) {
+    i++;
+    cin >> j;
+    if (cin.fail()) return 0;
+    cout << "Integer " << i << ": " << j << endl;  
+  }
+}
+
+//input: 30 40 50 60 70 -100 Fred 99 88 77 66
+/*	output:  Integer 1: 30
+*	Integer 2: 40
+*	Integer 3: 50
+*	Integer 4: 60
+*	Integer 5: 70
+*	Integer 6: -100
+*/
+//it will not continue after 6th value as it quits after reading the seventh word, because that is not an 
+//integer: cin.fail() returns true.
+
+//when you detect that there is a number, you can use an std::istringstream to convert it, or any number of other 
+//alternatives (strtol, or std::stoi if you have C++11).
+

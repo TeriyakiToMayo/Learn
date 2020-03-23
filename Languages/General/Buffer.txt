@@ -1,0 +1,15 @@
+https://www.thoughtco.com/definition-of-buffer-p2-958030
+//==================================================================
+// What is buffer
+//==================================================================
+Buffer:
+	- A block of computer memory that serves as a temporary placeholder. 
+	- Advantage:
+		- Reduce difference between input speed and output speed.
+//==================================================================
+// Buffer & Cache
+//==================================================================
+Cache:
+	- Is a buffer:
+		1. stores data that is expected to be read several times
+		1. reduces the need to access slower storage.

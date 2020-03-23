@@ -1,0 +1,10 @@
+====================================================
+What if installer cannot correctly configure Windows Service?
+====================================================
+1. Check if C++ Library is not working
+https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads
+
+2. See this reply
+http://www.webdevelopersnotes.com/how-do-i/install-mysql-windows-7.php
+
+

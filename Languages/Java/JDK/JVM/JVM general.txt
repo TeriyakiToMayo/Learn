@@ -1,0 +1,97 @@
+https://www.bilibili.com/video/av62904698?p=2
+//==================================================================
+// JVM Core
+//==================================================================
+------------------------------------------------------
+[How it works]
+
+.class -> JVM -> native code
+
+------------------------------------------------------
+[algorithms]
+HotSpot(tested JDK 1.3 -> commercilized JDK 1.5): 
+	- marks the frequency of each .class
+	- store high frequency .class in cache
+
+
+
+//==================================================================
+// JVM Types
+//==================================================================
+				Memory uses		Threads
+Client VM: 			less		 fewer
+
+Server VM:			more		 more
+
+------------------------------------------------------
+[how to change structure*]
+java_path\jre\lib\...\jvm.cfg
+
+- client KNOWN
+- server KNOWN
+//the 1st one is default
+
+
+
+//==================================================================
+// JVM Architecture
+//==================================================================
+https://www.guru99.com/java-virtual-machine-jvm.html
+
+1. Class Loader
+
+2. JVM Memory
+	- Heap*
+	- JVM Language Stacks* (Thread)
+	- Native Method Stacks
+	- Method Area
+	- Program Counter(PC) Registers* (Thread)
+
+3. Execution Engine (manipulates JVM Memory)
+
+
+
+//==================================================================
+// JVM Memory: JVM Language Stacks
+//==================================================================
+------------------------------------------------------
+[Threads and stacks]
+
+Thread Structure:
+
+	[PC Register]
+		- Stores the line number of current instruction 
+		- Updated by Execution Engine
+
+	[Stack]
+
+
+
+------------------------------------------------------
+[Stack content]
+
+I. Stack structure:
+
+int e
+int d		<- frame_someMethod2()
+-------
+int c		<- frame_someMethod1()
+-------
+int a		<- frame_main(): contains local variables, int a can be used in all methods above
+-------
+Stack
+
+
+II. Frame structure:
+https://www.geeksforgeeks.org/java-virtual-machine-jvm-stack-area/
+
+1. Local Variable Array
+2. Operand Stack
+3. Frame Data
+	- Refrences: constant pool
+	- Method return
+
+E.g. SEE "Java Compile.txt" "Dissemble Compiled Java Code"
+
+
+

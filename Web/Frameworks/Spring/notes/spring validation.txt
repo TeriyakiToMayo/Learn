@@ -1,0 +1,14 @@
+====================================================
+Bean Validation Annotations
+====================================================
+//Size
+@Size(min=1, message="required")  
+
+//Regular Expression
+@Pattern(regexp="^[a-zA-Z0-9]{3}",message="length must be 3")
+
+//Min & Max
+@Min(value=18, message="must be equal or greater than 18")  
+@Max(value=45, message="must be equal or less than 45")  
+
+

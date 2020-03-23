@@ -1,0 +1,246 @@
+http://www.opengl-tutorial.org/assets/faq_quaternions/index.html#Q36
+//==================================================================
+// Arithmatic
+//==================================================================
+------------------------------------------------------
+[Multiplication]
+
+---------------	|1	0|
+|	-----------	|0	2|
+|	|	-------	|1	0|
+|	|	|		
+|1	0	0|		|1	0|	//1 = 1 * 1 + 0 * 0 + 0 * 1
+|0	2	0|		|0	4|
+|0	0	3|		|3	0|
+|0	0	4|		|4	0|
+
+
+//==================================================================
+// Determinants
+//==================================================================
+------------------------------------------------------
+[Determinant]
+Indication of inverse existence
+
+Det == 0	//no inverse
+Det != 0	//inverse exists
+
+------------------------------------------------------
+[Types of matrices]
+Det == 1	//isotropic
+Det != 1	//anisotropic
+
+------------------------------------------------------
+[Determinant Calculations]
+https://www.math.utah.edu/~gustafso/determinants.pdf "Determinant Notation for Cramer's Rule"
+
+//1 * 1:
+M = [a]
+
+Det_M = a
+
+
+//2 * 2:
+M = |a	b|
+	|c	d|
+	
+Det_M = a * [d] - b * [c]
+	  =-c * [b] + d * [a]
+
+
+//3 * 3:
+M = |a	b	c|
+	|d	e	f|
+	|g	h	i|
+
+Det_M = a * |e  f| - b * |d  f| + c * |d  e|
+			|h  i|		 |g  i|		  |g  h|
+			
+	  =-d * |b  c| + e * |a  c| - f * |a  b|
+			|h  i|		 |g  i|		  |g  h|
+			
+	  = g * |b  c| - h * |a  c| + i * |a  b|
+			|e  f|		 |d  f|		  |d  e|
+
+//N * N:
+Similar to 3 * 3
+
+
+//==================================================================
+// Inverses
+//==================================================================
+------------------------------------------------------
+[Inverse]
+M * M^-1 = I
+
+------------------------------------------------------
+[Inverse Calculations: Formula]
+//1 * 1:
+M = [a]
+
+M^-1 = [1/a]
+
+
+//2 * 2:
+M = |a	b|
+	|c	d|
+	
+M^-1 = 1/Det_M * |Det([d])  -Det([c])|
+				 |-Det([b])  Det([a])|
+	 = 1/Det_M * |d  -c|
+				 |-b  a|
+
+
+//3 * 3:
+M = |a  b  c|
+	|d  e  f|
+	|g  h  i|
+	
+M^-1 = 1/Det_M * | Det(|e  f|)  -Det(|d  f|)   Det(|d  e|)|
+					   |h  i|		 |g  i|		   |g  h|
+					  
+				 |-Det(|b  c|)   Det(|d  f|)  -Det(|a  b|)|
+					   |h  i|		 |g  i|		   |g  h|
+					  
+				 | Det(|b  c|)  -Det(|a  c|)   Det(|a  b|)|
+					   |e  f|		 |d  f|		   |d  e|
+					   
+	 = 1/Det_M * | (ei - fh)  -(bi - hc)   (bf - ec)|
+				 |-(di - fg)   (ai - gc)  -(af - dc)|
+				 | (dh - ge)  -(ah - gb)   (ae - bd)|
+				 
+
+//N * N:
+similar to 3 * 3
+
+------------------------------------------------------
+[Inverse Calculations: By Hand]
+|a  b  c | 1  0  0|		 |1  0  0 | j  k  l|
+|d  e  f | 0  1  0|  =>  |0  1  0 | m  n  o|
+|g  h  i | 0  0  1|		 |0  0  1 | p  q  r|
+
+
+//==================================================================
+// Rotations
+//==================================================================
+------------------------------------------------------
+[Rotation Matrices]
+"Q28 - Q30"
+
+//X-axis
+|1        0        0      |
+|0        cos(A)   -sin(A)|
+|0        sin(A)   cos(A) |
+
+//Y-axis
+|cos(A)	  0        sin(A) |
+|0		  1        0      |
+|-sin(A)  0        cos(A) |
+
+//Y-axis
+|cos(A)   -sin(A)  0      |
+|sin(A)   cos(A)   0      |
+|0        0        1      |
+
+
+------------------------------------------------------
+[Euler Angle => Matrix]
+"Q36. How do I generate a rotation matrix from Euler angles?"
+
+|ce          -cf         d   0|
+|(bde + af)  (-bdf + ae) -bc 0|
+|(-ade + bf) (adf + be)  ac  0|
+|0           0           0   1|
+
+a = cos(angle_x);
+b = sin(angle_x);
+c = cos(angle_y);
+d = sin(angle_y);
+e = cos(angle_z);
+f = sin(angle_z);
+
+
+------------------------------------------------------
+[Quaternion => Matrix]
+"Q54. How do I convert a quaternion to a rotation matrix?"
+
+Q = [x y z w]
+
+|(1 - (2y^2 + 2z^2)) (2xy + 2zw)          (2xz - 2yw)        |
+|(2xy - 2zw)         (1 - (2x^2 + 2z^2))  (2yz + 2xw)        |
+|(2xz + 2yw)         (2yz - 2xw)          (1 - (2x^2 + 2y^2))|
+
+
+//==================================================================
+// Quaternion
+//==================================================================
+http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-17-quaternions/
+Rotation Axis + Angle
+
+--------------------------------------------------------------
+[representation]
+[x y z w]
+	- x = Axis.x * sin(Angle / 2)
+	- y = Axis.y * sin(Angle / 2)
+	- z = Axis.z * sin(Angle / 2)
+	- w = cos(Angle / 2)
+
+--------------------------------------------------------------
+[arithmatics]
+q = [s(calar) v(ector)]
+
+//multiplication
+q1q2 = [(s1 * s2 - v1 * v2)  (s2 * v1 + s1 * v2 + v1v2)]
+
+//inner product
+q1 * q2 = s1 * s2 + v1 * v2
+
+//length
+|q| = root(q * q)
+
+//inverse
+q^-1 = 1/|q|^2 * [s -v]
+
+//unit quaternion
+q_unit = q/|q|
+
+
+------------------------------------------------------
+[Example: Calculate Unit Quaternion]
+
+Rotate 60 degrees about v = [3, 4, 0]
+
+cos(60/2) = cos(30) = root(3)/2
+sin(60/2) = sin(30) = 1/2
+
+Compute v’ = v/||v|| = [3,4,0]/5 = [3/5,4/5,0]	
+//since |q| = root(
+//					cos^2(Angle/2) + sin^2(Angle/2) * ((Axis.x)^2 + (Axis.y)^2 + (Axis.y)^2)
+//				  )
+//if |Axis| == 1, then |q| == 1
+
+q = [root(3)/2, (1/2)*[3/5,4/5, 0]]
+      = [root(3)/2, 3/10, 2/5, 0]
+
+||q|| = 3/4 + 9/100 + 4/25 
+          = (75+9+16)/100 = 1
+
+------------------------------------------------------
+[Example: Point Rotation Calculation]
+Rotate point P = (px,py,pz) = (0, 1, 1) 90 degrees about the y-axis
+
+P_rotated = q[0,P]q^-1
+
+q 
+= [cos(90/2), sin(90/2)[0,1,0]]
+= [cos45, 0, sin45, 0] 
+= [root(2)/2, 0, root(2)/2, 0]
+
+q-1 
+= 1/1 * [root(2)/2, 0, -root(2)/2, 0]
+= [root(2)/2, 0, -root(2)/2, 0]
+
+P_rotated
+= q[0,P]q-1
+=[root(2)/2, 0, root(2)/2, 0][0,0,1,1][root(2)/2, 0, -root(2)/2, 0]
+

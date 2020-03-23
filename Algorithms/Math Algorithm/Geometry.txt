@@ -1,0 +1,156 @@
+//==================================================================
+// Orientation of 3 ordered points
+//==================================================================
+https://www.geeksforgeeks.org/orientation-3-ordered-points/ *(this tutorial contains mistakes, slope does not work)
+https://stackoverflow.com/questions/17592800/how-to-find-the-orientation-of-three-points-in-a-two-dimensional-space-given-
+coo
+
+-------------------------------------------------------
+[Analysis]
+p1 (x1, y1)
+p2 (x2, y2)
+p3 (x3, y3)
+
+α = p2 - p1 = (x2 - x1, y2 - y1)	//assume a1 = x2 - x1, b1 = y2 - y1
+β = p3 - p2 = (x3 - x2, y3 - y2)	//assume a2 = x3 - x2, b2 = y3 - y2
+
+α x β = 
+|i	j	k|
+|a1	b1	0| = k * a1 * b2 + k * b1 * a2 = k * [(x2 - x1)(y3 - y2) - (x3 - x2)(y2 - y1)]
+|a2	b2	0|
+
+|α x β| 
+= |α| * |β| * sin(θ)	//θ: angle between α and β; sin(θ) angle from α to β
+= (x2 - x1)(y3 - y2) - (x3 - x2)(y2 - y1)
+
+
+Hence if
+0 < θ < 180, sin(θ) > 0: 
+	β turns left, counterclockwise
+180 < θ < 360, sin(θ) < 0:
+	β turns right, clockwise
+θ == 0 || θ == 180, sin(θ) == 0:
+	colinear
+
+-------------------------------------------------------
+[Code]
+int orientation(Point p1, Point p2, Point p3)
+{
+	int val = (p2.x - p1.x) * (p3.y - p2.y) - 
+				(p2.y - p1.y) * (p3.x - p2.x); 
+  
+    if (val == 0) return 0;  // colinear 
+  
+    return (val > 0)? 1: 2; // counterclock or clock wise 
+}
+
+
+//==================================================================
+// Segment Intersection
+//==================================================================
+https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/
+
+-------------------------------------------------------
+[Analysis]
+segments: (a1, b1), (a2, b2)
+
+Case 1: each point on each segment is on different sides of the other segment
+	- (a1, b1, a2) and (a1, b1, b2) different (a2, b2 on different sides of (a1, b1))
+	- (a2, b2, a1) and (a2, b2, b1) different
+
+Case 2: There is at least 1 segment whose points are on the same side(counterclockwise, colinear, clockwise) 
+of the other segment
+	- check each point whether it is colinear with the points on the other segment
+		- orientation(a1, b1, a2) == 0	//check if a2 is on (a1, b1)
+		- orientation(a1, b1, b2) == 0	//check if b2 is on (a1, b1)
+		- orientation(a2, b2, a1) == 0	//check if a1 is on (a2, b2)
+		- orientation(a2, b2, b1) == 0	//check if b1 is on (a2, b2)
+	- if it is, then check whether it is within the range
+		- if segment(a1, b1) is tilted, then check min(a1.x, b1.x) <= a2.x <= max(a1.x, b1.x) is enough
+		- if segment(a1, b1) is horizontal/vetical
+			- check min(a1.x, b1.x) <= a2.x <= max(a1.x, b1.x)
+			- check min(a1.y, b1.y) <= a2.y <= max(a1.y, b1.y)
+		
+-------------------------------------------------------
+[Code]
+bool onSegment(Point p, Point q, Point r) 
+{ 
+    if (q.x <= max(p.x, r.x) && q.x >= min(p.x, r.x) && 
+        q.y <= max(p.y, r.y) && q.y >= min(p.y, r.y)) 
+       return true; 
+  
+    return false; 
+}
+
+bool doIntersect(Point p1, Point q1, Point p2, Point q2) 
+{ 
+    // Find the four orientations needed for general and 
+    // special cases 
+    int o1 = orientation(p1, q1, p2); 
+    int o2 = orientation(p1, q1, q2); 
+    int o3 = orientation(p2, q2, p1); 
+    int o4 = orientation(p2, q2, q1); 
+  
+    // General case 
+    if (o1 != o2 && o3 != o4) 
+        return true; 
+  
+    // Special Cases 
+    // p1, q1 and p2 are colinear and p2 lies on segment p1q1 
+    if (o1 == 0 && onSegment(p1, p2, q1)) return true; 
+  
+    // p1, q1 and q2 are colinear and q2 lies on segment p1q1 
+    if (o2 == 0 && onSegment(p1, q2, q1)) return true; 
+  
+    // p2, q2 and p1 are colinear and p1 lies on segment p2q2 
+    if (o3 == 0 && onSegment(p2, p1, q2)) return true; 
+  
+     // p2, q2 and q1 are colinear and q1 lies on segment p2q2 
+    if (o4 == 0 && onSegment(p2, q1, q2)) return true; 
+  
+    return false; // Doesn't fall in any of the above cases 
+}
+
+
+//==================================================================
+// Point inside Polygon
+//==================================================================
+https://www.geeksforgeeks.org/how-to-check-if-a-given-point-lies-inside-a-polygon/
+
+
+//==================================================================
+// Rectangles Overlap
+//==================================================================
+https://www.geeksforgeeks.org/find-two-rectangles-overlap/
+
+-------------------------------------------------------
+[Analysis]
+l1: Top Left coordinate of Rec1.
+r1: Bottom Right coordinate of Rec1.
+l2: Top Left coordinate of second Rec2.
+r2: Bottom Right coordinate of second Rec2.
+
+(Assume Rec2 is fixed)
+Case 1: l1.x > r2.x
+	- Rec1 on the right
+Case 2: r1.x < l2.x
+	- Rec1 on the left
+Case 3: l1.y < r2.y
+	- Rec1 on the bottom
+Case 4: r1.y > l2.y
+	- Rec1 on the top
+
+-------------------------------------------------------
+[Code]
+bool doOverlap(Point l1, Point r1, Point l2, Point r2) 
+{ 
+    // If one rectangle is on left side of other 
+    if (l1.x > r2.x || r1.x < l2.x) 
+        return false; 
+  
+    // If one rectangle is above other 
+    if (l1.y < r2.y || r1.y > l2.y) 
+        return false; 
+  
+    return true; 
+} 

@@ -1,0 +1,91 @@
+====================================================
+Problem 105. Construct Binary Tree from Preorder and 
+Inorder Traversal
+====================================================
+Given preorder and inorder traversal of a tree, construct 
+the binary tree.
+
+Note:
+You may assume that duplicates do not exist in the tree.
+
+For example, given
+
+preorder = [3,9,20,15,7]
+inorder = [9,3,15,20,7]
+
+Return the following binary tree:
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+
+
+
+
+
+====================================================
+Analysis
+====================================================
+preorder = [3, 9, 20, 15, 7]	//note: 1st element of preorder is always the root
+inorder = [9, 3, 15, 20, 7]
+
+
+preorder = [9, 20, 15, 7]
+			3
+	[9]				[15, 20, 7]
+
+
+preorder = [20, 15, 7]
+			3
+	9				[15, 20, 7]
+
+
+preorder = [15, 7]
+			3
+	9				20
+				[15]	[7]
+
+
+preorder = [7]
+			3
+	9				20
+				15		[7]
+				
+preorder = []
+			3
+	9				20
+				15		7
+
+
+
+====================================================
+Java Approach: Backtracing
+3 ms	90.36%
+41.8 MB	39.50%
+====================================================
+public static int[] PRE;
+public static int preP = 0;
+public static Map<Integer, Integer> map;
+
+public static TreeNode buildTree(int[] preorder, int[] inorder) {
+	if(preorder.length == 0) return null;
+	
+	PRE = preorder;
+	preP = 0;
+	map = new HashMap<Integer, Integer>();
+	for(int i = 0; i < inorder.length; i++) map.put(inorder[i], i);
+	
+	return helper(0, preorder.length - 1);
+}
+
+public static TreeNode helper(int start, int end) {
+	int nodePos = map.get(PRE[preP]);
+	TreeNode node = new TreeNode(PRE[preP]);
+	preP++;
+	if(start  < nodePos) node.left = helper(start, nodePos - 1);
+	if(nodePos < end) node.right = helper(nodePos + 1, end);
+	
+	return node;
+}

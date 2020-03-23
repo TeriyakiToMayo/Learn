@@ -1,0 +1,42 @@
+====================================================
+Serialization
+====================================================
+https://www.tutorialspoint.com/java/java_serialization.htm
+
+Represent an object as a sequence of bytes
+
+
+
+====================================================
+Serial Version ID
+====================================================
+Definition: class version ID for serializing and deserializing
+
+Advantage: 
+	- Keeps class version constant when sending data over network
+	  (www.quora.com/What-is-the-need-for-serialization-in-java)
+
+Deserializing Process:
+	1. Check if SerialVersion ID of object and local class match
+	2. Deserialize the object
+	
+	
+	
+====================================================
+Default or Generated Serial Version ID
+====================================================
+https://stackoverflow.com/questions/888335/why-generate-long-serialversionuid-instead-of-a-simple-1l
+
+Default: 1L						//specify it yourself
+Generated: 8962866084952713644L
+
+
+====================================================
+Problems
+====================================================
+1. If delete a field, then load a object serialized before new class compiled
+- The new object can be deserialized
+- The new object contains all the data, including the removed field
+
+
+

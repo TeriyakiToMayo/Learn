@@ -1,0 +1,174 @@
+====================================================
+Tomcat Environment Settings
+====================================================
+CATALINA_HOME: "bin" folder of target Tomcat 
+
+
+
+====================================================
+Tomcat server.xml Config: Architecture
+====================================================
+https://howtodoinjava.com/tomcat/tomcats-architecture-and-server-xml-configuration-tutorial/
+SEE "Tomcat-Architechture.jpg"
+
+----------------------------------------------------------
+[Connector]
+AKA "Coyote"
+Handles communication with client
+
+<Connector connectionTimeout="20000" port="8080" protocol="HTTP/1.1" redirectPort="8443"/>
+- Request: all WebApp requests are through this connector
+- Properties: 
+	- connectionTimeout: session interval
+	- port
+	- portocol
+	- redirectPort: requests require Secure Socket Layer (SSL) transport are redirected to port 8443
+	
+
+----------------------------------------------------------
+[Host]
+- Network name association (domain name): "localhost" "yourdomain.com"
+	- Domain name resolution:
+		- Domain name server: maps [host] to your [IP address]
+		- Your computer: maps "localhost" to 127.0.0.1 in "C:\Windows\System32\drivers\etc\hosts"
+- One host can contain many WebApps
+
+
+<Host appBase="webapps" autoDeploy="true" name="localhost" unpackWARs="true">
+	<!-- other components -->
+</Host>
+- appBase: application directory
+	- webapps\ROOT:		"http://localhost:8080/"
+	- webapps\otherApp:	"http://localhost:8080/otherApp"
+- unpackWARs: if unpacks .war files
+- autoDeploy: automatically deploys when Tomcat is running
+
+
+----------------------------------------------------------
+[Engine]
+"Request processing pipeline for a specific Service"
+- Engine connects to multiple Connectors
+- Engine contains at least 1 Host (localhost here)
+
+<Engine defaultHost="localhost" name="Catalina">
+- Work process: 
+	1. Receives requests via HTTP connectors
+	2. Forwards requests to Host and Context (WebApp)
+	
+
+----------------------------------------------------------
+[Service]
+Service ties multiple Connectors to 1 Engine
+
+
+----------------------------------------------------------
+[Listener]
+"...(Liseners) respond to specific events."
+
+
+----------------------------------------------------------
+[GlobalNamingResources]
+
+
+----------------------------------------------------------
+[RemoteAddrValve]
+"allow or block requests on the basis of their source IP address"
+
+IP Blocking:
+<Valve className="org.apache.catalina.valves.RemoteAddrValve" block="192\.168.*"/>
+
+Host Blocking:
+<Valve className="org.apache.catalina.valves.RemoteHostValve" deny=".*badweb\.com"/>
+
+Request Logger:
+<Valve className="org.apache.catalina.valves.RequestDumperValve"/>
+
+Single authentication valve:
+<Valve className="org.apache.catalina.valves.SingleSignOn"/>
+
+
+
+====================================================
+Tomcat server.xml Config: Setup Https
+====================================================
+https://darrenoneill.eu/?p=772
+
+1. Generate SSL key:
+	keytool -genkey -alias tomcat -keyalg RSA -keystore “F:\apache-tomcat-8.5.34\conf\localhost.jks”
+
+2. server.xml:
+	<Connector
+		protocol="HTTP/1.1"
+		port="8443" maxThreads="200"
+		scheme="https" secure="true" SSLEnabled="true"
+		keystoreFile="conf\localhost.jks" keystorePass="password"	
+		<!-- keystorePass should be the same as localhost.jks -->
+		clinetAuth="false" sslProtocol="TLS" />
+
+3. Restart tomcat and navigate to https://localhost:8443
+
+
+
+
+====================================================
+Tomcat tomcat-users Config: User Settings
+====================================================
+"tomcat\apache-tomcat-8.5.43\conf\tomcat-users.xml":
+	
+	<!--
+		add these 2 lines between inside <tomcat-users>
+	-->
+	<role rolename="manager-gui"/>
+	<user username="abc123" password="abc123" roles="manager-gui"/>
+
+
+
+	
+====================================================
+Tomcat Deployment
+====================================================
+----------------------------------------------------------
+[manually deploy]
+copy and paste web [app folder] or [.war] to "tomcat\apache-tomcat-8.5.43\webapps"
+
+----------------------------------------------------------
+[deployment structure]
+> BeginnersBookServlet
+	> META-INF
+		- MANIFEST.MF
+		- ...			//some other meta info
+	> WEB-INF
+		> lib			//.jar files
+		> classes		//.classes files, can be originated from folders containing .java, they will be compiled when deployed
+		- web.xml
+	- index.jsp
+
+
+====================================================
+.war File
+====================================================
+https://www.javatpoint.com/war-file
+
+1. Go to deployed webapp folder(e.g. tomcat\apache-tomcat-8.5.43\webapps\BeginnersBookServlet)
+  (Contains META-INFO, WEB-INF and pages):
+		jar -cvf projectname.war *  
+
+2. Manually place the .war file in "tomcat\apache-tomcat-8.5.43\webapps"
+	- Tomcat will automatically extract the content and deploy it
+	
+
+Notice: If create .war File in original project folder (undeployed)
+	1. must perform creation in WebContent folder
+	2. .java must be compiled and put into WEB-INFO/classes
+	3. jar files must be in WEB-INFO/lib (unchecked)
+
+
+====================================================
+Tomcat Deployment Problems
+====================================================
+Tomcat Deployment failed:
+	- Servlet url lacks slash:
+		@WebServlet("servlet/Search") => @WebServlet("/servlet/Search")
+
+Tomcat Deployment succeeded but 404:
+	- web.xml not correct

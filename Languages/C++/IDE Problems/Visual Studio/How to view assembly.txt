@@ -1,0 +1,19 @@
+https://stackoverflow.com/questions/1020498/how-to-view-the-assembly-behind-the-code-using-visual-c
+------------------------------------------------------
+[Debugger]
+1. right click 
+	-> Breakpoint 
+	-> Insert Breakpoint
+
+2. start program
+	-> right click
+	-> Go To Assembly
+
+------------------------------------------------------
+[Generate assembly]
+project
+	-> Properties 
+	-> Configuration Properties
+	-> C/C++
+	-> Output Files
+	-> Assembly Output: Assembly With Source Code

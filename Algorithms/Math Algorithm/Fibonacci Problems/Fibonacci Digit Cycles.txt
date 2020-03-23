@@ -1,0 +1,41 @@
+https://www.goldennumber.net/fibonacci-60-repeating-pattern/
+
+1-digit:
+
+(0-15)0112...
+(16-30)0774...
+
+F(n+15) ≡ 7 * F(n) (in case of mod 10)
+(see https://math.stackexchange.com/questions/113536/fibonaccis-final-digits-cycle-every-60-numbers)
+
+period_1 = 15
+order = 4
+
+Cycle_1 = 15 * 4 = 60
+------------------------------------
+2-digit:
+
+(0-15)0112...
+(16-30)0774...
+(75-90)0774...
+
+period_2 = Cycle_1 + period_1 = 60 + 15 = 75
+order = 4
+
+Cycle_2 = 75 * 4 = 300
+-------------------------------------
+3-digit:
+
+(0-75)0112...
+(75-150)0774...
+(375-450) 0774...
+
+period = Cycle_2 + period_2 = 300 + 75 = 375
+order = 4
+
+Cycle = 375 * 4 = 1500
+--------------------------------------
+4-digit:
+
+somehow
+15000

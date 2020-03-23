@@ -1,0 +1,109 @@
+====================================================
+B Tree Properties
+====================================================
+https://www.cpp.edu/~ftang/courses/CS241/notes/b-tree.htm
+
+B Tree is a specialized m-way tree that can be widely used for 
+disk access.
+
+
+SEE "2.png"
+
+------------------------------------------------------
+[element number]
+
+max = order - 1
+min = max / 2
+
+min is determined by the remaining elements after spliting:
+
+	assume order = 5
+
+	before:
+	- - - - -
+
+	after:
+		-
+	- -   - -
+	
+	
+	assume order = 6
+	
+	before:
+	- - - - - -
+
+	after:
+		-
+	- -   - - -
+
+------------------------------------------------------
+[balance]
+https://www.geeksforgeeks.org/introduction-of-b-tree-2/
+
+Since all leaves in B Tree are of the same height, it avoids 
+unbalancing tree problems
+
+
+
+====================================================
+B Tree Searching
+====================================================
+SEE "1.png"
+
+Search 5 (Similar to Binary Search Tree):
+	- compare 45 with 60, go to left sub-tree
+	- compare 45 with 29 and 32, go to right sub-tree
+	- find 45
+
+
+====================================================
+B Tree Insertion
+====================================================
+https://www.javatpoint.com/b-tree
+
+Insert the node 8 into the B Tree of order 5 shown in the 
+following image. 
+
+	SEE "b-tree-inserting.png"
+
+
+8 will be inserted to the right of 5, therefore insert 8. 
+
+	SEE "b-tree-inserting2.png"
+	
+
+The node, now contain 5 keys which is greater than (5 -1 = 4 ) 
+keys. Therefore split the node from the median i.e. 8 and push 
+it up to its parent node shown as follows.
+
+	SEE "b-tree-inserting3.png"
+	
+	
+
+
+====================================================
+B Tree Deletion
+====================================================
+https://www.javatpoint.com/b-tree
+
+Delete the node 53 from the B Tree of order 5 shown in the 
+following figure. 
+
+	SEE "b-tree-deletion.png"
+
+
+53 is present in the right child of element 49. Delete it. 
+
+	SEE "b-tree-deletion2.png"
+	
+Now, 57 is the only element which is left in the node, the 
+minimum number of elements that must be present in a B tree of 
+order 5, is 2. it is less than that, the elements in its left 
+and right sub-tree are also not sufficient therefore, merge it 
+with the left sibling and intervening element of parent i.e. 49.
+
+The final B tree is shown as follows. 
+
+	SEE "b-tree-deletion3.png"
+	
+	

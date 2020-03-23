@@ -1,0 +1,24 @@
+//==================================================================
+// Declarations in C++
+//==================================================================
+https://stackoverflow.com/questions/37722570/declarations-in-c
+
+declaration must ended with ';'
+
+//==================================================================
+// Object Initialization
+//==================================================================
+std::string ("abc");
+std::string str = "abc";
+std::string str ("abc");
+
+
+//==================================================================
+// Complex Declarations
+//==================================================================
+https://www.codeproject.com/Articles/7042/How-to-interpret-complex-C-C-declarations
+
+http://c-faq.com/decl/spiral.anderson.html
+Clockwise/Spiral Rule
+OR
+C++ Guru Snail Rule

@@ -1,0 +1,73 @@
+====================================================
+Problem 31 Next Permutation
+====================================================
+Implement next permutation, which rearranges 
+numbers into the lexicographically next greater 
+permutation of numbers.
+
+If such arrangement is not possible, it must 
+rearrange it as the lowest possible order (ie, 
+sorted in ascending order).
+
+The replacement must be in-place and use only 
+constant extra memory.
+
+Here are some examples. Inputs are in the 
+left-hand column and its corresponding outputs are 
+in the right-hand column.
+
+1,2,3 → 1,3,2
+3,2,1 → 1,2,3
+1,1,5 → 1,5,1
+
+
+====================================================
+Analysis
+====================================================
+Approach: How to find next permutation
+	1. From right to left, find the 1st a[i - 1] < a[i]
+		- If exists, swap a[i - 1] with element a[j], a[j] is in the right side, just larger than a[i - 1]
+		- If not, current has no next permutation
+	2. Reverse the right side
+		- Before reverse, the right side is descending 
+		  (although a[i - 1] swapped with a[j], a[i - 1] is larger than all elements to the right of a[j])
+		- After reversing, the result is the next permutation
+	(SEE 31_Next_Permutation.gif)
+
+
+1 2 3 4 5 6
+1 2 3 4 6 5
+1 2 3 5 4 6
+1 2 3 5 6 4
+1 2 3 6 4 5
+1 2 3 6 5 4
+1 2 4 3 5 6
+1 2 4 3 6 5
+1 2 4 5 3 6
+......
+6 1 2 3 4 5
+6 1 2 3 5 4
+6 1 2 4 3 5
+6 1 2 4 5 3
+6 1 2 5 3 4
+......
+6 5 4 1 2 3
+6 5 4 1 3 2
+6 5 4 2 1 3
+6 5 4 2 3 1
+6 5 4 3 1 2
+6 5 4 3 2 1
+
+1. No next permutation: all descending 6 5 4 3 2 1
+
+2. Swapping:
+	- Before swapping (a[i - 1] == 5, a[j] = 6), right side (6 4) is descending
+		1 2 3 5 6 4
+			  - _ _
+		
+	- After swapping, right side is still descending, since a[i - 1](5) 
+	  is larger than all elements to the right of a[j](6)
+		1 2 3 6 5 4
+			  - _ _
+			  
+3. After swapping, we have a descending right side, after reversing it, we get the next permutation

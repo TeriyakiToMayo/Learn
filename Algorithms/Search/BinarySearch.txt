@@ -1,0 +1,147 @@
+====================================================
+Why Binary Search is able to find every single element?
+====================================================
+
+A: answer
+l: left
+r: right
+m: m
+
+
+m = (left + right)/2 = left + (right - left)/2	
+//SEE "Algorithms\Fundamental Knowledge in Algorithms
+	  \Discrete Mathematics in Algorithms\position and length.txt" "Position and Length transform\Mid Point"
+
+Answer in left side: r = m - 1
+Answer in right side: l = m + 1
+
+--------------------------------------------------------------
+[Odd length]
+1. 
+A
+- - - - -
+l   m   r
+
+A
+- - - - -
+l r     
+m
+
+2.
+  A
+- - - - -
+l   m   r
+
+  A
+- - - - -
+l r
+m
+
+  A
+- - - - -
+  r
+  l
+  m
+  
+3. 
+    A
+- - - - -
+l   m   r
+
+4.
+      A
+- - - - -
+l   m   r
+
+      A
+- - - - -
+      l r
+      m
+
+5.
+
+        A
+- - - - -
+l   m   r
+
+
+        A
+- - - - -
+      l r
+	  m
+	  
+	    A
+- - - - -
+        r
+	    l
+	    m
+
+--------------------------------------------------------------
+[Even length]
+
+1. 
+A
+- - - -
+l m   r
+
+A
+- - - -
+l 
+r
+m
+
+2. 
+  A
+- - - -
+l m   r
+
+3. 
+    A
+- - - -
+l m   r
+
+    A
+- - - -
+    l r
+    m
+	
+4. 
+      A
+- - - -
+l m   r
+
+      A
+- - - -
+    l r
+    m
+	
+      A
+- - - -
+      r
+      l
+	  m
+	  
+	  
+====================================================
+Problems
+====================================================
+If set new bound as mid
+Answer in left side: r = m
+Answer in right side: l = m
+
+        A
+- - - - -
+l   m   r
+
+        A
+- - - - -
+    l m r
+	
+        A
+- - - - -
+      l r
+	  m
+	
+then we cannot get out of the loop of l = m => m = l
+hence we must set bound as l = m + 1
+	

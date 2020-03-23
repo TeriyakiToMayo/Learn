@@ -1,0 +1,49 @@
+====================================================
+Java Compile Process
+====================================================
+HelloWorld.java		//source code file
+-> HelloWorld.class	//bytecode file
+
+
+
+
+====================================================
+Dissemble Compiled Java Code
+====================================================
+javap -c Math.class > Math.txt
+
+
+The Java Virtual Machine Instruction Set :
+https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html
+
+
+E.g.:
+
+Math.java:
+	public int compute(){
+		int a = 0;
+		int b = 0;
+		int c = (a + b)*10;
+		return c
+	}
+	
+	
+Math.txt:
+	iconst_1	//Push integer 1 into [Operand Stack]
+	istore_1	//Create memory area for variable_1 in [Local Variable Array], 
+				//then store integer 1 in this area
+	iconst_2
+	istore_2
+	
+	iload_1		//Load value in variable_1 to [Operand Stack]
+	iload_2
+	iadd		//Pop two values from [Operand Stack], add them up, then push result back
+	bipush 10	//Push 10 into [Operand Stack]
+	imul		//Pop two values from [Operand Stack], multiply them up, then push result back
+	istore_3	
+	
+	ireturn
+	
+
+
+

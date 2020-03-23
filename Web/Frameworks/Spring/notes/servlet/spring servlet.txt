@@ -1,0 +1,606 @@
+https://www.javatpoint.com/servletinterview
+====================================================
+Java Servlet: Misc. Ideas
+====================================================
+----------------------------------------------------------
+[General Structure of a Server]
+https://beginnersbook.com/2013/05/working-of-servlets/
+
+Web Server (like Apache)
+	- component A
+	- component B
+	- ...
+	- Web Container
+		- ServletConfig:
+			- Content: parameters
+			- Lifecycle: created at servlet initialization
+			- Copy: one for ALL WebApps, but used for each servlet
+		- ServletContext: 
+			- Content: parameters
+			- Lifecycle: interface for communicating with servlet
+			- Copy: one for EACH WebApp
+		- Servlets
+
+Web Application
+
+
+----------------------------------------------------------
+[Web Server vs. Application Server]
+https://www.javatpoint.com/server-web-vs-application
+
+Web Server
+	- Component: servlet container
+	- Examples: Apache Tomcat and Resin ...
+
+Application Server
+	- Component: Web and EJB containers
+	- Examples: JBoss, Glassfish, Weblogic, Websphere
+
+
+
+====================================================
+Java Servlet: Servlet Container (Web Container)
+====================================================
+https://en.wikipedia.org/wiki/Web_container
+https://stackoverflow.com/questions/6719004/understanding-servlet-container
+
+----------------------------------------------------------
+[definition]
+A servlet container is an application server that implements some version of the Java Servlet 
+Specification.
+
+
+
+====================================================
+Java Servlet: Servlet
+====================================================
+Servlet: server-side program
+
+----------------------------------------------------------
+[Common Gateway Interface(CGI) vs. Servlet]
+
+		new request		platform		Language
+		
+CGI		new process		dependent 		C, C++, Perl
+
+Servlet	new thread		independent		Java
+
+
+----------------------------------------------------------
+[Life cycle of servlet]
+https://beginnersbook.com/2014/04/servlet-interface/
+https://beginnersbook.com/2013/05/servlet-life-cycle/
+https://beginnersbook.com/2013/05/working-of-servlets/
+
+Decision making:
+	- lazy: create a servlet as requested
+	- load-on-startup: create as deployed
+
+Beginning: 
+	- Servlet Container:
+		- Loads servlet
+		- Creating instance of servlet
+			- Creation time: only when the first request arrives
+			- Pieces: only one instance, even there are multiple requests
+			  www.quora.com/How-many-objects-of-a-servlet-are-created-for-multiple-requests
+		- Calls void init(ServletConfig config)
+	
+Running:
+	- Servlet Container:
+		- receives request and calls void service(ServletConfig config)
+			- service(): dispatches the request to the correct handler method
+				- GenericServlet: service() contains everything
+				- HttpServlet: service() dispatches requests to doGet(), doPost() etc.
+		
+Ending:
+	- Servlet Container:
+		- calls void destroy()
+
+----------------------------------------------------------
+[Servlet Collaboration]
+Servlet Communications
+	- RequestDispatcher()
+		- dispatches request to other resources
+	- sendRedirect()
+
+----------------------------------------------------------
+[Servlet Session Tracking]
+Reason: Http is stateless -> each request is a new request
+
+Maintains the state of user.
+
+
+
+====================================================
+Java Servlet: Servlet Code
+====================================================
+https://beginnersbook.com/2017/07/requestdispatcher-methods-with-examples-in-servlet/
+
+----------------------------------------------------------
+[Basic request processing]
+https://practicehouse.com/webservlet-cannot-be-resolved-to-a-type-in-eclipse-for-servlet-solved/
+
+ExampleHttpServlet.java:
+
+	@WebServlet("/hello")	//slash is required
+							//exactly the same effect as <servlet-mapping> in web.xml
+							//what if @WebServlet cannot be resolved?
+																		-> right click project
+																		-> properties
+																		-> Targeted Runtimes
+																		-> check one Apache Tomcat
+	public class ExampleHttpServlet extends HttpServlet{
+	
+		public void doGet(HttpServletRequest request, 
+				HttpServletResponse response) throws ServletException, 
+				IOException 
+		{
+			response.setContentType("text/html");			// Writing the message on the web page    
+			  
+			PrintWriter out = response.getWriter();      
+			out.println("<h1>" + mymsg + "</h1>");      
+			out.println("<p>" + "Hello Friends!" + "</p>");   
+
+			String name = request.getParameter("uname");	//Obtain parameters:
+			String age = request.getParameter("uage");		//	- URL Parameters
+			out.println("Name: "+name); 					//	- Post Parameters
+			out.println("Age: "+age); 
+			out.close(); 
+		}
+	}
+
+----------------------------------------------------------
+[PrintWriter & ServletOutputStream]
+
+						setContentType("");		data-type
+
+PrintWriter				"text/html"				character-based
+
+ServletOutputStream		many					byte-based
+
+
+----------------------------------------------------------
+[Request Forwarding]
+https://www.javatpoint.com/requestdispatcher-in-servlet
+It forwards/includes user to a resource (servlet, JSP file, or HTML file) on server
+	- only forward
+	- not change url
+
+RequestDispatcher dis=request.getRequestDispatcher("welcome");	//Target can be Servlet / Html
+          dis.forward(request, response);    					//it forwards to "welcome"
+		  
+RequestDispatcher dis=request.getRequestDispatcher("welcome");          
+          dis.include(request, response);    					//it renders original page while 
+pwriter.print("User name or password is incorrect!");			//including response of "welcome"
+
+
+----------------------------------------------------------
+[Response Redirecting]
+res.sendRedirect("https://cn.bing.com/");  //it redirects user to Bing.com
+
+
+----------------------------------------------------------
+[Servlet Config]
+https://beginnersbook.com/2017/07/servletconfig-interface-with-example/
+https://www.javatpoint.com/servletconfig
+
+How to get ServletConfig:
+	ServletConfig sc=getServletConfig();
+
+Get a single value:
+	String driver=config.getInitParameter("driver");  
+	
+Get all values:
+	Enumeration<String> e = sc.getInitParameterNames();
+		String str;
+	while(e.hasMoreElements()) {
+		str = e.nextElement();
+		pwriter.println("<br>Param Name: " + str);
+		pwriter.println(" value: " + sc.getInitParameter(str));
+	}
+
+
+----------------------------------------------------------
+[Servlet Context]
+https://beginnersbook.com/2013/05/servlet-context/
+https://www.javatpoint.com/servletcontext
+
+How to get ServletContext:
+	1. ServletContext application=getServletConfig().getServletContext();  
+	2. ServletContext scontext=getServletContext();
+
+Get a single initParameter value: 
+	String userName=scontext.getInitParameter("uname");
+
+Get all initParameter values:
+	Enumeration<String> e=context.getInitParameterNames();  
+	while(e.hasMoreElements()){  
+		str=e.nextElement();  
+		out.print("<br> "+context.getInitParameter(str));  
+	}  
+
+Set and Get context attributes:
+	context.setAttribute("company","IBM");  
+	String n=(String)context.getAttribute("company");  
+//Share information between servlets
+
+
+
+
+====================================================
+Java Servlet: HttpSessions
+====================================================
+https://www.javatpoint.com/session-tracking-in-servlets
+
+HTTP: stateless (each request is considered as new request)
+
+----------------------------------------------------------
+[Way of maintaining state]
+	- HttpSessions
+	- Cookies
+	- URL Rewriting*
+	- Hidden Form Field*
+	
+----------------------------------------------------------
+[Http Session Cookies]
+https://beginnersbook.com/2013/05/servlet-cookies/
+https://www.javatpoint.com/cookies-in-servlet
+
+"A small piece of information that persisted between multiple requests. 
+Name, single value optional attributes"
+
+Cookies:
+	- Basic information
+		- Location: 
+			- Stored in client browser
+			- Each WebApp one folder
+		- Content:
+			- Cookie name
+			- Unique Session ID
+		- Active time: 
+			- Session (Non-persistent) Cookie: 
+				- single session
+					- exists as long as the browser is open
+					- stored in all resquest and responses
+			- Persistent Cookie: 
+				- multiple sessions based on expiry time
+	- Working flow:
+		- communicate between Servlet and Browser
+			- Html: access via JavaScript from Browser 
+		
+Access Cookies in Servlet:
+	MyServlet1.java:
+		//Creating two cookies
+		Cookie c1=new Cookie("userName",name);				//new Cookie("userName",null);
+		Cookie c2=new Cookie("userPassword",password);		//can clear the cookie
+		c2.setMaxAge(3600);		//set max age in seconds
+		
+		//Adding the cookies to response header
+		response.addCookie(c1);
+		response.addCookie(c2);
+		
+	MyServlet2.java:
+		//Reading cookies
+		Cookie c[]=request.getCookies(); 
+		
+		//Displaying User name value from cookie
+		pwriter.print("Name: "+c[1].getValue()); 
+		//Displaying user password value from cookie
+		pwriter.print("Password: "+c[2].getValue());
+		
+		
+Access Cookies in HTML:
+	SEE "Front-end/Javascript/Javascript.txt" "Access Cookies in HTML"
+	
+	//Sending cookies is done by browser
+
+
+
+----------------------------------------------------------
+[Http Session]
+https://beginnersbook.com/2013/05/http-session/
+
+Session:
+	- Location: web container
+	- Active time: 
+		- default: 30 min
+
+Access Sessions:
+	MyServlet1.java:
+		HttpSession session=request.getSession();
+		session.setAttribute("uname",name);
+		session.setAttribute("upass",password);
+
+	MyServlet2.java:
+		HttpSession session=request.getSession(false);	//Parameter: default/true: get current/create; false: get current, not create
+														//Return: 
+														//	- If session exists, return it
+														//	- if no session, return null
+		String myName=(String)session.getAttribute("uname");
+		String myPass=(String)session.getAttribute("upass");
+		
+	MyServlet3.java:
+		HttpSession session=request.getSession(false);
+		session.invalidate();							//destroy session
+		
+Check if session is valid*:
+https://stackoverflow.com/questions/634929/how-to-check-if-a-session-is-invalid
+
+	boolean session_accessible = true;
+	if(session == null) {
+		session_accessible = false;
+	}else {
+		try{
+			session.getCreationTime();
+		} catch (IllegalStateException ise) {
+			session_accessible = false;
+		}
+	}
+
+
+----------------------------------------------------------
+[Http Hidden Form Field]
+https://www.javatpoint.com/hidden-form-field-in-session-tracking
+
+FirstServlet.java:
+	out.print("<form action='servlet2'>");  
+	out.print("<input type='hidden' name='uname' value='"+n+"'>");  
+	out.print("<input type='submit' value='go'>");  
+	out.print("</form>");  
+
+SecondServlet.java:
+	String n=request.getParameter("uname");  
+	out.print("Hello "+n);  
+
+
+
+====================================================
+Java Servlet: Listener
+====================================================
+https://www.journaldev.com/1945/servletcontextlistener-servlet-listener-example
+
+How to mark class as listener:
+	1. MyListener.java: @WebListener 
+	2. web.xml: 
+		<listener>
+			<listener-class>com.journaldev.listener.AppContextListener</listener-class>
+		</listener>
+
+
+----------------------------------------------------------
+[ServletContextListener]
+https://www.javatpoint.com/ServletContextEvent
+
+Notified when project is deployed.
+
+Strcuture:
+	public class AppContextListener implements ServletContextListener {
+
+		public void contextInitialized(ServletContextEvent servletContextEvent) {
+
+		}
+
+		public void contextDestroyed(ServletContextEvent servletContextEvent) {
+			
+		}
+		
+	}
+
+----------------------------------------------------------
+[ServletContextAttributeListener]
+
+public class AppContextAttributeListener implements ServletContextAttributeListener {
+
+    public void attributeAdded(ServletContextAttributeEvent servletContextAttributeEvent) {
+	
+    }
+
+    public void attributeReplaced(ServletContextAttributeEvent servletContextAttributeEvent) {
+	
+    }
+
+    public void attributeRemoved(ServletContextAttributeEvent servletContextAttributeEvent) {
+	
+    }
+	
+}
+
+----------------------------------------------------------
+[HttpSessionListener]
+public class MyListener implements HttpSessionListener {
+
+    public void sessionCreated(HttpSessionEvent sessionEvent) {
+    	System.out.println("Session Created:: ID=" + sessionEvent.getSession().getId());
+    }
+
+    public void sessionDestroyed(HttpSessionEvent sessionEvent) {
+    	System.out.println("Session Destroyed:: ID=" + sessionEvent.getSession().getId());
+    }
+	
+}
+
+----------------------------------------------------------
+[ServletRequestListener]
+public class MyListener implements ServletRequestListener {
+
+    public void requestDestroyed(ServletRequestEvent servletRequestEvent) {
+    	ServletRequest servletRequest = servletRequestEvent.getServletRequest();
+    	System.out.println("ServletRequest destroyed. Remote IP="+servletRequest.getRemoteAddr());
+    }
+
+    public void requestInitialized(ServletRequestEvent servletRequestEvent) {
+    	ServletRequest servletRequest = servletRequestEvent.getServletRequest();
+    	System.out.println("ServletRequest initialized. Remote IP="+servletRequest.getRemoteAddr());
+    }
+	
+}
+
+
+
+====================================================
+Java Servlet: Filter
+====================================================
+https://www.javatpoint.com/servlet-filter
+
+Servlet Filter: dynamically intercepts requests and resopnses to transform information
+	- Request preprcessing
+	- Request postprocessing
+
+How to mark class as listener:
+	1. MyFilter.java: @WebFilter("/servlet1")
+	2. web.xml: 
+			<filter>  
+				<filter-name>...</filter-name>  
+				<init-param>  								//parameter
+					<param-name>construction</param-name>  
+					<param-value>no</param-value>  
+				</init-param>  
+				<filter-class>...</filter-class>  
+			</filter>  
+			   
+			<filter-mapping>  
+				<filter-name>...</filter-name>  
+				<url-pattern>...</url-pattern>  
+			</filter-mapping>  
+
+
+----------------------------------------------------------
+[Code Explaination]
+MyFilter.java:
+	public void doFilter(ServletRequest req, ServletResponse resp,  
+		FilterChain chain) throws IOException, ServletException {  
+		
+		//do some filter authentication here
+		
+		//sends request to next resource(filter, or final destination: servlet)  
+		chain.doFilter(req, resp);
+			  
+	}  
+
+
+----------------------------------------------------------
+[Filter Config]
+MyFilter.java:
+	FilterConfig config;  
+		  
+	public void init(FilterConfig config) throws ServletException {  
+		this.config=config;  
+	}  
+
+	public void doFilter(ServletRequest req, ServletResponse resp,  
+	    FilterChain chain) throws IOException, ServletException {  
+		
+		//...
+	    String s=config.getInitParameter("construction");  		//access parameter
+		//...
+	}  
+	
+	
+====================================================
+Java Servlet Examples: Upload & Download
+====================================================
+----------------------------------------------------------
+[Upload]
+https://www.javatpoint.com/example-of-uploading-file-to-the-server-in-servlet
+
+Requires: cos.jar
+			- com.oreilly.servlet.MultipartRequest
+			
+UploadServlet.java:
+	
+	private String UPLOAD_DIRECTORY = "/images";
+	//Get real path
+	ServletContext context = getServletContext();  
+	String path = context.getRealPath(UPLOAD_DIRECTORY);  
+	//Upload file
+	MultipartRequest m = new MultipartRequest(request, path);   
+
+
+----------------------------------------------------------
+[Download]
+https://www.javatpoint.com/example-of-downloading-file-from-the-server-in-servlet
+
+DownloadServlet.java:
+
+	response.setContentType("text/html");  
+	PrintWriter out = response.getWriter();  
+	String filename = "home.html";   
+	String filepath = "F:\\";   
+	response.setContentType("APPLICATION/OCTET-STREAM");   
+	response.setHeader("Content-Disposition","attachment; filename=\"" + filename + "\"");   
+	  
+	FileInputStream fileInputStream = new FileInputStream(filepath + filename);  
+	            
+	int i;   
+	while ((i=fileInputStream.read()) != -1) {  
+		out.write(i);   
+	}   
+	fileInputStream.close();   
+	out.close();   
+	
+	
+====================================================
+Java Servlet Examples: Email & PDF
+====================================================
+----------------------------------------------------------
+[Email]
+https://www.javatpoint.com/sending-email-through-java-mail-api-in-servlet
+
+requires 	- activition.jar
+			- mail.jar
+	
+----------------------------------------------------------
+[PDF]
+https://www.javatpoint.com/how-to-write-data-into-PDF-using-servlet
+requires	- darwinsys-api-1.1.3.jar
+
+	
+	
+====================================================
+Java Servlet: Front-end
+====================================================
+----------------------------------------------------------
+[Servlet Response Structure]
+Servlet Response = page + cookies + ...
+
+
+----------------------------------------------------------
+[Servlet Processing Procedures]
+1. receives request
+
+2. process data
+
+3. generate response
+	- add data to response (cookies, initParameters, attributes...)
+	- generate page
+
+----------------------------------------------------------
+[form actions]
+action = "target_servlet"
+//target_servlet is defined in @WebServlet("target_servlet")
+
+
+
+====================================================
+Spring Servlet: XML tags
+====================================================
+https://www.codelooru.com/2010/10/what-does-mvcannotation-driven-do.html
+https://stackoverflow.com/questions/3977973/whats-the-difference-between-mvcannotation-driven-and-con
+
+<context:component-scan base-package="com.javatpoint.controller"/>
+Scans "com.javatpoint.controller" for controllers
+
+<context:annotation-config>
+	- @Required
+	- @Autowired
+	- @PostConstruct
+	- etc.
+
+<mvc:annotation-driven/>
+	- @RequestMapping	//support by default
+	- @Controller		//support by default
+	- etc.				//support by default
+	- @Valid
+	- etc.
+	
+	

@@ -1,0 +1,8 @@
+//==================================================================
+// String to Binary
+//==================================================================
+https://www.geeksforgeeks.org/java-lang-integer-tobinarystring-method/
+
+Integer.parseInt("101", 2);
+//Output: 5
+

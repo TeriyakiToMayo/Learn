@@ -1,0 +1,55 @@
+====================================================
+Serialize and Deserialize a Binary Tree
+====================================================
+
+https://www.geeksforgeeks.org/serialize-deserialize-binary-tree/
+
+
+====================================================
+Traverse Order
+====================================================
+
+					1
+			/				\	
+		2						3	
+	/		\				/		\
+4				5		6				7
+
+Depth First Search:
+	Inorder: 4251637
+	Preorder: 1245367
+	Postorder: 7635421
+
+Breadth First Search: 1234567
+
+
+
+------------------------------------------------------
+[How to decide a Binary Search Tree]
+
+A unique BST can be decided by:
+Inorder + Preorder
+Inorder + Postorder
+
+
+------------------------------------------------------
+[Visiting Levels]
+For each leve, nodes are visited from left to right
+
+
+====================================================
+Inorder Traversal
+====================================================
+1. Results is in ascending order (since always smaller(left subtree) first, 
+   itself second, larger(right subtree) last)
+	- That is, all elements in the left side are in the left subtree, 
+	  vice versa
+2. Different BSTs can have the same inorder traversal
+	- Some of these BSTs can have the same height and can be balanced
+		- these are constructed by picking mid left, mid right, or random mid left/right
+		  of traversal list
+		- SEE "Inorder Traversal with different BSTs.png"
+			  "Inorder Traversal with different BSTs 2.png"
+	
+	
+	

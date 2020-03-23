@@ -1,0 +1,105 @@
+====================================================
+Problem 93. Restore IP Addresses
+====================================================
+Given a string containing only digits, restore it by 
+returning all possible valid IP address combinations.
+
+Example:
+
+Input: "25525511135"
+Output: ["255.255.11.135", "255.255.111.35"]
+
+
+
+
+====================================================
+Analysis
+====================================================
+1 digit: 0~9(OK)
+2 digits: 00~09(X) 10~99(OK)
+3 digits: 000~099(X) 100~255(OK) 256~999(X)
+
+
+
+====================================================
+Java Appraoch: Backtracing
+1 ms	100.00%
+38.1 MB	8.31%
+====================================================
+//Optimization
+//1. Use ArrayList for add operations
+//2. Strings:
+//	- Build: Use StringBuilder
+//	- Substrings: 
+//		- Store positions instead of making substrings all the time
+//		- Pick chars when checking values, instead of making substrings and converting them to integer
+
+
+
+public static List<String> res;
+public static String str;
+public static int[] cuts;
+public static int len;
+
+public static List<String> restoreIpAddresses(String s) {
+	res = new ArrayList<String>();
+	str = s;
+	cuts = new int[3];
+	len = s.length();
+	helper(1, 0);
+	
+	return res;
+}
+
+public static void helper(int stage, int index) {
+	if(stage == 4) {
+		int space = len - index;
+		if(index >= len || space >= 4) return;
+		if((space == 2 && !is2DigitIP(index)) 
+				|| (space == 3 && !is3DigitIP(index))) return;
+		
+		res.add(buildIPAddress());
+	}else {
+		int remainStages = 4 - stage;
+		int remainSpace = len - index - 1;
+		
+		for(int i = 0; i < 3; i++) {
+			if(remainSpace - remainStages - i < 0) break;
+			if(i == 1 && !is2DigitIP(index)) break;
+			if(i == 2 && !is3DigitIP(index)) break;
+			cuts[stage - 1] = index + 1 + i;
+			helper(stage + 1, index + 1 + i);
+		}
+	}
+	
+}
+
+public static String buildIPAddress() {
+	StringBuilder sb = new StringBuilder();
+	sb.append(str.substring(0, cuts[0]));
+	sb.append(".");
+	sb.append(str.substring(cuts[0], cuts[1]));
+	sb.append(".");
+	sb.append(str.substring(cuts[1], cuts[2]));
+	sb.append(".");
+	sb.append(str.substring(cuts[2]));
+	return sb.toString();
+}
+
+public static boolean is2DigitIP(int start) {
+	char c0 = str.charAt(start);
+	return c0 != '0';
+}
+
+public static boolean is3DigitIP(int start) {
+	char c0 = str.charAt(start);
+	if(c0 == '0') return false;
+	if(c0 == '1') return true;
+	if(c0 >= '3') return false;
+	
+	c0 = str.charAt(start + 1);
+	if(c0 >= '6') return false;
+	if(c0 == '5') return str.charAt(start + 2) <= '5';
+	
+	return true;
+}

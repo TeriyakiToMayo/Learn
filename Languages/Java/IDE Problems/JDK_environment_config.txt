@@ -1,0 +1,27 @@
+//==================================================================
+// Advanced System Settings
+//==================================================================
+This PC - System properties (upper-middle) - System info (upper-right)
+- Advanced system settings (upper-left) - Advanced - Environment Variables
+
+System variables:
+Path: java_path\bin (Ex. H:\Program Files\Java\bin)
+
+
+//==================================================================
+// Path Settings
+//==================================================================
+JAVA_HOME
+	- jdk installation path
+%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;
+	- Settings:
+		- javac: %JAVA_HOME%\bin
+		- java:  %JAVA_HOME%\jre\bin
+		- you can also use compilers and jvms from other paths, e.g.:
+			- javac: %JAVA_HOME%\bin
+			- java: C:\Program Files (x86)\Common Files\Oracle\Java\javapath
+	- Where to added: Path
+	
+.;%JAVA_HOME%\lib;%JAVA_HOME%\lib\tools.jar
+	- added to CLASSPATH
+

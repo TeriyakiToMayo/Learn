@@ -1,0 +1,12 @@
+
+//==================================================================
+// define type aliasing
+//==================================================================
+https://docs.microsoft.com/en-us/previous-versions/05w82thz(v=vs.140)
+typedef char FlagType;
+
+
+//==================================================================
+// define pointer type to member
+//==================================================================
+typedef int (X::*pointer)();	//see class.txt - member functions - member function pointer

@@ -1,0 +1,14 @@
+Javatpoint 
+
+	Spring:
+	https://www.javatpoint.com/steps-to-create-spring-application
+
+	Servlet:
+	https://www.javatpoint.com/servlet-tutorial
+	https://beginnersbook.com/2014/04/genericservlet-class/
+	https://howtodoinjava.com/tomcat/tomcats-architecture-and-server-xml-configuration-tutorial/
+
+
+
+Tomcat:
+https://howtodoinjava.com/tomcat/tomcats-architecture-and-server-xml-configuration-tutorial/

@@ -1,0 +1,99 @@
+=============================
+Network
+=============================
+ifconfig			show the status of ethernet devices
+
+lshw -C network			show network status
+(SEE https://askubuntu.com/questions/1049302/wired-   ethernet-not-working-ubuntu-18-04)
+
+
+====================================================================
+Authentication
+====================================================================
+sudo				superuser do
+
+
+====================================================================
+Installation & Uninstallation
+====================================================================
+
+-------------------------------------------------------------
+[Basic Commands]
+
+	apt				Advanced Packaging Tool/package management system
+	apt-get				alternative to "apt" command, covered by "apt"
+	(SEE https://blog.csdn.net/maizousidemao/article/details/79859669)
+
+-------------------------------------------------------------
+[Unzip]
+
+	sudo tar zxf abc.tar.gz		unzip file "abc.tar.gz"
+
+
+-------------------------------------------------------------
+[Run bash script]
+	(https://www.cyberciti.biz/faq/run-execute-sh-shell-script/)
+	
+	Note: bash file does not necessarily include ".sh" as extension
+	
+	chmod +x script-name-here.sh		set execute permission
+	./script-name-here.sh				run
+	
+
+-------------------------------------------------------------
+[Uninstallation]
+	
+	dpkg --list			list all installed applications
+						ii: has been installed
+						rc: has been uninstalled but config remains
+	(SEE https://www.kutu66.com//ubuntu/article_155837)
+	sudo apt-get --purge remove eclipse
+						uninstall eclipse
+	(SEE https://blog.csdn.net/luckydog612/article/details/80877179)
+
+
+====================================================================
+Basics
+====================================================================
+
+-------------------------------------------------------------
+[Command Syntacs]
+
+	Space: "\ "			"~Documents/Linux System Problem Log"
+					"~DOcuments/Linux\ System\ Problem \Log"
+	
+
+-------------------------------------------------------------
+[Shortcuts]
+
+	Ctrl + Shift + C		copy
+	Ctrl + Shift + V		paste
+	Ctrl + c			exit current program
+	
+	
+	
+-------------------------------------------------------------
+[File&Folder Operations]
+
+	touch abc.txt			create file abc.txt, can be other extensions
+	mkdir [-p] abc			create folder abc, [-p]: if exists, do nothing
+					if not, create it
+	(SEE https://www.runoob.com/linux/linux-comm-mkdir.html)
+
+	rm abc.txt			remove file abc.txt
+	rm -rf abc			remove folder abc
+					[-r] recursively remove all sub-folders
+					[-f] forced removing
+
+	sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup
+					copy sources.list to sources.list.backup
+
+-------------------------------------------------------------
+[Others]
+
+	ln -s /xxx/xxx/abc ~/Desktop	create shortcut
+	(SEE https://blog.csdn.net/yinghuo110/article/details/80726750)
+
+
+
+

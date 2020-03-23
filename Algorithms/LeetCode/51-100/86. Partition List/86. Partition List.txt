@@ -1,0 +1,137 @@
+====================================================
+Problem 86. Partition List
+====================================================
+Given a linked list and a value x, partition it such that 
+all nodes less than x come before nodes greater than or 
+equal to x.
+
+You should preserve the original relative order of the nodes 
+in each of the two partitions.
+
+Example:
+
+Input: head = 1->4->3->2->5->2, x = 3
+Output: 1->2->2->4->3->5
+
+
+
+====================================================
+Analysis
+====================================================
+1->4->3->2->5->2, x = 3
+
+1. Add head to original list, and make a new list
+
+h1: list1newHead
+h2: list2Head
+l1l: list1Last
+l2l: list2Last
+p: pointer
+tp: tmpPointer
+
+
+    h1
+	0 -> 1 -> 4 -> 3 -> 2 -> 5 -> 2
+	l1l  p    tp
+	
+	h2
+	0
+	l2l
+    
+2. Iterate through elements, if < x, add to list2, if >= x, leave to list1
+
+	h1
+	0      -> 4 -> 3 -> 2 -> 5 -> 2 -> null
+	l1l       p    tp
+	
+	h2
+	0 -> 1
+	     l2l
+		 
+		 
+		 
+	h1
+	0      -> 4 -> 3 -> 2 -> 5 -> 2 -> null
+	          l1l  p    tp
+	
+	h2
+	0 -> 1
+	     l2l
+		 
+		 
+		 
+	h1
+	0      -> 4 -> 3 -> 2 -> 5 -> 2 -> null
+	               l1l  p    tp
+	
+	h2
+	0 -> 1
+	     l2l
+		 
+		 
+		 
+	h1
+	0      -> 4 -> 3      -> 5 -> 2 -> null
+	               l1l       p    tp
+	
+	h2
+	0 -> 1 -> 2
+	          l2l
+			  
+			  
+			
+	h1
+	0      -> 4 -> 3      -> 5 -> 2 -> null
+	                         l1l  p    tp
+	
+	h2
+	0 -> 1 -> 2
+	          l2l
+			  
+			  
+			  
+	h1
+	0      -> 4 -> 3      -> 5      -> null
+	                         l1l       p    tp
+	
+	h2
+	0 -> 1 -> 2 -> 2
+	               l2l
+
+
+====================================================
+Java Approach
+0 ms	100.00%
+37.8 MB	5.42%
+====================================================
+public static ListNode partition(ListNode head, int x) {
+	
+	if(head == null) return null;
+	
+	ListNode list1newHead = new ListNode(0);
+	list1newHead.next = head;
+	ListNode list1Last = list1newHead;
+	ListNode pointer = head;
+	ListNode tmpNext = null;
+	ListNode list2Head = new ListNode(0);
+	ListNode list2Last = list2Head;
+	
+	while(pointer != null) {	
+		tmpNext = pointer.next;
+		pointer.next = null;
+		if(pointer.val < x) {
+			list2Last.next = pointer;
+			list2Last = pointer;
+		}else {
+			list1Last.next = pointer;
+			list1Last = pointer;
+		}
+		pointer = tmpNext;
+	}
+	
+	list1Last.next = null;
+	list2Last.next = list1newHead.next;
+	
+	return list2Head.next;
+}
+

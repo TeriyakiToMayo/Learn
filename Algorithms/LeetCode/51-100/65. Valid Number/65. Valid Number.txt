@@ -1,0 +1,116 @@
+====================================================
+Problem 65. Valid Number
+====================================================
+Validate if a given string can be interpreted as a decimal 
+number.
+
+Some examples:
+"0" => true
+" 0.1 " => true
+"abc" => false
+"1 a" => false
+"2e10" => true
+" -90e3   " => true
+" 1e" => false
+"e3" => false
+" 6e-1" => true
+" 99e2.5 " => false
+"53.5e93" => true
+" --6 " => false
+"-+3" => false
+"95a54e53" => false
+
+Note: It is intended for the problem statement to be 
+ambiguous. You should gather all requirements up front 
+before implementing one. However, here is a list of 
+characters that can be in a valid decimal number:
+
+    Numbers 0-9
+    Exponent - "e"
+    Positive/negative sign - "+"/"-"
+    Decimal point - "."
+
+Of course, the context of these characters also matters in 
+the input.
+
+Update (2015-02-10):
+The signature of the C++ function had been updated. If you 
+still see your function signature accepts a const char * 
+argument, please click the reload button to reset your code 
+definition.
+
+
+
+====================================================
+Java Approach: Dividing
+4 ms	37.73%
+42.8 MB	5.16%
+====================================================
+public static boolean isNumber(String s) {
+	if(s == null || s.length() == 0) return false;
+	
+	s = s.trim();
+	
+	if(isInteger(s)) return true;
+	if(isFloatPoint(s)) return true;
+	if(isSciNum(s)) return true;
+	
+	return false;
+}
+
+//Correct scientific number format:
+//Integer e Float/Integer
+public static boolean isSciNum(String s) {
+	for(int i = 0; i < s.length(); i++) {
+		if(s.charAt(i) == 'e') {
+			String left = s.substring(0, i);
+			return (isInteger(left) || isFloatPoint(left)) && isInteger(s.substring(i + 1));
+		}
+	}
+	return false;
+}
+
+//Correct float formats:
+//+0.1, -0.1, 0.1
+//+.1, -.1, .1
+//+1., -1., 1.
+public static boolean isFloatPoint(String s) {
+	if(s.length() == 0) return false;
+	char c = s.charAt(0);
+	if(c == '+' || c == '-') s = s.substring(1);
+	for(int i = 0; i < s.length(); i++) {
+		if(s.charAt(i) == '.') {
+			String left = s.substring(0, i);
+			String right = s.substring(i + 1);
+			if(left.length() == 0 && right.length() == 0) return false;
+			return (isDigitSeq(left) || left.length() == 0) && (isDigitSeq(right) || right.length() == 0);
+		}
+	}
+	
+	return false;
+}
+
+//Since input might be < Integer.MAX_VALUE or > Integer.MIN_VALUE
+//default method provided by Integer cannot be used
+
+//Correct integer format:
+//+00000011, -00000011, 00000011
+public static boolean isInteger(String s) {
+	if(s.length() == 0) return false;
+	char c = s.charAt(0);
+	if(c == '+' || c == '-') s = s.substring(1);
+	return isDigitSeq(s);
+}
+
+public static boolean isDigitSeq(String s) {
+	if(s.length() == 0) return false;
+	for(int i = 0; i < s.length(); i++) {
+		if(!digit0To9(s.charAt(i))) return false;
+	}
+	return true;
+}
+
+public static boolean digit0To9(char c) {
+	return c >= '0' && c <= '9';
+}
+

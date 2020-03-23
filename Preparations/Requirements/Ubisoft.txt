@@ -1,0 +1,100 @@
+//==================================================================
+// Junior Gameplay Programmer（Mobile）
+//==================================================================
+
+Job Description
+
+Missions:
+
+- Work closely with game designers to implement game design and features
+
+- Design and implement modifications, reorganizations,extensions and optimizations to existing code base.
+
+- Provide workload estimates to leads and management; keep co-workers informed about development progress
+
+- Collaborate with local and remote team members
+
+
+Qualifications
+
+Requirements:
+
+- Bachelor or Master’s degree (major in computer science,maths, engineering is Preferred),
+
+- Good knowledge of object oriented development;
+
+- Has basic knowledge or experienced with one script language,like, C#; AS, Lua
+
+- Passion on mobile game development or has relevant game project experience;
+
+- Basic to Intermediate English in written and oral;
+
+- Self-motivated and pro-active with a strong work ethic.
+
+
+//==================================================================
+// Gameplay Programmer(Console)
+//==================================================================
+Job Description
+
+What you will do:
+
+- Work closely with the game designers and understand their AI needs, and assess the technical feasibility;
+
+- Design and implement features, modifications, improvements and optimizations to existing code base, in a clear and structured way;
+
+- Provide workload estimates to leads, and follow up on progress on a regular basis;
+
+- Actively participate in discussions about development progress with the other team members (AI, Animation, Game Design, etc…);
+
+- Investigate and fix AI bugs;
+
+- Document features and systems and share knowledge with the rest of the teams;
+
+ 
+
+Qualifications
+
+What you should be equipped with:
+
+- 3+ years’ experience of game development programming;
+
+- Strong C++ skills;
+
+- Good knowledge of standard AI algorithms and concepts(path finding, animation, sensory, behaviors);
+
+- Strong analytical and synthesis skills;
+
+- Strong ability in problem solving and adapt to change;
+
+- Results-driven with a strong attention to detail;
+
+- Pro-active communication skills
+
+- Good English communication both written and oral
+
+
+Bonus Points:
+
+- Experience with at least one shipped title, preferably an FPS or third person game;
+
+- Computer science, mathematics or related degree;
+
+- Experience with Behavior Trees;
+
+- Experience with Animation Trees/Graphs.
+
+- Experience with Node Graphs.
+
+- Experience with Navigation (path finding/following).
+
+- Additional Information
+
+
+ What you will also get:
+
+- An international working environment
+
+- FUN Culture
+
+- Lots of love from your colleagues!

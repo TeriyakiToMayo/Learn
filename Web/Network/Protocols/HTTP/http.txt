@@ -1,0 +1,104 @@
+====================================================
+URI & URL
+====================================================
+https://danielmiessler.com/study/difference-between-uri-url/
+SEE URI_URL.webp
+
+URI: Uniform Resource Identifier
+	- identifier for anything
+URL: Uniform Resource Locator
+	- identifier for websites (HTTPS, FTP)
+	
+====================================================
+REpresentational State Transfer (REST) & Hypertext Transfer Protocol (HTTP)
+====================================================
+https://searchapparchitecture.techtarget.com/definition/REST-REpresentational-State-Transfer
+https://stackoverflow.com/questions/2190836/what-is-the-difference-between-http-and-rest
+
+REST: architectural style for developing web services
+HTTP: implementation of web protocol
+
+REST is the way HTTP should be used.
+
+
+====================================================
+Request Methods: GET POST PUT PATCH DELETE
+====================================================
+https://stackoverflow.com/questions/31089221/what-is-the-difference-between-put-post-and-patch
+https://stackoverflow.com/questions/630453/put-vs-post-in-rest
+https://dzone.com/articles/the-simple-guide-to-http-verbs-patch-put-and-post
+https://restfulapi.net/rest-put-vs-post/
+
+"Difference between PUT, POST, GET, DELETE and PATCH IN HTTP Verbs:"
+
+GET: 
+	- Imlpementation Level: 	Sends url			//URL limit: 2048 bytes || data limit: 8MB (not sure)
+	- REST Level: 				Read
+
+POST: 
+	- Imlpementation Level: 	Sends url + data	//data limit: 8MB
+	- REST Level: 				Create
+		- Server makes new URI
+
+PUT:
+	- Imlpementation Level: 	Sends url + data
+	- REST Level: 				Update (Overwrite)
+		- User specifies the URI
+			- Exists: put it there
+			- Not exists: create and place it
+		- Idempotent: identical requests is the same as for a single request
+		              (https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.1.2)
+					  
+PATCH:
+	- Imlpementation Level: 	Sends url + data
+	- REST Level: 				Partial Update (one field, for instance)
+	
+DELETE:
+	- Imlpementation Level: 	Sends url
+	- REST Level: 				Delete
+	
+----------------------------------------------------------
+[Request code]
+https://www.javatpoint.com/get-vs-post
+
+GET: 	https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET
+
+POST:	https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST
+
+PUT: 	https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT
+
+PATCH:	https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PATCH
+
+DELETE:	https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE
+
+
+
+====================================================
+http & https
+====================================================
+https://www.geeksforgeeks.org/difference-between-http-and-https/
+
+"
+In HTTP, URL begins with “http://” whereas URL starts with “https://”
+HTTP uses port number 80 for communication and HTTPS uses 443
+HTTP is considered to be unsecure and HTTPS is secure
+HTTP Works at Application Layer and HTTPS works at Transport Layer
+In HTTP, Encryption is absent and Encryption is present in HTTPS as discussed above
+HTTP does not require any certificates and HTTPS needs SSL Certificates
+"
+
+https = http + cryptographic protocols
+
+		URL		Port	Security	Layer			Certificate
+		
+HTTP	http	80		unsecure	Application 	N/A
+
+HTTPS	https	443		secure		Transport		SSL
+
+
+
+====================================================
+How to set up https
+====================================================
+See "Tomcat/tomcat.txt/" "Tomcat Setup Https"
+

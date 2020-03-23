@@ -1,0 +1,77 @@
+====================================================
+Problem 54. Spiral Matrix
+====================================================
+Given a matrix of m x n elements (m rows, n columns), return 
+all elements of the matrix in spiral order.
+
+Example 1:
+
+Input:
+[
+ [ 1, 2, 3 ],
+ [ 4, 5, 6 ],
+ [ 7, 8, 9 ]
+]
+Output: [1,2,3,6,9,8,7,4,5]
+
+Example 2:
+
+Input:
+[
+  [1, 2, 3, 4],
+  [5, 6, 7, 8],
+  [9,10,11,12]
+]
+Output: [1,2,3,4,8,12,11,10,9,5,6,7]
+
+
+
+====================================================
+Analysis
+====================================================
+SEE "anime.gif"
+
+1. Go through the first line, then move upper bound down
+
+2. Go through the last column, then move right bound left
+
+3. Keep going until bounds are intersected with each other
+
+Key Points:
+	- Move the last bound, not the current
+		- E.g. moving right, current bound is right bound, 
+		  after finishing this row, move upper bound (last bound) down
+	- Use dir as the indicator of direction, current bound and calculate the movement (x_move, y_move)
+
+====================================================
+Java Approach: Traverse
+0ms: 100%
+34.3MB: 85%
+====================================================
+public static List<Integer> spiralOrder2(int[][] matrix) {
+	List<Integer> list = new LinkedList<Integer>();
+	if(matrix.length == 0) return list;
+	
+	//rightBound, bottomBound, leftBound, upBound, 
+	int[] bounds = {matrix[0].length - 1, matrix.length - 1, 0, 0};
+	int dir = 0;	//0: right, 1: down, 2: left, 3: up
+	int x_move = 0, y_move = 1;
+	int i = 0, j = 0;
+	
+	while(bounds[3] <= bounds[1] && bounds[2] <= bounds[0]) {
+		list.add(matrix[i][j]);
+		
+		if((dir%2 == 0 && j == bounds[dir]) || (dir%2 == 1 && i == bounds[dir])) {
+			int last = dir == 0 ? 3 : dir - 1;
+			bounds[last] += last <= 1 ? -1 : 1;
+			dir = dir == 3? 0 : dir + 1;
+			x_move = dir%2 == 0 ? 0 : (dir == 1 ? 1 : -1);
+			y_move = dir%2 == 1 ? 0 : (dir == 0 ? 1 : -1);
+		}
+		
+		i += x_move;
+		j += y_move;
+	}
+	
+	return list;
+}

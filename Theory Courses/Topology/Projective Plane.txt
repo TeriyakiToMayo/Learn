@@ -1,0 +1,11 @@
+https://en.wikipedia.org/wiki/Projective_plane
+https://en.wikipedia.org/wiki/Real_projective_plane
+http://mathworld.wolfram.com/ProjectivePlane.html
+
+The Möbius strip with a single edge, can be closed into a projective 
+plane by gluing opposite open edges together.
+
+Equivalently, gluing a disk along the boundary of the Möbius strip gives 
+the projective plane. (making the Möbius strip closed)
+
+(As seen in Pic.1 Projective Plane)

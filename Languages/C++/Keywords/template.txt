@@ -1,0 +1,51 @@
+//==================================================================
+// template keywords
+//==================================================================
+https://stackoverflow.com/questions/213121/use-class-or-typename-for-template-parameters
+class & typename are equivalent
+
+
+//==================================================================
+// template arguments
+//==================================================================
+------------------------------------------------------
+[fixed argument template]
+https://stackoverflow.com/questions/37801151/difference-between-allocator-supplied-as-template-parameter-and-alloc
+ator-suppli
+template <class T, typename U, class Allocator = std::allocator<int>, int N>
+bool are_equal (T a, U b, const Allocator &alloc = Allocator())
+{
+  return (a==b);
+}
+
+1. class & typename are interchangable
+2. T, U, Allocator are identifiers
+3. Allocator is set to default value std::allocator<int>, and can be omitted
+4. N is constant expression, or compiling error, must be specified:
+
+	are_equal<int, int, std::allocator<int>, 10>(5, 5);
+
+------------------------------------------------------
+[variadic template]
+https://m.wikihow.com/Use-Function-Template-Parameter-Packs-in-C%2B%2B
+https://docs.microsoft.com/en-us/cpp/cpp/ellipses-and-variadic-templates?view=vs-2019
+
+template<int ...Ns>
+void addOne(){
+	for(int i : {Ns...}){		//you can unpack the parameter pack with foreach statement
+		cout << i + 1 << endl;
+	}
+}
+
+template<class T, class ...Ts>
+void print(T arg, Ts... args){
+	cout << " " << arg;
+	print(args...);				//you cannot unpack this parameter, you must use recursion
+}
+
+
+//==================================================================
+// function template
+//==================================================================
+see functions
+

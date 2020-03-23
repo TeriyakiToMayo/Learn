@@ -1,0 +1,36 @@
+//==================================================================
+// Definition
+//==================================================================
+Gimbal Lock: 1 axix losts its freedom
+
+//==================================================================
+// Tests
+//==================================================================
+------------------------------------------------------
+[Maya]
+Other 2 axies rotates while 1 rotating (3 rings always perpendicular to each other)
+
+------------------------------------------------------
+[Unity]
+https://www.youtube.com/watch?v=Qn9Xdh972Z8
+
+Object Local Rotation (rotate with rings inside Scene panel):
+	- axises are perpendicular
+	- rings are corresponding to axises and remain perpendicular to other rings
+	//it is actually not possible to rotate like this
+	//in real world, you always need some "gizmos" to
+	//rotate it
+	
+Object Global Rotation:
+	- rotates like a Gimbal
+	- Gimbal's Y is always horizontal
+	//hence, when x = 90 (y and z are parallel),
+	//gimbal lock occurs
+	
+CONCLUSION:
+in short, Eulerian rotation is achieved with a Gimbal
+	- Rotation of Gimbal is based on current Gimbal state
+	 (the position of each ring)
+	- Rotation of Quaternion is always based on Coordinate System
+	
+	

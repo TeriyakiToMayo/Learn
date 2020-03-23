@@ -1,0 +1,22 @@
+//==================================================================
+// Why using Anisotropic Filtering
+//==================================================================
+https://youtu.be/Pdn13TRWEM0
+
+------------------------------------------------------
+[Problem: what if we dont use anisotropic filtering]
+See: "1 Why using Anisotropic Filtering.jpg"
+	- Textures at right angle look good
+	- Textures at steep angle looks blur
+
+------------------------------------------------------
+[Problem: reason behind blurring]
+See: "2 General Mipmap.jpg"
+	- We only have uniformly scaling mipmaps
+	- In order to achieve anti-aliasing, for steep angles, we choose mipmap basing on the shortest side
+	- Then the low resolution mipmap is stretched to fill the longer side, hence blurs
+
+------------------------------------------------------
+[Solution: using mipmaps of different scaling sizes]
+See "3 Anisotropic Filtering Mipmap.jpg"
+

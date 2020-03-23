@@ -1,0 +1,92 @@
+====================================================
+Web Application Structure
+====================================================
+Project
+	> .settings		//unknown
+	> build			//.class compiled files
+	> jar			//optional
+	> src			//.java files
+	> WebContent
+		> META-INF
+			- MANIFEST.MF
+		> WEB-INF
+			> lib
+			web.xml
+		index.html
+		
+		
+====================================================
+web.xml
+====================================================
+<web-app>
+
+	<display-name>BeginnersBookServlet</display-name>	//name
+	
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>			//index files, find in order
+		<welcome-file>index2.html</welcome-file>		//displayed in
+	</welcome-file-list>								//http://localhost:8080/genericexample/
+	
+	<context-param>										//- context initial parameters
+		<param-name>uname</param-name>					//		- Accessibility: in all servlets
+		<param-value>ChaitanyaSingh</param-value>		//		- Usage: spring test\notes\"Java Servlet: Servlet Code"
+	</context-param>
+	<context-param>
+		<param-name>email</param-name>
+		<param-value>beginnersbook@gmail.com</param-value>
+	</context-param>
+	
+	<servlet>
+		<servlet-name>S1</servlet-name>						//create servlet object
+		<servlet-class>First</servlet-class>
+		<load-on-startup>1</load-on-startup>				//value >= 0: load on start up
+	</servlet>												//value < 0: load when receives request
+	
+	<servlet>
+		<servlet-name>MyServlet1</servlet-name>
+		<servlet-class>com.beginnersbook.DemoServlet1</servlet-class>
+		<load-on-startup>5</load-on-startup>				//since 5 > 1, Myservlet1 loads earlier than S1
+		
+		<param-name>MyName</param-name>						// - servlet initial parameters
+		<param-value>Chaitanya</param-value>				// 		- Accessibility: only in MyServlet1 
+	</servlet>												//		- Usage: spring test\notes\"Java Servlet: Servlet Code"
+	
+	<servlet-mapping>
+		<servlet-name>S1</servlet-name>						//assign servlet url-pattern
+		<url-pattern>/hello</url-pattern>
+	</servlet-mapping>
+	
+
+</web-app>
+
+
+
+
+====================================================
+Directory Listing
+====================================================
+https://howtodoinjava.com/tomcat/tomcat-enabledisable-directory-listing/
+https://www.netsparker.com/blog/web-security/disable-directory-listing-web-servers/
+
+Add this to web.xml:
+	<servlet>
+		<servlet-name>default</servlet-name>
+		<servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>0</param-value>
+		</init-param>
+		<init-param>
+			<param-name>listings</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+When requested resource is missing, then the servlet responses 
+the directory(SEE "directory_listing_enabled.png") instead of 404.
+
+
+
+
+

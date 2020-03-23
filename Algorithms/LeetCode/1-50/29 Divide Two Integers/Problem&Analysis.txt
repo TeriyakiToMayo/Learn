@@ -1,0 +1,142 @@
+====================================================
+Problem 29 Divide Two Integers
+====================================================
+Given two integers dividend and divisor, divide two 
+integers without using multiplication, division and 
+mod operator.
+
+Return the quotient after dividing dividend by divisor.
+
+The integer division should truncate toward zero.
+
+Example 1:
+
+Input: dividend = 10, divisor = 3
+Output: 3
+
+Example 2:
+
+Input: dividend = 7, divisor = -3
+Output: -2
+
+Note:
+
+    Both dividend and divisor will be 32-bit signed 
+integers.
+    The divisor will never be 0.
+    Assume we are dealing with an environment which 
+could only store integers within the 32-bit 
+signed integer range: [−2^31,  2^31 − 1]. For the 
+purpose of this problem, assume that your 
+function returns 2^31 − 1 when the division result 
+overflows.
+
+
+====================================================
+Java Approach:
+====================================================
+
+public static int divide2(int dividend, int divisor) {
+	if(dividend == Integer.MIN_VALUE && divisor==-1) return Integer.MAX_VALUE;
+	boolean sign = (dividend < 0) == (divisor < 0);
+	//if use positive, then range [0, 2147483647], -2147483648 is not covered
+	//if use negative, then range [-2147483648, 0], -2147483648 is covered
+	int res = div(-Math.abs(dividend), -Math.abs(divisor));
+	return sign? res: -res;
+}
+	
+public static int div(int dividend, int divisor){
+	System.out.println(dividend + " " + divisor);
+	if(dividend > divisor) return 0;
+	int sum = divisor, q = 1;
+	
+	//when (sum + sum) < Integer.MIN_VALUE, (sum + sum) == 0
+	//then loop breaks
+	while(dividend <= sum + sum && sum + sum < sum){
+		sum = sum + sum;
+		q = q + q;
+		System.out.println("sum = " + sum);
+	}
+	
+	return q + div(dividend - sum, divisor);
+}
+
+
+====================================================
+Analysis
+====================================================
+------------------------------------------------------
+[Requirements]
+1. No multiplication: sign*result
+
+2. Environment only store 32-bit: no long
+
+
+------------------------------------------------------
+[Special Case]
+
+Integer.MAX_VALUE = 2147483647
+Integer.MIN_VALUE = -2147483648
+
+
+dividend = Integer.MIN_VALUE
+
+if divisor == 1:
+	actual quotient = -2147483648 (within Integer range)
+	return 
+
+if divisor == -1:
+	actual quotient = 2147483648 (out of Integer range) *
+	return 2147483647
+	
+
+Integer.MIN_VALUE / divisor
+
+divisor > 0 => 
+	1. divisor = 1:
+		Integer.MIN_VALUE == quotient
+	2. divisor > 1:
+		Integer.MIN_VALUE < quotient < 0
+divisor < 0 => 
+	1. divisor = -1:
+		quotient = 2147483648 (out of Integer range)
+	2. divisor < -1:
+		0 < quotient < 2147483648
+		
+
+------------------------------------------------------
+[Optimization]
+dividend and divisor are negative
+
+dividend0
+										-----------------------------------------0
+																				- sum1 (dividend < sum1 + sum1)
+																			   -- sum1 + sum1
+																			   
+																			   -- sum2 (dividend < sum2 + sum2)
+																			 ---- sum2 + sum2
+																			   .......
+															 -------------------- sumM (dividend < sumM + sumM)
+										 ---------------------------------------- sumM + sumM
+										 
+										 ---------------------------------------- sumN (dividend > sumN + sumN)
+ -------------------------------------------------------------------------------- sumN + sumN
+																				  //special case:
+																				  //if sumN*2 < Integer.MIN_VALUE
+																				  //then sumN*2 == 0
+																				  //then dividend < sumN*2
+																				  //then loop does not stop
+																				  //
+																				  //but since no dividend is smaller
+																				  //than Integer.MIN_VALUE, 
+																				  //that is, sumN*2 < dividend
+																				  //hence in this case, we can stop loop
+q1 = number of sums
+
+dividend1
+																				-
+																				- sum1 (dividend > sum1 + sum1)
+																			   -- sum1 + sum1
+q2 = number of sums
+
+q = q1 + q2

@@ -1,0 +1,44 @@
+https://www.geeksforgeeks.org/set-in-java/
+//==================================================================
+// Initialization
+//==================================================================
+
+------------------------------------------------------
+[Initialize new]
+Set<String> hash_set = new HashSet<String>(); 
+
+------------------------------------------------------
+[Initialize with Collection]
+Set<Integer> mySet = new HashSet<>(c);	//c is Collection
+
+
+------------------------------------------------------
+[Initialize with array (a form of Collection)]
+Integer[] arr = new Integer[] {1, 2, 3};
+Set<Integer> mySet = new HashSet<>(Arrays.asList(arr));
+
+
+
+
+
+//==================================================================
+// Add
+//==================================================================
+hash_set.add("Geeks"); 
+hash_set.addAll(c);		//Collection c containing elements to add
+
+
+//==================================================================
+// Remove
+//==================================================================
+https://www.geeksforgeeks.org/hashset-removeall-method-in-java-with-example/
+
+hash_set.remove("Geeks");
+hash_set.removeAll(c);	//Collection c containing elements to remove
+
+
+//==================================================================
+// Compare
+//==================================================================
+mySet.equals(mySet2)
+

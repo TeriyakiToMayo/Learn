@@ -1,0 +1,474 @@
+//==================================================================
+// Class Operations: 1. Initialization
+//==================================================================
+P510
+------------------------------------------------------
+[class body]
+//usually in header file
+class Stock{
+	private:
+		string company;
+		long shares;
+		double share_val;
+		double total_val;
+		void set_tot();
+	public:
+		void acquaire(const string & co, long n, double pr);
+		
+}
+
+------------------------------------------------------
+[member functions]
+//in cpp file
+void Stock::set_tot() {total_val = shares * share_val;}
+void Stock::acquaire(const string & co, long n, double pr)
+{
+	...
+}
+
+
+//==================================================================
+// Class Operations: 2. Create New Object
+//==================================================================
+------------------------------------------------------
+[creating new object: new or without new]
+https://stackoverflow.com/questions/3673998/what-is-difference-between-instantiating-an-object-using-new-vs-without
+Time t (12, 0, 0);
+	1. local scope(stack), destroyed when scope ends
+	2. returns reference
+	
+Time* t = new Time(12, 0, 0);
+	1. t on stack
+	   obj on heap, requires to be [delete]d
+	2. new returns pointer
+	3. (t = new Time(12, 0, 0)) returns 
+		- address if succeed
+		- 0 if failed(memory is used up)
+
+------------------------------------------------------
+[destroy object]
+https://www.tutorialspoint.com/cplusplus/cpp_dynamic_memory.htm
+delete t;	//releases memory of t
+
+------------------------------------------------------
+[different constructors: categorized by number of parameters]
+IntCell obj;	//legal: ZERO parameter constructor
+IntCell obj();	//illegal: function declaration
+IntCell obj{};	//legal(C++11)
+IntCell obj = {};	//legal(C++11)
+
+IntCell obj (12);	//legal: ONE parameter constructor
+IntCell obj = 12;	//illegal if EXPLICIT
+IntCell obj{12};	//legal(C++11)
+IntCell obj = {12};	//legal(C++11)
+
+
+------------------------------------------------------
+[different constructors: categorized by using approach]
+IntCell obj;		IntCell obj (1);	IntCell obj (1, 2);		...
+IntCell obj {};		IntCell obj	{1};	IntCell obj {1, 2};		...
+IntCell obj = {};	IntCell obj = {1};	IntCell obj = {1, 2};	...
+					IntCell obj = 1;
+
+------------------------------------------------------
+[new constructor]
+new IntCell;
+new IntCell();		new IntCell(1);		new IntCell(1, 2);		...
+new IntCell{};		new IntCell{1};		new IntCell{1, 2};		...
+
+
+//==================================================================
+// Class Structure: 1. Constructor & Destructor
+//==================================================================
+------------------------------------------------------
+[constructor and destructor]
+Stock::Stock(){...}		//constructor
+Stock::~Stock(){...}	//destructor
+
+------------------------------------------------------
+[initialization list]
+https://en.cppreference.com/w/cpp/language/initializer_list
+struct S {
+    int n;
+	int m;
+    
+    S() 			// constructor definition.
+		: n(7)		// ": n(7), m(8)" is the initializer list
+		, m(8) 
+	{} 				// "{}" is the function body
+                  
+	S(int, int);	// constructor declaration
+};
+
+S::S(int x, int y) : n{x}, m(y) {} // constructor definition. ": n{x}" is the initializer list
+
+int main()
+{
+    S s; // calls S::S()
+    S s2(10); // calls S::S(int, int)
+}
+
+------------------------------------------------------
+[explicit constructor]
+S(int a)
+	: a{ a }
+{}
+
+S s = 1;	//legal: it calls S(int) to construct a new S object
+			
+explicit S(int a)	//using explicit will avoid this problem
+			: a{ a }
+		{}			
+
+
+//==================================================================
+// Class Structure: 2. Member Functions
+//==================================================================
+------------------------------------------------------
+[member function types]
+accessor(const function): function that examines but not change obj state
+mutator(non-const function): function that changes obj state
+
+------------------------------------------------------
+[member function initialization]
+void Stock::acquire(const string & co, long n, double pr){
+	company = co;
+	if (n < 0){
+		shares = 0;
+	}else
+		shares = n;
+	share_val = pr;
+	set_tot();
+}
+
+------------------------------------------------------
+[member function pointer]
+https://stackoverflow.com/questions/6586205/what-are-the-pointer-to-member-and-operators-in-c
+struct X {
+	int f() {
+		cout << "f called" << endl;
+	}
+	void g() {
+		cout << "g called" << endl;
+	}
+};
+
+typedef int (X::*pointer)();
+//what does last line mean?
+//https://stackoverflow.com/questions/3982470/what-does-typedef-void-something-mean
+pointer somePointer = &X::f;
+X x;
+(x.*somePointer)();
+X* px = new X;
+(px->*somePointer)();
+
+//output: 
+f called
+f called
+
+------------------------------------------------------
+[member function differences]
+1. functions in class declaration:
+	- inline
+2. functions defined outside:
+	- not inlined
+	
+
+//==================================================================
+// Class Structure: 3. Virtual
+//==================================================================
+https://gradestack.com/Programming-in-C-/Binding-Polymorphisms-/Binding-In-C-/21206-4330-52994-study-wtw
+------------------------------------------------------
+[virtual class]
+used to solve diamond problems, see Derived Classes - diamond problems
+
+------------------------------------------------------
+[virtual functions]
+see virtual_function_rules.png
+
+------------------------------------------------------
+[pure virtual functions]
+virtual void display() = 0;	//it does nothing
+
+abstract class:
+	- has pure virtual function
+	- cannot be instantiated
+
+concrete class:
+	- has no pure virtual function(must re-declare pure virtual function in super class)
+	- can be instantiated
+							
+------------------------------------------------------
+[function binding]
+Binding: 
+	- a link between
+		- function call
+		- function executed
+Static binding:
+	- at compile time
+	- compiler knows which function to be invoked
+Dynamic binding:
+	- at run time
+	- function called is dependent on address in pointer
+
+
+non-virtual:
+	- static binding: at compile time, bind function [invoked] in [declared type]
+	- Ex.
+		class first
+		{
+			public:
+				void display(){}
+		}
+		class second: public first
+		{
+			public:
+				void display(){}
+		}
+		int main()
+		{
+			first f, *p;
+			second s;
+			p=&f;
+			p->display();	//display() in first
+			p=&s;
+			p->display();	//display() in first, since p is first*
+		}
+	
+virtual:
+	- dyanamic binding: at run time, bind function [invoked] according to [obj type]
+	- Ex.
+		class first
+		{
+			public:
+				virtual void display(){}
+		}
+		class second: public first
+		{
+			public:
+				void display(){}
+		}
+		int main()
+		{
+			first f, *p;
+			second s;
+			p=&f;
+			p->display();	//display() in first
+			p=&s;
+			p->display();	//display() in second, since s is second
+		}
+
+------------------------------------------------------
+[VTABLE & VPTR]
+https://gradestack.com/Programming-in-C-/Binding-Polymorphisms-/Binding-In-C-/21206-4330-52994-study-wtw
+VTABLE_VPTR.png
+
+class base						=>			base:VTABLE				<=			VPTR		<=		base obj
+{											
+	virtual void sum(){}					sum(): &base::sum()
+	virtual void sub(){}					sub(): &base::sub()
+}
+
+class derivedA: public base		=>			derivedA:VTABLE			<=			VPTR		<=		detivedA obj
+{
+	void sum(){}							sum(): &detivedA:sum()
+}											sub(): &base:sub()
+
+VTABLEs:
+	- all classes with virtual functions have VTABLEs
+	- VTABLE contains function address to be invoked
+	
+VPTR:
+	- all objects of those classes have VPTRs
+	- compiler finds virtual functions via VPTRs
+	- function search approach:
+		- pointer points to its own type
+			- function in class: directly invoke
+			- function in super class: find in super class
+		- pointer points to derived type
+			- function in derived class: error
+			- function in class: 
+				- non-virtual: directly invoke
+				- virtual: find re-defined version in derived class
+			- function in super class: 
+				- non-virtual: direcly invoke
+				- virtual: find re-defined version in derived class
+
+
+//==================================================================
+// Class Structure: 4. Class Size
+//==================================================================
+https://gradestack.com/Programming-in-C-/Binding-Polymorphisms-/Binding-In-C-/21206-4330-52994-study-wtw
+Minimum: 1
+
+class A 	//total = int(2) + void_pointer(2) = 4
+{
+	int j;
+	virtual void show(){}
+}
+//void* points to a VTABLE(virtual table)
+
+class B		//total = int(2) = 2
+{
+	int j;
+	void show(){}
+}
+
+class C 	//total = 1
+{
+	void show(){}
+}
+
+
+
+//==================================================================
+// Derived Classes
+//==================================================================
+------------------------------------------------------
+[initialization]
+https://www.programiz.com/cpp-programming/public-protected-private-inheritance
+class base{};
+
+class derived: public base
+{};
+
+------------------------------------------------------
+[accessibility]
+class base 
+{
+	public:
+		int x;
+	protected:
+		int y;
+	private:
+		int z;
+};
+
+class publicDerived: public base
+{
+	// x is public
+	// y is protected
+	// z is not accessible from publicDerived
+};
+
+class protectedDerived: protected base
+{
+	// x is protected
+	// y is protected
+	// z is not accessible from protectedDerived
+};
+
+class privateDerived: private base
+{
+	// x is private
+	// y is private
+	// z is not accessible from privateDerived
+}
+
+------------------------------------------------------
+[diamond problem]
+https://stackoverflow.com/questions/2659116/how-does-virtual-inheritance-solve-the-diamond-multiple-inheritance-ambiguit
+
+  A  
+ / \  
+B   C  
+ \ /  
+  D 
+And not: (What happens without virtual inheritance)
+
+A   A  
+|   |
+B   C  
+ \ /  
+  D 
+Virtual inheritance means that there will be only 1 instance of the base A class not 2.
+
+------------------------------------------------------
+[diamond problem example]
+https://www.geeksforgeeks.org/multiple-inheritance-in-c/
+
+#include<iostream> 
+using namespace std; 
+class Person { 
+   // Data members of person  
+public: 
+    Person(int x)  { cout << "Person::Person(int ) called" << endl;   } 
+}; 
+  
+class Faculty : public Person { 
+   // data members of Faculty 
+public: 
+    Faculty(int x):Person(x)   { 
+       cout<<"Faculty::Faculty(int ) called"<< endl; 
+    } 
+}; 
+  
+class Student : public Person { 
+   // data members of Student 
+public: 
+    Student(int x):Person(x) { 
+        cout<<"Student::Student(int ) called"<< endl; 
+    } 
+}; 
+  
+class TA : public Faculty, public Student  { 
+public: 
+    TA(int x):Student(x), Faculty(x)   { 
+        cout<<"TA::TA(int ) called"<< endl; 
+    } 
+}; 
+  
+int main()  { 
+    TA ta1(30); 
+} 
+
+OUTPUT:
+Person::Person(int ) called
+Faculty::Faculty(int ) called
+Person::Person(int ) called
+Student::Student(int ) called
+TA::TA(int ) called
+
+------------------------------------------------------
+[diamond problem solution]
+
+#include<iostream> 
+using namespace std; 
+class Person { 
+public: 
+    Person(int x)  { cout << "Person::Person(int ) called" << endl;   } 
+    Person()     { cout << "Person::Person() called" << endl;   } 
+}; 
+  
+class Faculty : virtual public Person { 
+public: 
+    Faculty(int x):Person(x)   { 
+       cout<<"Faculty::Faculty(int ) called"<< endl; 
+    } 
+}; 
+  
+class Student : virtual public Person { 
+public: 
+    Student(int x):Person(x) { 
+        cout<<"Student::Student(int ) called"<< endl; 
+    } 
+}; 
+  
+class TA : public Faculty, public Student  { 
+public: 
+    TA(int x):Student(x), Faculty(x), Person(x)   { 
+        cout<<"TA::TA(int ) called"<< endl; 
+    } 
+}; 
+  
+int main()  { 
+    TA ta1(30); 
+}
+
+
+OUTPUT:
+Person::Person(int ) called
+Faculty::Faculty(int ) called
+Student::Student(int ) called
+TA::TA(int ) called
+

@@ -1,0 +1,37 @@
+//==================================================================
+// Bitset
+//==================================================================
+#include <bitset>
+
+------------------------------------------------------
+[Initialize: empty set]
+std::bitset<8> foo;
+
+[Initialize: Convert int to bitset]
+int x = -5;
+int size = (sizeof x) * CHAR_BIT; //or sizeof(int)
+std::string str = std::bitset<size>(x).to_string(); 
+
+[Convert String(bits) to int]
+strtol(...);	//see string.txt
+				//BE CAREFUL: str is not 2's complement
+				//"1010" => 10, "-1010" => -10
+
+
+------------------------------------------------------
+[Count & Size]
+foo.size();  //return the size of set
+foo.count();  //return the amount of ones
+(foo.size()-foo.count());  //return amount of zeros
+
+
+------------------------------------------------------
+[Set & []]
+foo.set();			//1111
+foo.set(2,0);		//1101
+foo.set(2);			//1111
+
+std::bitset<4> foo;	//0000
+foo[1] = 1;			//0100
+foo[2] = foo[1];	//0110
+

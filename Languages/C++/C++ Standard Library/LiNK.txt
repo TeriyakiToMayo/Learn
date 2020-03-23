@@ -1,0 +1,269 @@
+http://www.cplusplus.com/reference/
+https://www.programiz.com/cpp-programming/library-function
+
+//==================================================================
+// C Library
+//==================================================================
+https://www.programiz.com/cpp-programming/library-function
+(types with * are VERY IMPORTANT)
+
+-------------------------------------------------------
+[I. Data Handling: 1. Basic Data Types]*
+	<cstddef> (stddef.h): C Standard definitions(size_t, nullptr_t, ...)
+
+	<cstdbool> (stdbool.h): Boolean type
+	
+	<cinttypes> (inttypes.h): C integer types
+	<cstdint> (stdint.h): Integer types
+	<climits> (limits.h): Sizes of integral types
+	
+	<cfloat> (float.h): Characteristics of floating-point types 
+	<cfenv> (fenv.h): Floating-point environment 
+
+-------------------------------------------------------
+[I. Data Handling: 2. String and Character Handling]*
+	//basic characters
+	<cctype> (ctype.h): Character handling functions 
+	<cuchar> (uchar.h): Unicode characters 
+	
+	//wide characters
+	<cwctype> (wctype.h): Wide character type 
+	<cwchar> (wchar.h): Wide characters
+	
+	<cstring> (string.h): C Strings 
+
+
+-------------------------------------------------------
+[I. Data Handling: 3. Dynamic Allocation]*
+	<cstdlib> (stdlib.h): C Standard General Utilities Library 
+
+
+-------------------------------------------------------
+[II. Components: 1. I/O]*
+	<cstdio> (stdio.h): C library to perform Input/Output operations 
+
+
+-------------------------------------------------------
+[II. Components: 2. Functions]
+	<cstdarg> (stdarg.h): Variable arguments handling
+	<csetjmp> (setjmp.h): Non local jumps 
+
+-------------------------------------------------------
+[II. Components: 3. Errors, and Assertions]
+	<cerrno> (errno.h): C Errors 
+	<csignal> (signal.h): C library to handle signals 
+	
+	<cassert> (assert.h): C Diagnostics Library 
+
+
+-------------------------------------------------------
+[III. Utilities: 0. Constants]
+	<ciso646> (iso646.h): Marco constants of operators(ex. and -> &&)
+
+	
+-------------------------------------------------------
+[III. Utilities: 1. Mathematical]
+	<ctgmath> (tgmath.h): Type-generic math, provides templates for <complex>
+
+	<cmath> (math.h): C numerics library 
+
+
+-------------------------------------------------------
+[III. Utilities: 2. Time, Date, Localization]
+	<ctime> (time.h): C Time Library
+	
+	<clocale> (locale.h): C localization library 
+
+
+//==================================================================
+// C++ Standard Template Libraries: 1. Containers
+//==================================================================
+
+-------------------------------------------------------
+[Sequence]
+	<array>: Array class
+
+	<vector>: Vector
+
+	<deque>: Double ended queue
+
+	<forward_list>: Forward list
+
+	<list>: List
+
+
+-------------------------------------------------------
+[Associative Containers]
+	<tuple>: Tuple library
+
+	<set>: Set
+
+	<multiset>: Multiple-key set
+
+	<map>: Map
+
+	<multimap>: Multiple-key map
+
+
+-------------------------------------------------------
+[Unordered Associative Containers]
+	<unordered_set>: Unordered Set
+
+	<unordered_multiset>: Unordered Multiple-key set
+
+	<unordered_map>: Unordered Map
+
+	<munordered_ultimap>: Unordered Multiple-key map
+
+
+-------------------------------------------------------
+[Container Adaptors]
+	<stack>: LIFO stack
+
+	<queue>: FIFO queue
+
+	<priority_queue>: Priority queue
+
+
+-------------------------------------------------------
+[Iterators]
+	<iterator>: Iterator definitions
+
+
+//==================================================================
+// C++ Standard Template Libraries: 2. Input/Output
+//==================================================================
+See Input_Output_Stream_Library_Relationships.GIF
+
+-------------------------------------------------------
+[<ios>]
+	CLASS ios_base: Base class for streams
+	CLASS ios: Base class for streams (type-dependent components)
+
+
+-------------------------------------------------------
+[<istream> + <ostream> + <streambuf>]
+	<istream>	
+		CLASS istream: Input stream
+		CLASS iostream: Input/output stream
+	
+	<ostream>
+		CLASS ostream: Output Stream
+
+	<streambuf>
+		CLASS streambuf: Base buffer class for streams
+
+
+-------------------------------------------------------
+[<iostream>]
+	OBJECT cin: Standard input stream
+
+	OBJECT cout: Standard output stream
+	OBJECT cerr: Standard output stream for errors
+	OBJECT clog: Standard output stream for logging
+
+
+-------------------------------------------------------
+[<fstream>]
+	CLASS ifstream: Input file stream class
+	CLASS ofstream: Output file stream
+	CLASS fstream: Input/output file stream class
+	CLASS filebuf: File stream buffer
+
+
+-------------------------------------------------------
+[<sstream>]
+	CLASS istringstream: Input string stream
+	CLASS ostringstream: Output string stream
+	CLASS stringstream: Input/output string stream
+	CLASS stringbuf: String stream buffer
+
+
+//==================================================================
+// C++ Standard Template Libraries: 3. Multi-threading
+//==================================================================
+	<atomic>: Atomic
+
+	<thread>: Thread
+
+	<mutex>: Mutex
+
+	<condition_variable>: Condition variable
+
+	<future>: Future
+
+
+//==================================================================
+// C++ Standard Template Libraries: 4. Other
+//==================================================================
+
+-------------------------------------------------------
+[I. Data Handling: 0. Type Info]
+	<typeinfo>: Type information
+
+	<type_traits>: type_traits
+
+
+-------------------------------------------------------
+[I. Data Handling: 1. Bit Set]
+	<bitset>
+
+
+-------------------------------------------------------
+[I. Data Handling: 2. Basic Data Types]
+	<numeric>: Generalized numeric operations
+	<limits>: Numeric limits
+	
+	<valarray>: Library for arrays of numeric values
+	
+
+-------------------------------------------------------
+[I. Data Handling: 3. String, Characters]
+	<codecvt>: UTF character convertor
+
+	<string>: Strings
+
+
+-------------------------------------------------------
+[I. Data Handling: 4. Dynamic Allocation]
+	<new>: Dynamic memory
+	<memory>: Memory elements
+
+
+-------------------------------------------------------
+[II. Components: Function]
+	<functional>: Function objects
+	
+	<initializer_list>: Initializer list
+
+
+-------------------------------------------------------
+[II. Components: Errors, Exceptions]
+	<system_error>: System errors
+	
+	<exception>: Standard exceptions
+	<stdexcept>: Exception classes
+
+
+-------------------------------------------------------
+[III. Utilities: General Utilities]
+	<utility>: Utility components
+	<algorithm>: Standard Template Library: Algorithms
+
+
+-------------------------------------------------------
+[III. Utilities: Mathematical]
+	<ratio>: Ratio header
+	<complex>: Complex numbers library
+	
+	<regex>: Regular Expressions
+	
+	<random>: Random
+
+
+-------------------------------------------------------
+[III. Utilities: Time, Date, and Localization]
+	<chrono>: Time library
+	
+	<locale>: Localization library
+

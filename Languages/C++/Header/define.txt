@@ -1,0 +1,10 @@
+
+//==================================================================
+// Difference between #define and const
+//==================================================================
+https://stackoverflow.com/questions/1637332/static-const-vs-define
+				value				memory space		scope
+				
+#define			literal				no memory			global
+
+const			variable value		occupies memory		local

@@ -1,0 +1,122 @@
+//==================================================================
+// Array Initialization
+//==================================================================
+
+------------------------------------------------------
+[Array of Integers]
+https://stackoverflow.com/questions/2154251/any-shortcut-to-initialize-all-array-elements-to-zero
+
+//language spec: default value = 0
+
+//general initialization
+int[] arr = {1, 2, 3};
+Integer[] arr = new Integer[5] {1, 2, 3};	//Integer array
+
+//initialize with same value
+int[] arr = new int[100];
+Arrays.fill(arr, 1);	//initialize with 1s, avoids loop
+
+
+------------------------------------------------------
+[Array of Characters]
+
+//language spec: default value = '\0'
+char[] cArr = new char[10];
+
+------------------------------------------------------
+[Array of Collection]
+Set<Integer>[] set = new Set[5];	//Array of Set<Integer>
+
+
+//==================================================================
+// Array Basic Operations
+//==================================================================
+int[] arr = new int[5];
+
+------------------------------------------------------
+[Arrays fill]
+java.util.Arrays.fill(arr, val);
+
+
+------------------------------------------------------
+[Arrays sort]
+Arrays.sort(arr);
+
+Arrays.sort(arr, new Comparator<>(){
+	@Override
+	public int compare(Object a, Object b){
+		return ...
+	}
+});
+
+
+------------------------------------------------------
+[Arrays sub array]
+https://stackoverflow.com/questions/4439595/how-to-create-a-sub-array-from-another-array-in-java
+
+Arrays.copyOfRange(arr, 1, 5);
+
+
+------------------------------------------------------
+[Copy array to another]
+https://www.tutorialspoint.com/Array-Copy-in-Java
+
+------------------------------------------------------
+[System.arraycopy()]
+int[] g = {1, 2, 3};      
+int[] h = new int[g.length];
+System.arraycopy(g, 0, h, 0, h.length);
+
+//Note: copying 2d array with this method will only copy references of y arrays
+//Meaning that the original and the copied arrays share the same references, changing one will affect another
+
+int[][] g = {{1}, {2}, {3}};      
+int[][] h = new int[g.length];
+System.arraycopy(g, 0, h, 0, h.length);
+
+h[0][0] = 0;
+System.out.println(g[0][0]);	//output: 0
+
+------------------------------------------------------
+[clone()]
+https://www.geeksforgeeks.org/array-copy-in-java/
+
+int b[] = a.clone(); 
+
+//Similarly, this cannot be used for 2d array
+
+
+//==================================================================
+// Array Conversion
+//==================================================================
+https://www.techiedelight.com/convert-int-array-integer-array-java/
+------------------------------------------------------
+[int array to Integer array]
+Integer[] boxedArray = Arrays.stream(primitiveArray).boxed().toArray(Integer[]::new);
+
+Integer[] boxedArray = IntStream.of(primitiveArray).boxed().toArray(Integer[]::new);
+
+------------------------------------------------------
+[Integer array to int array]
+
+//Integer List to int array
+int[] array = list.stream().mapToInt(i->i).toArray();
+
+
+------------------------------------------------------
+[Arrays convert to Set(Collection)]
+Set<Character> set = new HashSet<Character>();
+set.addAll(Arrays.asList(new Character[] {'5', '3', '6', '9', '8'}));
+
+
+
+//==================================================================
+// Arrays Misc.
+//==================================================================
+------------------------------------------------------
+[Print array]
+https://stackoverflow.com/questions/409784/whats-the-simplest-way-to-print-a-java-array
+
+Arrays.toString(arr);
+Arrays.deepToString(arr);	//for arrays within arrays
+

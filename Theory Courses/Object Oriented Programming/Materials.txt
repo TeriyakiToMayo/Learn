@@ -1,0 +1,149 @@
+https://career.guru99.com/top-50-oops-interview-questions/
+
+https://www.geeksforgeeks.org/tag/object-oriented-design/
+
+https://www.wisdomjobs.com/e-university/object-oriented-analysis-and-desig
+n-interview-questions.html
+
+
+https://medium.com/dot-net-tutorial/oops-interview-questions-with-answers-for-freshers-b2a568ed364b
+1. What is OOPS?
+
+OOPS is abbreviated as Object Oriented Programming system in which 
+programs are considered as a collection of objects. Each object is 
+nothing but an instance of a class.
+
+2 . Write basic concepts of OOPS?
+
+Following are the concepts of OOPS and are as follows:.
+
+Abstraction.
+
+Encapsulation.
+
+Inheritance.
+
+Polymorphism.
+
+3. What is a class?
+
+A class is simply a representation of a type of object. It is the 
+blueprint/ plan/ template that describe the details of an object.
+
+4. What is an object?
+
+Object is termed as an instance of a class, and it has its own state, 
+behavior and identity.
+
+5 . What is Encapsulation?
+
+Encapsulation is an attribute of an object, and it contains all data 
+which is hidden. That hidden data can be restricted to the members of 
+that class.
+
+Levels are Public,Protected, Private, Internal and Protected Internal.
+
+6 . What is Polymorphism?
+
+Polymorphism is nothing butassigning behavior or value in a subclass to 
+something that was already declared in the main class. Simply, 
+polymorphism takes more than one form.
+
+7 . What is Inheritance?
+
+Inheritance is a concept where one class shares the structure and 
+behavior defined in another class. Ifinheritance applied on one class is 
+called Single Inheritance, and if it depends on multiple classes, then 
+it is called multiple Inheritance.
+
+8. What are manipulators?
+
+Manipulators are the functions which can be used in conjunction with the 
+insertion (<<) and extraction (>>) operators on an object. Examples are 
+endl and setw.
+
+9. Define a constructor?
+
+Constructor is a method used to initialize the state of an object, and 
+it gets invoked at the time of object creation. Rules forconstructor are:
+
+Constructor Name should be same asclass name.
+
+Constructor must have no return type.
+
+10. Define Destructor?
+
+Destructor is a method which is automatically called when the object 
+ismade ofscope or destroyed. Destructor name is also same asclass name 
+but with the tilde symbol before the name.
+
+11. What is Inline function?
+
+Inline function is a technique used by the compilers and instructs to 
+insert complete body of the function wherever that function is used in 
+the program source code.
+
+12. What is operator overloading?
+
+Operator overloading is a function where different operators are applied 
+and depends on the arguments. Operator,-,* can be used to pass through 
+the function , and it has their own precedence to execute.
+
+13. What is an abstract class?
+
+An abstract class is a class which cannot be instantiated. Creation of 
+an object is not possible with abstract class , but it can be inherited. 
+An abstract class can contain only Abstract method. Java allows only 
+abstract method in abstract class while for other language it allows 
+non-abstract method as well.
+
+14. What is an interface?
+
+An interface is a collection of abstract method. If the class implements 
+an inheritance, and then thereby inherits all the abstract methods of an 
+interface.
+
+15. What is exception handling?
+
+Exception is an event that occurs during the execution of a program. 
+Exceptions can be of any type — Run time exception, Error exceptions. 
+Those exceptions are handled properly through exception handling 
+mechanism like try, catch and throw keywords.
+
+16. What is dynamic or run time polymorphism?
+
+Dynamic or Run time polymorphism is also known as method overriding in 
+which call to an overridden function is resolved during run time, not at 
+the compile time. It means having two or more methods with the same 
+name,same signature but with different implementation.
+
+17. What is static and dynamic binding?
+
+Binding is nothing but the association of a name with the class. Static 
+binding is a binding in which name can be associated with the class 
+during compilation time , and it is also called as early Binding.
+
+Dynamic binding is a binding in which name can be associated with the 
+class during execution time , and it is also called as Late Binding.
+
+18. What is a copy constructor?
+
+This is a special constructor for creating a new object as a copy of an 
+existing object. There will be always only on copy constructor that can 
+be either defined by the user or the system.
+
+19. Difference between class and an object?
+
+An object is an instance of a class. Objects hold any information , but 
+classes don’t have any information. Definition of properties and 
+functions can be done at class and can be used by the object.
+
+Class can have sub-classes, and an object doesn’t have sub-objects.
+
+20. What is the difference between structure and a class?
+
+Structure default access type is public , but class access type is 
+private. A structure is used for grouping data whereas class can be used 
+for grouping data and methods. Structures are exclusively used for data 
+and it doesn’t require strict validation , but classes are used to 
+encapsulates and inherit data which requires strict validation.

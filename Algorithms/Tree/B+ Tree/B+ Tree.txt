@@ -1,0 +1,61 @@
+====================================================
+B+ Tree Structure
+====================================================
+Order: k
+
+1. Nodes with k subtrees have k elements (k - 1 elements in B tree)
+
+	B Tree (order 3): 
+	[sub1, 1, sub2, 5, sub3]
+	
+	B+ Tree (order 3):
+	[sub1, 1, sub2, 5, sub3, 6]	//6 is the maximum value
+
+2. Leaves contain all data (data in internal nodes are also in leaves)
+
+3. Leaves are connected
+	
+
+====================================================
+B+ Tree Properties
+====================================================
+https://blog.csdn.net/qq_26222859/article/details/80631121
+
+1. Satellite Information: address of corresponding data in database
+	- B Tree: each node contains satellite information
+		
+		some internal node:
+		[SubNode0,	1(Ref:x00ABAA10),	SubNode1,	6(Ref:x00FF8),		SubNode2] 				Elements: 2
+		[Ref:32]	[Int:32][Ref:32]	[Ref:32]	[Int:32][Ref:32] 	[Ref:32]  				Total: 32*7
+		
+	- B+ Tree: only leaf contains satellite information
+	
+		some internal node:
+		[SubNode0,	1,			SubNode1,	6,			SubNode2,		10,			SubNode3,]	Elements: 3
+		[Ref:32]   [Int:32]		[Ref:32]	[Int:32]	[Ref:32]  		[Int:32]	[Ref:32]	Total: 32*7
+		
+	- Hence of the same disk space, each node contains more elements
+	  the whole is flatter, and fewer IOs needed for searching
+	  
+2. Only leaf contains data:
+	- B Tree: search time varies
+	
+	- B+ Tree: since each search needs to go down to leaf, search time is constant
+	
+3. Leaves are connected: range search becomes much easier
+	- B Tree: Inorder traverse
+	
+	- B+ Tree: find the first, then go through the linked list of leaves
+	  
+
+
+====================================================
+B+ Tree Searching
+====================================================
+
+
+
+====================================================
+B+ Tree Inserting
+====================================================
+

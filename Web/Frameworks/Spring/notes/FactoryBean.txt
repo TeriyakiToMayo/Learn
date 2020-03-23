@@ -1,0 +1,33 @@
+====================================================================
+How FactoryBean Instantiated
+====================================================================
+	(https://blog.csdn.net/zknxx/article/details/79572387)
+	
+	freemarker-config.xml:
+	
+		<bean id="freemarkerConfiguration" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+			<property name="location">
+				<value>classpath:/freemarker.properties</value>
+			</property> 
+		</bean>
+		<!--
+			PropertiesFactoryBean
+				- Implements FactoryBean<Properties> 
+				- no constructor, singleton returns a Properties object
+		-->
+	
+	
+	org.springframework.context.support.AbstractApplicationContext.class
+		getBean(){}
+	
+	org.springframework.beans.factory.support.doGetBeanNamesForType.class:
+	
+		private String[] doGetBeanNamesForType(...){}
+		
+		//this method decides if the bean is a general Bean or a FactoryBean
+		//if a general Bean, then create its instance
+		//if a FactoryBEan, then get the instance it provides
+		
+		
+		
+

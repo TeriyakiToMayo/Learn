@@ -1,0 +1,40 @@
+====================================================================
+Proxy
+====================================================================
+	
+	(https://blog.csdn.net/jss19940414/article/details/84944624)
+	
+	Proxy server: a gateway between you and the internet
+		- Access prohibited websites
+		- Hide IP
+		- Accelerate network speed
+		
+	-------------------------------------------------------------
+	[Application Area]
+	
+		a proxy works for a specific web services:
+			- FTP proxy
+			- HTTP proxy
+			- HTTPS proxy
+			- SSL proxy
+			- Socks proxy
+
+
+====================================================================
+Setting up proxy
+====================================================================
+	
+	
+====================================================================
+VPN
+====================================================================
+	Virtual Private Network: also a gateway between you and the internet
+	
+	-------------------------------------------------------------
+	[Data Encryption]
+	
+	-------------------------------------------------------------
+	[Application Area]
+		
+		All services of operating system
+	

@@ -1,0 +1,201 @@
+====================================================
+Problem 68. Text Justification
+====================================================
+Given an array of words and a width maxWidth, format the 
+text such that each line has exactly maxWidth characters 
+and is fully (left and right) justified.
+
+You should pack your words in a greedy approach; that is, 
+pack as many words as you can in each line. Pad extra 
+spaces ' ' when necessary so that each line has exactly 
+maxWidth characters.
+
+Extra spaces between words should be distributed as evenly 
+as possible. If the number of spaces on a line do not 
+divide evenly between words, the empty slots on the left 
+will be assigned more spaces than the slots on the right.
+
+For the last line of text, it should be left justified and 
+no extra space is inserted between words.
+
+Note:
+
+    A word is defined as a character sequence consisting of 
+non-space characters only.
+    Each word's length is guaranteed to be greater than 0 
+and not exceed maxWidth.
+    The input array words contains at least one word.
+
+Example 1:
+
+Input:
+words = ["This", "is", "an", "example", "of", "text", 
+"justification."]
+maxWidth = 16
+Output:
+[
+   "This    is    an",
+   "example  of text",
+   "justification.  "
+]
+
+Example 2:
+
+Input:
+words = ["What","must","be","acknowledgment","shall","be"]
+maxWidth = 16
+Output:
+[
+  "What   must   be",
+  "acknowledgment  ",
+  "shall be        "
+]
+Explanation: Note that the last line is "shall be    " 
+instead of "shall     be",
+             because the last line must be left-justified 
+instead of fully-justified.
+             Note that the second line is also 
+left-justified becase it contains only one word.
+
+Example 3:
+
+Input:
+words = 
+["Science","is","what","we","understand","well","enough","to"
+,"explain",
+         
+"to","a","computer.","Art","is","everything","else",
+"we","do"]
+maxWidth = 20
+Output:
+[
+  "Science  is  what we",
+  "understand      well",
+  "enough to explain to",
+  "a  computer.  Art is",
+  "everything  else  we",
+  "do                  "
+]
+
+
+====================================================
+Analysis
+====================================================
+------------------------------------------------------
+[Iterate through each word VS. Iterate through each line]
+
+I. Iterate through each word:
+
+Assume we have word1-7, 
+word1-3, word4-5, word6-7 are lines
+
+word1 word2 word3 word4 word5 word6 word7
+
+----- ----- ----- ----- ----- ----- ----- 
+loop1 loop2 loop3 loop4 loop5 loop6 loop7
+
+----------------- ----------- -----------
+phase1            add         add
+                  phase2      phase3
+
+Since no phase4, the line of phase3 must be added after the 
+loop is ended.
+
+
+II. Iterate through each line:
+
+word1 word2 word3 word4 word5 word6 word7
+
+----------------- ----------- -----------
+loop1         add loop2   add loop3   add
+
+Add is performed at the end of each loop, no bothering problems.
+
+
+------------------------------------------------------
+[Range and gaps]
+
+Assume we have 10 remaining spaces, and n gaps
+
+n = 2		n = 3		n = 4
+
+10			10			10
+
+5  5		4 3 3		3 3 2 2
+
+Hence basic space = 10/n, the first 10%n spaces are one more
+
+
+
+====================================================
+Java Approach
+1 ms	85.66%
+41.4 MB	5.22%
+====================================================
+
+//Note0:	Iterate through each word, find each line
+//				- Problem: difficult to deal with the last line
+
+//Note1:	Instead of iterate through each word, now we find one line in each loop,
+//			then, the problem of the last line is resolved	
+
+public static List<String> fullJustify(String[] words, int maxWidth) {
+    	
+	int start = 0;
+	List<String> list = new LinkedList<String>();
+	
+	while(start < words.length) {
+		int[] result = findEnd(start, words, maxWidth);
+		list.add(generateLine2(words, start, result[0], result[1], maxWidth));
+		start = result[0] + 1;
+	}
+	
+	return list;
+}
+
+public static int[] findEnd(int start, String[] words, int maxWidth) {
+	int end = start;
+	int sum = words[end].length();
+	end++;
+	
+	while(end < words.length && (sum + 1 + words[end].length()) <= maxWidth) {
+		sum += 1 + words[end].length();
+		end++;
+	}
+	
+	return new int[] {end - 1, sum};
+}
+
+public static String generateLine2(String[] words, int start, int end, int curLen, int maxWidth) {
+	
+	int remainSpaces = maxWidth - curLen;
+	if(start == end)  return padResult(words[start], maxWidth);
+	
+	boolean lastLine = end == words.length - 1;
+	
+	
+	int gaps = end - start;
+	remainSpaces += gaps;
+	String space = lastLine ? " " : generateSpaces(remainSpaces/gaps);
+	int remainder = lastLine ? 0 : remainSpaces%gaps;
+	
+	//Use StringBuilder to make it faster
+	StringBuilder sb = new StringBuilder();
+	sb.append(words[start]);
+	for(int i = start + 1; i <= end; i++) {
+		sb.append(space).append((remainder > 0 ? " " : "")).append(words[i]);
+		remainder--;
+	}
+	
+	return padResult(sb.toString(), maxWidth);
+}
+
+public static String padResult(String str, int maxWidth) {
+	StringBuilder sb = new StringBuilder();
+	sb.append(str).append(generateSpaces(maxWidth - str.length()));
+	return sb.toString();
+}
+
+public static String generateSpaces(int n) {
+	return new String(new char[n]).replace('\0', ' ');
+}

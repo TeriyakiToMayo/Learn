@@ -1,0 +1,3 @@
+The Computational Geometry Algorithms Library - CGAL
+
+OpenCV Hough Lines

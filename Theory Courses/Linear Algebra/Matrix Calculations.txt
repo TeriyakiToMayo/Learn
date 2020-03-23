@@ -1,0 +1,8 @@
+//==================================================================
+// Matrix Multiplication Properties
+//==================================================================
+https://ltcconline.net/greenl/courses/203/MatricesApps/MatrixOpsProps.htm
+
+A(BC) = (AB)C associative.
+A(B + C) = AB + AC distributive.
+(A + B)C = AC + BC distributive.

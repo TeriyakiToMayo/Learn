@@ -1,0 +1,22 @@
+//==================================================================
+// Turing Completeness
+//==================================================================
+https://en.wikipedia.org/wiki/Turing_completeness
+"In computability theory, a system of data-manipulation rules (such as 
+a computer's instruction set, a programming language, or a cellular 
+automaton) is said to be Turing complete or computationally universal 
+if it can be used to simulate any Turing machine."
+
+Key Points
+	- an automaton (a formal language)
+		- https://en.wikipedia.org/wiki/Automata_theory
+		  "An automaton is a finite representation of a formal language 
+		  that may be an infinite set."
+	- simulates any Turing machine
+	
+//==================================================================
+// Turing Equivalance
+//==================================================================
+"...two computers P and Q are called equivalent if P can simulate Q and Q 
+can simulate P."
+

@@ -1,0 +1,29 @@
+====================================================================
+What is Host
+====================================================================
+
+	Host maps the domain name to IP address
+	
+
+====================================================================
+How Host works
+====================================================================
+	(https://blog.csdn.net/growing_way/article/details/82797466)
+	
+	Windows checks host file 
+		- if domain name exists, then go directly to the address
+		- if not exists, then go to DNS for resolution
+	
+
+====================================================================
+Hosts file
+====================================================================
+	
+102.54.94.97 rhino.acme.com
+38.25.63.10 x.acme.com
+
+127.0.0.1 some.illegal.com #this domain will be forbidden
+0.0.0.0 some.illegal2.com #this domain will also be forbidden
+
+
+

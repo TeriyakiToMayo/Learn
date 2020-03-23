@@ -1,0 +1,16 @@
+//==================================================================
+// GET and POST
+//==================================================================
+https://www.youtube.com/watch?v=Un2JTC7tFPI
+https://www.youtube.com/watch?v=9o_4lsOkQ3g
+
+GET: www.abc.com?id=123&name=bob
+	- ?: GET sign
+	- GET sends only the url string
+		- everything send with GET method shows in the url line 
+		  (like password)
+	
+POST: www.abc.com/id=123&name=bob
+	- POST sends the url + data to server
+		- they are in seperate header files, but not encrypted
+	

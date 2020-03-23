@@ -1,0 +1,63 @@
+
+//==================================================================
+// How to use namespace in source files
+//==================================================================
+https://stackoverflow.com/questions/4122607/c-using-namespace-in-source-files
+
+Example:
+-----------------------------------------------
+//add.h
+namespace my_math {
+	int add(int x, int y);
+	int substraction(int x, int y);
+}
+
+-----------------------------------------------
+//add.cpp
+namespace my_math {
+	int add(int x, int y) {
+		return x + y;
+	}
+
+	int substraction(int x, int y) {
+		return x - y;
+	}
+}
+
+-----------------------------------------------
+//Main.cpp:
+#include "add.h"
+
+int main()
+{	
+	int result = my_math::substraction(10, 2);
+	std::cout << "result = " << result << std::endl;
+
+	return 0;
+}
+
+
+//==================================================================
+// Namespace linking
+//==================================================================
+//namespaces of the same name (in different files) are the same namespace
+namespace A{
+	int func();
+}
+
+void main(){
+	A::func();
+}
+
+namespace A{
+	int func(){
+		return 0;
+	}
+}
+
+
+//==================================================================
+// Why "using namespace std" is a bad practice?
+//==================================================================
+https://stackoverflow.com/questions/1452721/why-is-using-namespace-std-considered-bad-practice
+when namespace A & B have the same functions -> error

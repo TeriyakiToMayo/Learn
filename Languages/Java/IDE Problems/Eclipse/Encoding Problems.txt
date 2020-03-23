@@ -1,0 +1,10 @@
+//==================================================================
+// What if I cannot process Chinese characters?
+//==================================================================
+Project 
+- Properties 
+- Resource
+- Text file encoding 
+- Other: 
+UTF-8
+

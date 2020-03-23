@@ -1,0 +1,7 @@
+====================================================
+Regular Expressions
+====================================================
+https://stackoverflow.com/questions/15059740/pattern-matching-java-regex-one-or-more-operator
+
+*: 0 or more
++: 1 or more

@@ -1,0 +1,84 @@
+====================================================
+Problem 61. Rotate List
+====================================================
+Given a linked list, rotate the list to the right by k 
+places, where k is non-negative.
+
+Example 1:
+
+Input: 1->2->3->4->5->NULL, k = 2
+Output: 4->5->1->2->3->NULL
+Explanation:
+rotate 1 steps to the right: 5->1->2->3->4->NULL
+rotate 2 steps to the right: 4->5->1->2->3->NULL
+
+Example 2:
+
+Input: 0->1->2->NULL, k = 4
+Output: 2->0->1->NULL
+Explanation:
+rotate 1 steps to the right: 2->0->1->NULL
+rotate 2 steps to the right: 1->2->0->NULL
+rotate 3 steps to the right: 0->1->2->NULL
+rotate 4 steps to the right: 2->0->1->NULL
+
+
+
+====================================================
+Analysis
+====================================================
+k = 2
+1->2->3->4->5->NULL
+0  1  2  3  4  len
+         c				//c: where to cut, c = len - k
+
+
+====================================================
+Java Appraoch
+1 ms	98.63%
+41.1 MB	5.05%
+====================================================
+public static ListNode rotateRight(ListNode head, int k) {
+			if(head == null) return null;
+	
+	ListNode node = head;
+	int len = 0;
+	while(true) {
+		len++;
+		if(node.next == null) {
+			break;
+		}
+		node = node.next;
+	}
+	if(len == 1) return head;
+	
+	k = k%len;
+	if(k == 0) return head;
+	
+	//pos: the target pos of node, the node will be cut off from the last
+	int pos = len - k;
+	ListNode last = head;
+	ListNode cur = head.next;
+	//i from 2 since the 1st loop starts from the 2nd position
+	//E.g.: 
+	//step0:
+	//	1->2->3->4->5->NULL, pos = 3,
+	//	0  1  2  3  4
+	//	l  c
+	//
+	//step1 (the 1st loop):
+	//	1->2->3->4->5->NULL, pos = 3,
+	//	0  1  2  3  4
+	//	   l  c
+	for(int i = 2; i <= pos; i++) {
+		last = cur;
+		cur = cur.next;
+	}
+	
+	ListNode newHead = cur;
+	last.next = null;
+	node.next = head;
+	
+	return newHead;
+}
+

@@ -1,0 +1,39 @@
+http://www.cplusplus.com/doc/tutorial/structures/
+//==================================================================
+// initialize
+//==================================================================
+struct product {
+  int weight;
+  double price;
+} apple, products[10];
+
+product banana = {10, 20};
+
+
+//==================================================================
+// struct pointer
+//==================================================================
+struct movies_t {
+  string title;
+  int year;
+};
+
+movies_t amovie;
+movies_t * pmovie = &amovie;
+
+--------------------------------------------
+[Access members]
+pmovie->title
+(*pmovie).title
+
+
+//==================================================================
+// Struct vs. Class
+//==================================================================
+P514
+1. Default access type:
+	Struct: public
+	Class: private
+2. Purpose:
+	Struct: pure data/plain-old data(POD)
+	Class: data + operations

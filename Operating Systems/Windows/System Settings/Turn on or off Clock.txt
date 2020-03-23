@@ -1,0 +1,6 @@
+Search:
+Taskbar Settings 
+-> Notification area 
+-> Turn system icons on or off
+-> Clock On/Off
+

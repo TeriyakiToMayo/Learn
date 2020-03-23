@@ -1,0 +1,14 @@
+//==================================================================
+// UTF-8 and UTF-8 BOM
+//==================================================================
+https://blog.csdn.net/weixin_40449300/article/details/86567129
+https://blog.csdn.net/qq_27545063/article/details/81138722
+
+				Chinese
+
+ASCII			2 Byte
+
+UTF-8			2 Byte
+
+UTF-8 BOM		3 Byte
+(byte order mark)

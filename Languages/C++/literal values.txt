@@ -1,0 +1,84 @@
+https://www.tutorialspoint.com/cplusplus/cpp_constants_literals.htm
+//==================================================================
+// Integer Literals
+//==================================================================
+				Prefix		Value		Suffix
+Octal			0			0-7			u/U + l/L + l/L
+
+Decimal			n/a			0-9			u/U + l/L + l/L
+
+Hexadecimal		0x/0X		0-9ABCDEF	u/U + l/L + l/L
+
+
+//==================================================================
+// Float-point Literals
+//==================================================================
+Exponential:
+	- Value: integer(314)/float(3.14, .14)
+	- E: e/E
+	- Exponential: (+)10/-10
+
+Float:		Value		Suffix
+			1.0			f/F
+
+
+//==================================================================
+// Character Literals
+//==================================================================
+Each Character literal contains at most [4] elements, the [LAST] element counts
+
+------------------------------------------------------
+[Element Types]
+General elements: 'a', '5'
+
+Escape elements: '\0', '\123', '\x123'
+
+------------------------------------------------------
+[Element Types: Escape]
+https://docs.microsoft.com/en-us/previous-versions/6aw8xdf2(v=vs.140)
+https://blog.csdn.net/dark_cy/article/details/83515270
+
+Value			Escape sequence			Additional notes
+newline			\n
+
+horizontal tab	\t
+
+vertical tab	\v
+
+backspace		\b
+
+carriage return	\r
+
+form feed		\f
+
+alert			\a
+
+backslash		\\
+
+single quote	\'
+
+double quote	\"
+
+null character	\0	//means array is at the end
+
+octal			\o, \oo, \ooo (at most 3 octal digits)
+
+hexadecimal		\xh, \xhh, \xhhh ...(no limit)
+
+- Notice:
+	1. octal & hex gets the longest valid value possible: 
+		- octal: '\12356' first element is '\123'
+		- hex: '\xaaaaaaaaaaaaasd' first element is '\xaaaaaaaaaaaaa'
+	2. octal & hex conform to those formats are compile-time safe
+	3. only values <= (octal: 377) or (hex: ff) are runtime safe
+
+
+Unicode (UTF-8)	\uxxxx
+
+Unicode (UTF-16)\Uxxxxxxxx
+
+- Notice about Unicode:
+	1. Format length is fulfilled: properties are same as other elements
+	2. Format length not fulfilled: 
+		1. At the end ('\uaa'): valid, but result unpredictable
+		2. In the middle: invalid

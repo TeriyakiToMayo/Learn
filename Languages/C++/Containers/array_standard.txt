@@ -1,0 +1,28 @@
+https://www.learncpp.com/cpp-tutorial/6-15-an-introduction-to-stdarray/
+https://www.codesdope.com/cpp-stdarray/
+//==================================================================
+// Initialize
+//==================================================================
+std::array<int, 5> myArray = { 9, 7, 5, 3, 1 }; // initialization list
+std::array<int, 5> myArray = { 9, 8, 7 }; // okay, elements 3 and 4 are set to zero!
+std::array<int, 5> myArray = { 0, 1, 2, 3, 4, 5 }; // not allowed, too many elements in initializer list!
+
+std::array<int, 5> myArray { 9, 7, 5, 3, 1 }; // uniform initialization
+
+std::array<int, > myArray = { 9, 7, 5, 3, 1 }; // illegal, array length must be provided
+
+
+//==================================================================
+// Access
+//==================================================================
+std::cout << myArray[1];
+myArray[2] = 6;
+myArray.at(2) = 6;
+
+
+//==================================================================
+// Size
+//==================================================================
+myArray.size();
+
+

@@ -1,0 +1,109 @@
+====================================================
+Problem 77. Combinations
+====================================================
+Given two integers n and k, return all possible combinations 
+of k numbers out of 1 ... n.
+
+Example:
+
+Input: n = 4, k = 2
+Output:
+[
+  [2,4],
+  [3,4],
+  [2,3],
+  [1,2],
+  [1,3],
+  [1,4],
+]
+
+
+====================================================
+Analysis
+====================================================
+SEE "39. Combination Sum"
+
+Time Complexity O(kC(n, k))
+
+C(n, k): total combinations
+
+k: adding tmpList to output, needed for each combination
+
+
+
+====================================================
+Java Approach: Backtracing
+18 ms	58.60%
+44.3 MB	5.03%
+====================================================
+//Using Stack will be very slow
+static LinkedList<Integer> tmpList;	//using LinkedList to use removeLast()
+static List<List<Integer>> output;
+static int N;
+
+public static List<List<Integer>> combine(int n, int k) {
+	tmpList = new LinkedList<Integer>();
+	output = new LinkedList<List<Integer>>();
+	N = n;
+	helper(1, k);
+	
+	return output;
+}
+
+public static void helper(int start, int k) {
+	if(k == 0) {
+		output.add(new LinkedList<Integer>(tmpList));
+		return;
+	}
+	
+	for(int i = start; i <= N; i++) {
+		tmpList.add(i);
+		helper(i + 1, k - 1);
+		tmpList.removeLast();	//removeLast() is much faster than remove(tmpList.size() - 1)
+	}
+}
+
+
+====================================================
+Java Approach: Backtracing with Cutting Branches
+2 ms	99.49%
+42.8 MB	11.02%
+====================================================
+n = 5, k = 3
+
+1 2 3 4 5
+a
+
+1 2 3 4 5
+  a
+
+1 2 3 4 5
+    a
+	
+Since k = 3, a cannot be at 4, hence the last pos of a is (n - (k - p.size()) + 1)
+k - p.size() is the remaining amount of numbers
+
+
+
+private static List<List<Integer>> result;
+
+public static List<List<Integer>> combine3(int n, int k) {
+	result = new ArrayList<>();
+	if (n <= 0 || k <= 0 || n < k) {
+		return result;
+	}
+	findCombinations(n, k, 1, new LinkedList<Integer>());
+	return result;
+}
+
+private static void findCombinations(int n, int k, int index, LinkedList<Integer> p) {
+	if (p.size() == k) {
+		result.add(new ArrayList<>(p));
+		return;
+	}
+	for (int i = index; i <= n - (k - p.size()) + 1; i++) {
+		p.add(i);
+		findCombinations(n, k, i + 1, p);
+		p.removeLast();
+	}
+}

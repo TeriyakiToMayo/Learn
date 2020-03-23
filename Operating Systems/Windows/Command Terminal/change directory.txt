@@ -1,0 +1,12 @@
+How to change directory?
+https://stackoverflow.com/questions/11065421/command-prompt-wont-change-directory-to-another-drive
+https://earnigo.com/tech/change-directory-cmd/
+1. Go to root directory
+	cd\
+2. Go to location in current directory(tab)
+	cd windows\system32
+3. Go back
+	cd..
+4. Go to arbitrary directory
+	cd /d d:\Docs\Java
+

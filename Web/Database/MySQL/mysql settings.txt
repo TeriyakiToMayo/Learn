@@ -1,0 +1,11 @@
+url: localhost:3306
+jdbc url: jdbc:mysql://localhost:3306
+
+user0:
+	- username: root
+	- password: admin
+	
+user1:
+	- username: admin
+	- password: admin
+

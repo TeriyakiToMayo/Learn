@@ -1,0 +1,47 @@
+http://thbecker.net/articles/auto_and_decltype/section_06.html
+http://thbecker.net/articles/rvalue_references/section_02.html
+//==================================================================
+// Usages
+//==================================================================
+1. typeof:
+	template <typename T, typename S>
+	void foo(T lhs, S rhs){
+		typedef decltype(lhs * rhs) product_type;
+	}
+	
+2. deduced return type:
+	template <typename T, typename S>
+	auto multiply(T lhs, S rhs) -> decltype(lhs * rhs){
+		return lhs * rhs;
+	}
+	
+	
+//==================================================================
+// Differences between auto & decltype
+//==================================================================
+struct S {
+	S() {m_x = 42;}
+	int m_x;
+};
+
+int x;
+const int cx = 42;
+const int& crx = x;
+const S* p = new S();
+
+
+1. 
+typedef decltype(x) x_type;			//int
+auto a = x;							//int
+
+2.
+typedef decltype(cx) x_type;		//const int
+auto a = cx;						//int
+
+3.
+typedef decltype(crx) x_type;		//const int&
+auto a = crx;						//int
+
+4.
+typedef decltype(p->m_x) x_type;	//int, since declare type
+auto a = p->m_x;					//int

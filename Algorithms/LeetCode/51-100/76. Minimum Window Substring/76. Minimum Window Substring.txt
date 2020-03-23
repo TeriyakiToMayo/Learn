@@ -1,0 +1,118 @@
+====================================================
+Problem 76. Minimum Window Substring
+====================================================
+Given a string S and a string T, find the minimum window in 
+S which will contain all the characters in T in complexity 
+O(n).
+
+Example:
+
+Input: S = "ADOBECODEBANC", T = "ABC"
+Output: "BANC"
+
+Note:
+
+    If there is no such window in S that covers all 
+characters in T, return the empty string "".
+    If there is such window, you are guaranteed that there 
+will always be only one unique minimum window in S.
+
+
+====================================================
+Analysis
+====================================================
+S = "EBANC" T = "ABC"
+pointers: l and r
+
+E				B				A				N		C
+E 		(X)	
+EB 		(X)		B
+EBA 	(X)		BA				A
+EBAN	(X)		BAN		(X)		AN				N
+EBANC 	-->		BANC	-->		ANC		(X)		NC		C
+
+E->EB->EBA->EBAN->EBANC->BANC
+
+if contains all, then
+	1. if move r left still contains all: go up (move r left) 
+	  (X: you are not going this way, cuz moving r left will cause formed = formed - 1)
+	2. if not: go right (move l right)
+	
+if not contains all, then go down (move r right)
+
+
+====================================================
+Java Approach: Two Pointers
+17 ms	66.96%
+46 MB	5.05%
+====================================================
+Warning 1: Must use ArrayList, or time will exceed
+Warning 2: Use (required == formed) to check status instead of iterate through the entire map
+Warning 3: Use int[] instead of String to avoid using substring multiple times
+Warning 4: Must convert Integer into int before comparing, or sometimes the result is correct, sometimes not
+
+Two Pointers:
+	- Left -> <- Right: one loop with condition testing if l and r collide
+	- Left -> Right ->: better having inner loops
+		- Type 1: Left(pointer for blocks) Right(pointers inside blocks)
+		- Type 2: Left < Right
+
+
+public static String minWindow2(String s, String t) {
+	if(s.length() == 0 || t.length() == 0) return "";
+	
+	//collect str t info
+	Map<Character, Integer> mapT = new HashMap<Character, Integer>();
+	for(int i = 0; i < t.length(); i++) {
+		char c = t.charAt(i);
+		mapT.put(c, mapT.getOrDefault(c, 0) + 1);
+	}
+	int required = mapT.size();
+	
+	//Warning 1
+	List<Pair<Character, Integer>> sReCon = new ArrayList<>();
+	for(int i = 0; i < s.length(); i++) {
+		char c = s.charAt(i);
+		if(mapT.containsKey(c)) sReCon.add(new Pair<Character, Integer>(c, i));
+	}
+	
+	int len = sReCon.size();
+	if(len == 0) return "";
+	
+	//iteration
+	Map<Character, Integer> mapS = new HashMap<Character, Integer>();
+	int a = 0, b = -1;
+	//Warning 2
+	int formed = 0;
+	char c = 'a';
+	
+	int[] ans = {0, s.length(), -1};
+	
+	while(b == -1 || (b < len - 1 && a <= b)) {
+		
+		while(b < len - 1 && formed < required) {
+			b++;
+			c = sReCon.get(b).getKey();
+			mapS.put(c, mapS.getOrDefault(c, 0) + 1);
+			//Warning 4: 
+			if((int)mapT.get(c) == (int)mapS.get(c)) formed++;
+		}
+		
+		while(a <= b && formed == required) {
+			int sa = sReCon.get(a).getValue(), sb = sReCon.get(b).getValue(); 
+			if(ans[2] == -1 || sb - sa + 1 < ans[2]) {
+				ans[0] = sa;
+				ans[1] = sb;
+				ans[2] = sb - sa + 1;
+			}
+			
+			c = sReCon.get(a).getKey();
+			int count = mapS.get(c);
+			if(count - 1 < mapT.get(c)) formed--;
+			mapS.put(c, count - 1);
+			a++;
+		}
+	}
+	
+	return ans[2] == -1 ? "" : s.substring(ans[0], ans[1] + 1);
+}
