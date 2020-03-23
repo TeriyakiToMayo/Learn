@@ -1,8 +1,46 @@
 ====================================================================
-
+Create Repository
 ====================================================================
 
-	-------------------------------------------------------------
-	[]
+	echo "# Test" >> README.md
+	git init
+	git add README.md
+	git commit -m "first commit"
+	git remote add origin https://github.com/TeriyakiToMayo/Test.git
+	git push -u origin master
 
+
+
+====================================================================
+Add, Commit, and Push
+====================================================================
 	
+	git add .
+	git add --all
+	git add -A				//add changes to [CACHE]
+	
+	git commit --message
+	git commit -m			//commit with message
+	
+	git push				//push changes
+	
+	
+	-------------------------------------------------------------
+	[Cancel Commit]
+	
+		(https://www.cnblogs.com/lfxiao/p/9378763.html)
+	
+		get reset [mode] HEAD^		//mode:
+									//			CODE		ADD			COMMIT
+									//--soft 	keep		keep		cancel
+									//--mixed	keep		cancel		cancel
+									//--hard 	cancel		cancel		cancel
+											
+									//HEAD^:
+									//	- HEAD~1		reset 1 commit
+									//  - HEAD~2		reset 2 commits
+									
+		
+		git commit -amend			//only edit comment
+		
+		
